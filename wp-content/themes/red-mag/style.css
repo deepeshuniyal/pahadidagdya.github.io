@@ -1,0 +1,105 @@
+/*
+ Theme Name:   Red Mag
+ Theme URI:    http://themes4wp.com/theme/red-mag/
+ Description:  Red Mag is free magazine WordPress theme ideal for any sports magazine, newspaper, online magazine, review sites, blog or personal websites. Red Mag is child theme of First Mag - free responsive magazine WordPress Theme. Theme support WP Review plugin, an easy and powerful way to review content with stars, percentages or points rating. WooCommerce support is included. Red Mag is fully responsive and looks good on every device. Check the demo at http://demo.themes4wp.com/red-mag/
+ Author:       Themes4WP
+ Author URI:   http://themes4wp.com/
+ Template:     first-mag
+ Version:      1.0.1
+ License:      GNU General Public License v3 or later
+ License URI:  http://www.gnu.org/licenses/gpl-3.0.html
+ Tags:         one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-background, custom-menu, featured-images, theme-options, translation-ready, news 
+ Text Domain:  red-mag
+*/
+
+.rsrc-main .rsrc-post-content {
+    margin-top: 15px;
+}
+.rsrc-header-img {
+    float: left;
+    padding: 15px;
+}
+.rsrc-header-text {
+    padding-bottom: 15px;
+}
+.widget, .rsrc-post-content, .archive-content, .front-page-content {
+    border: 1px solid #E3E3E3;
+    margin: 0 10px 15px;
+    padding: 10px 15px;
+    border-bottom: 4px solid #00D6F7;
+    -webkit-box-shadow: 0 0 3px #CACACA;
+    -moz-box-shadow: 0 0 3px #cacaca;
+    box-shadow: 0 0 3px #CACACA;
+}
+article.rsrc-main {
+    padding: 10px 15px;
+}
+.first-mag-widget h3.widget-title {
+    margin-top: 10px;
+}
+.header-ad .widget {
+    padding: 25px 15px;
+    margin: 0;
+    border: none;
+    border-bottom: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+#content-top-section .widget.first-mag-widget {
+    padding: 10px;
+}
+#content-top-section .widget {
+    padding: 25px;
+    margin: 0 10px 15px 10px;
+}
+@media only screen and (min-width: 767px) {
+  #sidebar-secondary .widget {
+      margin-right: -10px;
+  }
+  #sidebar .widget {
+      margin-left: -10px;
+  }
+}
+.widget_featured_posts .first-post {
+    border-right: 1px solid #E4E4E4;
+}
+.widget_featured_posts_second .first-post {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E4E4E4;
+}
+#content-top-section .carousel-widget .carousel-textarea {
+    padding: 0;
+}
+#content-top-section .carousel-widget h3.widget-title {
+    margin-left: 0;
+    margin-right: 0;
+}
+#content-top-section .widget_carousel_posts h3.widget-title {
+    margin-left: 0;
+    margin-right: 0;
+}
+.widget-line {
+    background: url('img/wbg.png');
+    height: 12px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+a:hover, a:focus {
+    color: #A20000;
+}
+a:focus, .review-result, .top-section, a.close-me, a:focus, .text-primary, .btn-primary .badge, .btn-link, .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > .active > a:focus, .pagination > li > a, .pagination > li > span, .list-group-item.active > .badge, .nav-pills > .active > a > .badge, .panel-primary > .panel-heading .badge, .btn-primary.outline:active, .btn-primary.outline.active, .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: #F70000;
+}
+
+.navigation.pagination, .btn-warning, #wp-calendar #prev a, #wp-calendar #next a, .newForm.focus:before, .newForm.focus:after, .home-icon.front_page_on, .page-header:before, .comment-reply-link:hover, .btn-success, .comment-reply-link, .top-section, .bg-primary, .btn-primary, .label-primary, .top-section, .first-textarea, #back-top span, .btn-info, .comment-respond #submit, #searchform #searchsubmit, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, #searchform #searchsubmit:hover, .comment-respond #submit:hover {
+    background-color: #F70000;
+} 
+
+.btn-warning, #wp-calendar #prev a, #wp-calendar #next a, .rsrc-top-menu, .home-icon.front_page_on, .widget_tab_posts .nav-tabs > li > a:before, blockquote, h3.widget-title .title-text:before, .rsrc-author-credits, #slidebox, .pagination > .active > span:hover, .pagination > .active > span, .comment-reply-link:hover, .btn-success, .comment-reply-link, .hover-style .home-header, .hover-style .page-header, .btn-primary.outline:active, .btn-primary.outline.active, .btn-primary.outline, .btn-info, .comment-respond #submit, #searchform #searchsubmit, #searchform #searchsubmit:hover, .comment-respond #submit:hover {
+    border-color: #F70000;
+}
+
+.front-page-content, .archive-content, .widget, .rsrc-post-content {
+    border-bottom-color: #F70000;
+}

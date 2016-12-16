@@ -1,0 +1,755 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Jurist\n"
+"POT-Creation-Date: 2014-02-03 22:08+0800\n"
+"PO-Revision-Date: 2014-02-03 22:08+0800\n"
+"Last-Translator: ed cardinal <lizardking67@gmail.com>\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: C:\\xampp\\htdocs\\wordpress\\wp-content\\themes"
+"\\wpjurist\n"
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/404.php:6
+msgid "Error 404 - Page Not Found"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/404.php:19
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching, or one of the links below, can help."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/404.php:29
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:62
+msgid "Most Used Categories"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/404.php:39
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:70
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_no_slider.php:78
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:152
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:152
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:64
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/author.php:73
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/category.php:65
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:128
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/people-profile-template.php:80
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:50
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/tag.php:63
+msgid "Nothing Found"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_no_slider.php:82
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:156
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:156
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:68
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/author.php:77
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/category.php:69
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:132
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/people-profile-template.php:84
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/tag.php:67
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:72
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:78
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:72
+msgid "Previous"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:72
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:78
+msgid "&lt;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:73
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:79
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:73
+msgid "Next"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:73
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:79
+msgid "&gt;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_gallery.php:124
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:125
+msgid "Latest News"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/alt_homepage_with_slider.php:56
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:52
+msgid "No featured image set for this post."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:11
+#, php-format
+msgid "Daily Archives: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:13
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:15
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/archive.php:17
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:104
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:38
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:38
+msgid "Archives"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/author.php:18
+#, php-format
+msgid "Author: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/category.php:9
+#, php-format
+msgid "Category: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/comments.php:8
+msgid ""
+"This post is password protected. Enter the password to view any comments."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/comments.php:40
+msgid "Comment navigation"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/comments.php:41
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/comments.php:42
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/comments.php:52
+msgid "Comments are closed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:13
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-gallery.php:25
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:13
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:68
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:13
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content.php:27
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:14
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-page.php:6
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:14
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:69
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:6
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:14
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content.php:28
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content.php:35
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:79
+msgid "Pages:"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:23
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:24
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:24
+msgid "Leave a comment"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:23
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:24
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:24
+msgid "1 Comment"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:23
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:24
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:24
+msgid "% Comments"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-aside.php:25
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-page.php:8
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-quote.php:26
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:59
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-status.php:26
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:22
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:93
+msgid "Edit"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:46
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:42
+msgid "LinkedIn"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:50
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:46
+msgid "Twitter"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:54
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:50
+msgid "Facebook"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:58
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:54
+msgid "Google+"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:62
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:58
+msgid "Avvo"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-people.php:66
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:62
+msgid "Mailto"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:79
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:90
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:38
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:49
+msgid ", "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:83
+#, php-format
+msgid "Posted in %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single-people.php:94
+#, php-format
+msgid "Tagged %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:20
+msgid "Written by "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:20
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:461
+#, php-format
+msgid "View all posts by %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:27
+msgid "Website: "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:42
+#, php-format
+msgid "<span class=\"meta-cat\"></span> %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/content-single.php:53
+#, php-format
+msgid "<span class=\"meta-tag\"></span> %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:5
+msgid "&copy; "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:7
+msgid "- Powered by "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:7
+msgid "http://wordpress.org/"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:7
+msgid "WordPress"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:8
+msgid " and "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:8
+msgid "http://wpdevshed.com/"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/footer.php:8
+msgid "WP Dev Shed"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:33
+msgid "Primary Menu"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:34
+msgid "Footer Menu"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:101
+msgid "Category"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:102
+msgid "Tag"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:103
+msgid "Author"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:109
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:113
+msgid "Page "
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:140
+msgid "Site Logo"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:142
+msgid "Upload a logo to replace the default site name in the header"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:150
+msgid ""
+"Choose your logo (ideal width is 100-300px and ideal height is 40-100px)"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:163
+msgid "Theme Color Option"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:171
+msgid "Display Author Bio"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:173
+msgid "Option to show/hide the author bio in the posts."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:182
+msgid "Show the author bio in posts?"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:190
+msgid "Slider Options"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:192
+msgid "Adjust the behavior of the image slider."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:203
+msgid "Select Effect:"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:220
+msgid "Autoplay Speed in Seconds"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:335
+msgid "Blog Sidebar"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:344
+msgid "Home Page Widget Area"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:353
+msgid "Static Page Sidebar"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:373
+msgid "Post navigation"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:383
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:387
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:409
+msgid "Pingback:"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:409
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:432
+msgid "(Edit)"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:419
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:422
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:430
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:455
+#, php-format
+msgid ""
+"<span class=\"sep meta-on\">Posted on </span><a href=\"%1$s\" title=\"%2$s\" "
+"rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></"
+"a><span class=\"byline\"> <span class=\"sep meta-by\">by</span><span class="
+"\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel="
+"\"author\">%7$s</a></span></span>"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:548
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:579
+msgid "&lsaquo; Prev"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:549
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:580
+msgid "Next &rsaquo;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:595
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:29
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:56
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:29
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:56
+msgid "Untitled"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:771
+msgid "Install Recommended Plugins"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:772
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:146
+msgid "Install Plugins"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:773
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:147
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:774
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:785
+msgid "Return to Recommended Plugins Installer"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:786
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:160
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1546
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/functions.php:787
+#, php-format
+msgid "All plugins installed and activated successfully. %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/header.php:27
+msgid "Main menu"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/header.php:28
+msgid "Skip to content"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:12
+#, php-format
+msgid ""
+"Published <span class=\"entry-date\"><abbr class=\"published\" title=\"%1$s"
+"\">%2$s</abbr></span> at <a href=\"%3$s\" title=\"Link to full-size image\">"
+"%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel="
+"\"gallery\">%7$s</a>"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:85
+#, php-format
+msgid ""
+"<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a "
+"comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" "
+"title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:87
+#, php-format
+msgid ""
+"Comments are closed, but you can leave a trackback: <a class=\"trackback-link"
+"\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback"
+"\">Trackback URL</a>."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:89
+msgid ""
+"Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond"
+"\" title=\"Post a comment\">post a comment</a>."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:91
+msgid "Both comments and trackbacks are currently closed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:100
+msgid "&larr; Previous"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/image.php:101
+msgid "Next &rarr;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:72
+msgid "&#9664;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/index.php:73
+msgid "&#9654;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:11
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:54
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/search.php:57
+msgid "Or you can try these links below."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:11
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:11
+msgid "Categories"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:21
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:21
+msgid "Latest Posts"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar-page.php:45
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/sidebar.php:45
+msgid "Popular Posts"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/tag.php:9
+#, php-format
+msgid "Tag: %s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:145
+msgid "Install Required Plugins"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:148
+msgid "Something went wrong."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:159
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:414
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:161
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:438
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1720
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:462
+#, php-format
+msgid "The following plugin was activated successfully: %s."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:601
+msgid "Dismiss this notice"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:918
+msgid "External Link"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:923
+msgid "Private Repository"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:926
+msgid "Pre-Packaged"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:930
+msgid "WordPress Repository"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:932
+msgid "Required"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:932
+msgid "Recommended"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:934
+msgid "Not Installed"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:936
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1084
+#, php-format
+msgid ""
+"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+"Dashboard\">Return to the Dashboard</a>"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1097
+msgid "Plugin"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1098
+msgid "Source"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1099
+msgid "Type"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1100
+msgid "Status"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1114
+msgid "Install"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1115
+msgid "Activate"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1532
+msgid "Install package not available."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1533
+#, php-format
+msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1534
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1535
+msgid "Installing the plugin&#8230;"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1536
+msgid "Plugin install failed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1537
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1545
+msgid "Plugin activation failed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1636
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1637
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1637
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1646
+msgid "Show Details"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1637
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1646
+msgid "Hide Details"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1638
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1639
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1643
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1644
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1645
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1646
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1647
+msgid "All installations have been completed."
+msgstr ""
+
+#: C:\xampp\htdocs\wordpress\wp-content\themes\wpjurist/library/class/class-tgm-plugin-activation.php:1648
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
