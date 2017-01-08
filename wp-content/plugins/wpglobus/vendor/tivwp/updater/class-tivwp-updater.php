@@ -135,8 +135,8 @@ class TIVWP_Updater {
 
 		$this->_initialize_class_variables( $args );
 
-		// Continue only if there is no version control folder or if forced with a special define.
-		if ( defined( 'TIVWP_UPDATER_GIT_OK' ) || ! is_dir( dirname( $this->plugin_file ) . '/.git' ) ) {
+		// Continue only if there is no version control folder.
+		if ( ! is_dir( dirname( $this->plugin_file ) . '/.git' ) ) {
 			$this->_set_hooks();
 		}
 

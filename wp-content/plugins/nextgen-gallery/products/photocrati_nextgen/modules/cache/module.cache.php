@@ -1,9 +1,4 @@
 <?php
-/***
-{
-		Module: photocrati-cache
-}
-***/
 class M_Cache extends C_Base_Module
 {
     /**

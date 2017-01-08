@@ -37,6 +37,12 @@ define('DB_CHARSET', 'utf8mb4');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+/** FTP Settings */
+define("FTP_HOST", "52.24.113.119");
+define("FTP_USER", "ftpuser");
+##Deny from all
+define("FTP_PASS", "bagoli@123");
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *

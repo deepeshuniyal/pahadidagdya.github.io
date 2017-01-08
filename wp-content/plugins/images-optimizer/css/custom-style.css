@@ -1,0 +1,51 @@
+.media-frame.hide-toolbar .media-frame-toolbar{bottom:0 !important;}
+.loader {
+    background: #fff none repeat scroll 0 0;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 999999999999;
+	display:none;
+}
+.loader > img {
+    margin-top: -108px;
+    position: relative;
+    top: 50%;
+}
+.attachments.ui-sortable.ui-sortable{
+	width:100%;
+}
+.api_suggestion{
+	cursor:pointer;
+}
+.ab-emoji-lol {
+    margin-bottom: -8px;
+    width: 26px;
+}
+.dashicons, .dashicons-before::before{
+	width: 16px;
+}
+.ab-powere-by {
+    float: left;
+    font-size: 16px;
+    padding: 20px 0;
+	font-weight:bold;
+}
+.powered-by-image{ 	
+	padding: 2% 0 0 0;" 
+}
+#add-grid-image-panel-top > h2 {
+    border-bottom-color: #c7c7c7;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    float: left;
+    font-size: 35px;
+    margin-left: 12px;
+    padding-bottom: 27px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 12px;
+    width: 96%;
+}

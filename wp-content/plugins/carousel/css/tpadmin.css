@@ -1,0 +1,17 @@
+.wrap h2.tpcarousel-admin-htwo {
+  padding-bottom: 15px;
+}
+.wrap .tpcarousel-admin-extra {
+  padding: 25px;
+}
+.tpcarousel-admin-extra p {
+  font-size: 14px;
+}
+.tpcarousel-admin-extra ul {
+  font-size: 14px;
+  list-style: outside none disc;
+  margin: 0 0 0 2.5em;
+}
+.tpcarousel-admin-extra li {
+  margin-bottom: 12px;
+}

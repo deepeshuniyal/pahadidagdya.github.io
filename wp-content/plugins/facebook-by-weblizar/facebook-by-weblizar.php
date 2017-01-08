@@ -1,12 +1,11 @@
 <?php
 /**
  * Plugin Name: Facebook By WebLizar
- * Version: 2.4.5.1
+ * Version: 2.4.6
  * Description: Facebook like box plugin to display facebook page live stream & friends on WordPress blog.
  * Author: WebLizar
  * Author URI: http://www.weblizar.com
  * Plugin URI: http://www.weblizar.com/plugins/
- *
  */
 
 /**
