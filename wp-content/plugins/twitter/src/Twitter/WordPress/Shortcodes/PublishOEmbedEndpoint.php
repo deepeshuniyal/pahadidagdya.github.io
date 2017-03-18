@@ -30,7 +30,8 @@ namespace Twitter\WordPress\Shortcodes;
  *
  * @since 1.5.0
  */
-interface PublishOEmbedEndpoint {
+interface PublishOEmbedEndpoint
+{
 	/**
 	 * PHP class to use for fetching oEmbed data
 	 *
@@ -48,4 +49,16 @@ interface PublishOEmbedEndpoint {
 	 * @type string
 	 */
 	const OEMBED_API_ENDPOINT = 'oembed';
+
+	/**
+	 * Create a unique cache key to represent the requested object
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $id               datasource identifier
+	 * @param array  $query_parameters oEmbed-compatible API parameters possibly affecting display
+	 *
+	 * @return string cache key
+	 */
+	public static function getOEmbedCacheKey( $id, array $query_parameters );
 }

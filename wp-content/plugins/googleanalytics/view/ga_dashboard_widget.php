@@ -25,45 +25,45 @@
         <div>
             <div id="boxes-container">
                 <div class="ga-box-row">
-					<?php if ( ! empty( $boxes ) ) : ?>
-					<?php $iter = 1; ?>
-					<?php foreach ( $boxes as $k => $v ) : ?>
+	                <?php if ( ! empty( $boxes ) ) : ?>
+	                <?php $iter = 1; ?>
+	                <?php foreach ( $boxes as $k => $v ) : ?>
                     <div class="ga-box-column ga-box-dashboard">
                         <div style="color: grey; font-size: 13px;"
                              id="ga_box_dashboard_label_<?php echo $k; ?>"><?php echo $v['label'] ?></div>
                         <div style="font-size: 15px;"
                              id="ga_box_dashboard_value_<?php echo $k; ?>"><?php echo $v['value'] ?></div>
                     </div>
-					<?php if ( ( ( $iter ++ ) % 3 ) == 0 ) : ?>
+	                <?php if ( ( ( $iter ++ ) % 3 ) == 0 ) : ?>
                 </div>
                 <div class="ga-box-row">
-					<?php endif; ?>
-					<?php endforeach; ?>
-					<?php endif; ?>
+	                <?php endif; ?>
+	                <?php endforeach; ?>
+	                <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <div style="margin-top: 5px;"><?php echo sprintf( '<a href="%s">' . __( 'Show more details' ) . '</a>', $more_details_url ); ?></div>
+    <div style="margin-top: 5px;"><?php echo sprintf( '<a href="%s">' . __( 'Show more details' ) . '</a>',
+			$more_details_url ); ?></div>
 </div>
 
 <script type="text/javascript">
-
+	<?php if ( ! empty( $chart ) ) : ?>
     dataArr = [['Day', 'Pageviews'],<?php
-		if ( $chart ) {
-			$arr = "";
-			foreach ( $chart as $row ) {
-				if ( $arr ) {
-					$arr .= ",";
-				}
-				$arr .= "['" . $row['day'] . "'," . $row['current'] . "]";
-			}
-		}
-		echo $arr;
-		?>];
+	    $arr = "";
+	    foreach ( $chart as $row ) {
+		    if ( $arr ) {
+			    $arr .= ",";
+		    }
+		    $arr .= "['" . $row['day'] . "'," . $row['current'] . "]";
+	    }
+
+	    echo $arr;
+	    ?>];
 
     ga_dashboard.init(dataArr);
     ga_dashboard.events(dataArr);
-
+	<?php endif; ?>
 </script>

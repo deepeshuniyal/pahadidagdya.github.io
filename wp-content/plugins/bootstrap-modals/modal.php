@@ -205,9 +205,9 @@ function plugin_settings() {
     );
 
     add_settings_field(
-        'ng_modal_footer_alignment', //unique id of field
+        'ng_modal_barter_alignment', //unique id of field
         'Modal Footer Alignment', //title
-         __NAMESPACE__ . '\\ng_modal_footer_alignment_callback', //callback function below
+         __NAMESPACE__ . '\\ng_modal_barter_alignment_callback', //callback function below
         'bootstrap-modal', //page that it appears on
         'ng_bootstrap_modal_section' //settings section declared in add_settings_section
     );
@@ -402,16 +402,16 @@ if( !isset( $options['ng_modal_alignment'] ) ) $options['ng_modal_alignment'] = 
  * @since 1.3.0
  */
 
-function ng_modal_footer_alignment_callback() {
+function ng_modal_barter_alignment_callback() {
 $options = get_option( 'bootstrap_modal_settings' );
 
-if( !isset( $options['ng_modal_footer_alignment'] ) ) $options['ng_modal_footer_alignment'] = 'right';
+if( !isset( $options['ng_modal_barter_alignment'] ) ) $options['ng_modal_barter_alignment'] = 'right';
 ?>
 
-<select name="bootstrap_modal_settings[ng_modal_footer_alignment]" id="ng_modal_footer_alignment">
-	<option selected="selected" value="left" <?php selected($options['ng_modal_footer_alignment'], 'left'); ?>>Left</option>
-	<option value="center" <?php selected($options['ng_modal_footer_alignment'], 'center'); ?>>Center</option>
-  <option value="right" <?php selected($options['ng_modal_footer_alignment'], 'right'); ?>>Right</option>
+<select name="bootstrap_modal_settings[ng_modal_barter_alignment]" id="ng_modal_barter_alignment">
+	<option selected="selected" value="left" <?php selected($options['ng_modal_barter_alignment'], 'left'); ?>>Left</option>
+	<option value="center" <?php selected($options['ng_modal_barter_alignment'], 'center'); ?>>Center</option>
+  <option value="right" <?php selected($options['ng_modal_barter_alignment'], 'right'); ?>>Right</option>
 </select>
 <?php
 
@@ -500,7 +500,7 @@ function inline_modal() {
           'ng_modal_color'             => 'rgba(0,0,0,1)',
           'ng_modal_color_background'  => 'rgba(255,255,255,1)',
           'ng_modal_alignment'         => 'left',
-          'ng_modal_footer_alignment'  => 'right',
+          'ng_modal_barter_alignment'  => 'right',
           'ng_modal_border_color'      => '',
           'ng_modal_use_borders'       => '',
           'ng_modal_use_css'           => '',
@@ -518,7 +518,7 @@ function inline_modal() {
        $ng_modal_color             = $options['ng_modal_color'];
        $ng_modal_color_background  = $options['ng_modal_color_background'];
        $ng_modal_alignment         = $options['ng_modal_alignment'];
-       $ng_modal_footer_alignment  = $options['ng_modal_footer_alignment'];
+       $ng_modal_barter_alignment  = $options['ng_modal_barter_alignment'];
        $ng_modal_border_color      = $options['ng_modal_border_color'];
        $ng_modal_use_borders       = $options['ng_modal_use_borders'];
        $ng_modal_use_css           = $options['ng_modal_use_css'];
@@ -550,8 +550,8 @@ function inline_modal() {
         .modal-dialog {
           text-align:{$ng_modal_alignment};
         }
-        .modal-footer {
-          text-align:{$ng_modal_footer_alignment};
+        .modal-barter {
+          text-align:{$ng_modal_barter_alignment};
         }
         ";
         if($ng_modal_use_borders) {
@@ -559,7 +559,7 @@ function inline_modal() {
         .modal-header {
           border-bottom: 1px solid {$ng_modal_border_color};
         }
-        .modal-footer {
+        .modal-barter {
           border-top: 1px solid {$ng_modal_border_color};
         }";
         }
@@ -568,7 +568,7 @@ function inline_modal() {
         .modal-header {
           border-bottom: none;
         }
-        .modal-footer {
+        .modal-barter {
           border-top: none;
         }
         ";
@@ -598,7 +598,7 @@ function bm_shortcode( $atts, $content = null ) {
 						'id' 	      => '',
 						'class'     => '',
 						'header'    => '',
-						'footer'    => '',
+						'barter'    => '',
 						'arialabel' => '',
 					),
 					$atts,
@@ -616,8 +616,8 @@ function bm_shortcode( $atts, $content = null ) {
 													<?php endif; ?>
 				            </div>
 				            <div class="modal-body"><?php echo $content; ?></div>
-											<?php if( $atts['footer'] ) : ?>
-				            <div class="modal-footer"><?php echo $atts['footer']; ?></div>
+											<?php if( $atts['barter'] ) : ?>
+				            <div class="modal-barter"><?php echo $atts['barter']; ?></div>
 									<?php endif; ?>
 				        </div>
 				    </div>

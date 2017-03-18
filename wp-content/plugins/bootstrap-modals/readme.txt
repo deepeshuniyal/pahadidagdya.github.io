@@ -51,7 +51,7 @@ Here is a simple HTML Modal MarkUp
 					<h4 class="modal-title">My Title in a Modal Window</h4>
 			</div>
 			<div class="modal-body">This is the body of a modal...</div>
-			<div class="modal-footer">This is the footer of a modal...</div>
+			<div class="modal-barter">This is the barter of a modal...</div>
 			</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -81,7 +81,7 @@ Here is a simple HTML Modal MarkUp
 					<h4 class="modal-title">My Title in a Modal Window</h4>
 			</div>
 			<div class="modal-body">This is the body of a modal...</div>
-			<div class="modal-footer">This is the footer of a modal...</div>
+			<div class="modal-barter">This is the barter of a modal...</div>
 			</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

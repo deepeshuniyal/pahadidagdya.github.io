@@ -19,7 +19,6 @@ class WPGlobus_Utils {
 	 * @return string
 	 */
 	public static function localize_url( $url = '', $language = '', WPGlobus_Config $config = null ) {
-
 		/**
 		 * Use the global configuration if alternative not passed
 		 */
@@ -28,6 +27,22 @@ class WPGlobus_Utils {
 			$config = WPGlobus::Config();
 		}
 		// @codeCoverageIgnoreEnd
+
+		/**
+		 * Use the current language if not passed
+		 */
+		$language = empty( $language ) ? $config->language : $language;
+
+		/**
+		 * Local cache to speed-up processing on pages with multiple links.
+		 */
+		static $cache = array();
+		if ( isset( $cache[ $language ][ $url ] ) ) {
+			return $cache[ $language ][ $url ];
+		}
+		if ( ! isset( $cache[ $language ] ) ) {
+			$cache[ $language ] = array();
+		}
 
 		/**
 		 * In Admin-Settings-General:
@@ -39,11 +54,6 @@ class WPGlobus_Utils {
 		 * @todo Multisite?
 		 */
 		$home_url = get_option( 'home' );
-
-		/**
-		 * Use the current language if not passed
-		 */
-		$language = empty( $language ) ? $config->language : $language;
 
 		/**
 		 * `hide_default_language` means "Do not use language code in the default URL"
@@ -102,6 +112,11 @@ class WPGlobus_Utils {
 		 */
 		$localized_url = preg_replace( $re, '\1' . $language_url_prefix . '\2', $url );
 
+		/**
+		 * Cache it.
+		 */
+		$cache[ $language ][ $url ] = $localized_url;
+
 		return $localized_url;
 	}
 
@@ -153,22 +168,16 @@ class WPGlobus_Utils {
 
 	/**
 	 * Check if was called by a specific function (could be any levels deep).
-	 * Note: does not check if the function is in a class method.
+	 * @deprecated 1.7.7 Use WPGlobus_WP::is_function_in_backtrace()
+	 * @see        WPGlobus_WP::is_function_in_backtrace()
 	 *
-	 * @param string $function_name
-	 * @return bool
+	 * @param string|callable $function_name Function name or array(class,function).
+	 *
+	 * @return bool True if Function is in backtrace.
 	 */
 	public static function is_function_in_backtrace( $function_name ) {
-		$function_in_backtrace = false;
-
-		foreach ( debug_backtrace() as $_ ) {
-			if ( ! empty( $_['function'] ) && $_['function'] === $function_name ) {
-				$function_in_backtrace = true;
-				break;
-			}
-		}
-
-		return $function_in_backtrace;
+		_deprecated_function( __METHOD__, 'WPGlobus 1.7.7', 'WPGlobus_WP::is_function_in_backtrace()' );
+		return WPGlobus_WP::is_function_in_backtrace( $function_name );
 	}
 
 	/**
@@ -309,7 +318,7 @@ class WPGlobus_Utils {
 
 		if ( ! $url ) {
 			/**
-			 * Use the global configuration is alternative not passed
+			 * Use the global configuration if alternative not passed
 			 */
 			if ( null === $config ) {
 				// @codeCoverageIgnoreStart
@@ -323,7 +332,7 @@ class WPGlobus_Utils {
 	}
 
 	/**
-	 * Localize www.wpglobus.com for use in outgoing links
+	 * Localize wpglobus.com for use in outgoing links
 	 *
 	 * @param WPGlobus_Config $config
 	 * @return string

@@ -51,9 +51,9 @@ trait SingleImage
      * @param int $width width of the image in whole pixels
      * @param int $height height of the image in whole pixels
      *
-     * @return __CLASS__ support chaining
+     * @return self support chaining
      */
-    public function setImage($url, $width = 0, $height = 0)
+    public function setImage($url, $width = 0, $height = 0, $alt = '')
     {
         if (! $url) {
             return $this;
@@ -64,6 +64,9 @@ trait SingleImage
         if (! ( is_int($height) && $height >= 0 )) {
             $height = 0;
         }
+        if (! is_string($alt)) {
+            $alt = '';
+        }
 
         $image = null;
         $preset = false;
@@ -72,10 +75,11 @@ trait SingleImage
             $image = $url;
             $width = $url->getWidth();
             $height = $url->getHeight();
+            $alt = $url->getAlternativeText();
         } elseif (is_string($url)) {
             try {
                 $image = new \Twitter\Cards\Components\Image($url);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return $this;
             }
         }
@@ -104,6 +108,9 @@ trait SingleImage
                 }
             }
         }
+        if (is_string($alt) && $alt) {
+            $image->setAlternativeText($alt);
+        }
 
         $this->image = $image;
 
@@ -127,13 +134,13 @@ trait SingleImage
      */
     protected function imageCardProperties()
     {
-        if (! isset( $this->image )) {
-            return '';
+        if (! isset($this->image)) {
+            return array();
         }
 
         $card_properties = $this->image->asCardProperties();
-        if (empty( $card_properties )) {
-            return '';
+        if (empty($card_properties)) {
+            return array();
         }
 
         return $card_properties;

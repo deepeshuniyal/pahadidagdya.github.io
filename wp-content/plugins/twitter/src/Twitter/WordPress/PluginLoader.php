@@ -41,7 +41,7 @@ class PluginLoader
 	 *
 	 * @type string
 	 */
-	const VERSION = '1.5.0';
+	const VERSION = '2.0.1';
 
 	/**
 	 * Unique domain of the plugin's translated text
@@ -125,6 +125,29 @@ class PluginLoader
 	}
 
 	/**
+	 * Plugin features and corresponding widget class
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return array plugin feature and widget class{
+	 *   @type string plugin feature identifier
+	 *   @type string WP_Widget class to register
+	 * }
+	 */
+	public static function getAvailableWidgets()
+	{
+		return array(
+			\Twitter\WordPress\Features::FOLLOW_BUTTON    => '\Twitter\WordPress\Widgets\Buttons\Follow',
+			\Twitter\WordPress\Features::PERISCOPE_ON_AIR => '\Twitter\WordPress\Widgets\Buttons\Periscope\OnAir',
+			\Twitter\WordPress\Features::EMBED_PROFILE    => '\Twitter\WordPress\Widgets\Embeds\Timeline\Profile',
+			\Twitter\WordPress\Features::EMBED_LIST       => '\Twitter\WordPress\Widgets\Embeds\Timeline\TwitterList',
+			\Twitter\WordPress\Features::EMBED_SEARCH     => '\Twitter\WordPress\Widgets\Embeds\Timeline\Search',
+			\Twitter\WordPress\Features::EMBED_COLLECTION => '\Twitter\WordPress\Widgets\Embeds\Timeline\Collection',
+			\Twitter\WordPress\Features::TRACKING_PIXEL   => '\Twitter\WordPress\Widgets\Advertising\Tracking',
+		);
+	}
+
+	/**
 	 * Register widgets
 	 *
 	 * @since 1.0.0
@@ -134,13 +157,72 @@ class PluginLoader
 	public static function widgetsInit()
 	{
 		$features = \Twitter\WordPress\Features::getEnabledFeatures();
+		$widgets = static::getAvailableWidgets();
 
-		if ( isset( $features[ \Twitter\WordPress\Features::FOLLOW_BUTTON ] ) ) {
-			register_widget( '\Twitter\WordPress\Widgets\Follow' );
+		foreach ( $widgets as $feature => $widget_class ) {
+			if ( isset( $features[ $feature ] ) ) {
+				register_widget( $widget_class );
+			}
+		}
+	}
+
+	/**
+	 * Load Twitter widgets JavaScript early in the page build if a dependent widget will be rendered
+	 *
+	 * @since 2.0.1
+	 *
+	 * @return void
+	 */
+	public static function loadTwitterWidgetsJavaScriptWhenWidgetsActive()
+	{
+		$widgets_js_widgets = static::getAvailableWidgets();
+		// remove widgets not depending on Twitter widgets JS
+		unset( $widgets_js_widgets[ \Twitter\WordPress\Features::TRACKING_PIXEL ] );
+		if ( empty( $widgets_js_widgets ) ) {
+			return;
 		}
 
-		if ( isset( $features[ \Twitter\WordPress\Features::PERISCOPE_ON_AIR ] ) ) {
-			register_widget( '\Twitter\WordPress\Widgets\PeriscopeOnAir' );
+		$features = \Twitter\WordPress\Features::getEnabledFeatures();
+		foreach ( $widgets_js_widgets as $feature_name => $widget_class ) {
+			if ( isset( $features[ $feature_name ] ) ) {
+				if ( method_exists( $widget_class, 'getBaseID' ) ) {
+					$base_id = $widget_class::getBaseID();
+					if ( $base_id && is_active_widget( false, false, $base_id, true ) ) {
+						// enqueue after the script is registered in wp_enqueue_scripts action priority 1
+						add_action( 'wp_enqueue_scripts', array( '\Twitter\WordPress\JavaScriptLoaders\Widgets', 'enqueue' ) );
+
+						// register DNS prefetch before WordPress resource hints run at wp_head priority 2
+						add_action( 'wp_head', array( '\Twitter\WordPress\JavaScriptLoaders\Widgets', 'dnsPrefetch' ), 1 );
+
+						// only enqueue once
+						return;
+					}
+					unset( $base_id );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Load Twitter advertising JavaScript early in the page build if an ad tracker widget will be rendered
+	 *
+	 * @since 2.0.1
+	 *
+	 * @return void
+	 */
+	public static function loadTwitterAdvertisingJavaScriptWhenWidgetsActive()
+	{
+		$features = \Twitter\WordPress\Features::getEnabledFeatures();
+		if ( ! isset( $features[ \Twitter\WordPress\Features::TRACKING_PIXEL ] ) ) {
+			return;
+		}
+
+		if ( is_active_widget( false, false, \Twitter\WordPress\Widgets\Advertising\Tracking::getBaseID(), true ) ) {
+			// enqueue after the script is registered in wp_enqueue_scripts action priority 1
+			add_action( 'wp_enqueue_scripts', array( '\Twitter\WordPress\JavaScriptLoaders\Tracking', 'enqueue' ) );
+
+			// register DNS prefetch before WordPress resource hints run at wp_head priority 2
+			add_action( 'wp_head', array( '\Twitter\WordPress\JavaScriptLoaders\Tracking', 'dnsPrefetch' ), 1 );
 		}
 	}
 
@@ -162,9 +244,8 @@ class PluginLoader
 		// Twitter settings menu
 		\Twitter\WordPress\Admin\Settings\Loader::init();
 
-		if (
-			isset( $features[ \Twitter\WordPress\Features::CARDS ] ) ||
-			isset( $features[ \Twitter\WordPress\Features::TWEET_BUTTON ] )
+		if ( isset( $features[ \Twitter\WordPress\Features::CARDS ] )
+			|| isset( $features[ \Twitter\WordPress\Features::TWEET_BUTTON ] )
 		) {
 			// Edit post meta box
 			add_action( 'admin_init', array( '\Twitter\WordPress\Admin\Post\MetaBox', 'init' ) );
@@ -188,14 +269,9 @@ class PluginLoader
 		$features = \Twitter\WordPress\Features::getEnabledFeatures();
 
 		// load widgets JS if a Twitter widget is active
-		if (
-			( isset( $features[ \Twitter\WordPress\Features::FOLLOW_BUTTON ] ) && is_active_widget( false, false, \Twitter\WordPress\Widgets\Follow::BASE_ID, true ) ) ||
-			( isset( $features[ \Twitter\WordPress\Features::PERISCOPE_ON_AIR ] ) && is_active_widget( false, false, \Twitter\WordPress\Widgets\PeriscopeOnAir::BASE_ID, true ) )
-		) {
-			// enqueue after the script is registered in wp_enqueue_scripts action priority 1
-			add_action( 'wp_enqueue_scripts', array( '\Twitter\WordPress\JavaScriptLoaders\Widgets', 'enqueue' ) );
-			add_action( 'wp_head', array( '\Twitter\WordPress\JavaScriptLoaders\Widgets', 'dnsPrefetch' ) );
-		}
+		static::loadTwitterWidgetsJavaScriptWhenWidgetsActive();
+		// load advertising JS if an ad tracking widget is active
+		static::loadTwitterAdvertisingJavaScriptWhenWidgetsActive();
 
 		// do not add content filters to HTTP 404 response
 		if ( is_404() ) {
@@ -220,7 +296,7 @@ class PluginLoader
 		// possibly add Tweet button(s)
 		add_filter(
 			'the_content',
-			array( '\Twitter\WordPress\Content\TweetButton', 'contentFilter' ),
+			array( '\Twitter\WordPress\Content\Buttons\Tweet', 'contentFilter' ),
 			$twitter_content_priority
 		);
 	}
@@ -241,11 +317,14 @@ class PluginLoader
 		if ( wp_http_supports( array( 'ssl' => true ) ) ) {
 			foreach (
 				array(
-					\Twitter\WordPress\Features::EMBED_TWEET       => 'EmbeddedTweet',
-					\Twitter\WordPress\Features::EMBED_TWEET_VIDEO => 'EmbeddedTweetVideo',
-					\Twitter\WordPress\Features::EMBED_VINE        => 'Vine',
-					\Twitter\WordPress\Features::EMBED_TWEETS_GRID => 'TweetGrid',
-					\Twitter\WordPress\Features::EMBED_MOMENT      => 'Moment',
+					\Twitter\WordPress\Features::EMBED_TWEET            => 'Tweet',
+					\Twitter\WordPress\Features::EMBED_TWEET_VIDEO      => 'Tweet\\Video',
+					\Twitter\WordPress\Features::EMBED_VINE             => 'Vine',
+					\Twitter\WordPress\Features::EMBED_PROFILE          => 'Timeline\\Profile',
+					\Twitter\WordPress\Features::EMBED_LIST             => 'Timeline\\TwitterList',
+					\Twitter\WordPress\Features::EMBED_COLLECTION       => 'Timeline\\Collection',
+					\Twitter\WordPress\Features::EMBED_COLLECTION_GRID  => 'Timeline\\CollectionGrid',
+					\Twitter\WordPress\Features::EMBED_MOMENT           => 'Moment',
 				) as $feature => $shortcode_class
 			) {
 				if ( ! isset( $features[ $feature ] ) ) {
@@ -254,20 +333,21 @@ class PluginLoader
 
 				add_action(
 					'plugins_loaded',
-					array( $shortcode_namespace . $shortcode_class, 'init' ),
+					array( $shortcode_namespace . 'Embeds\\' . $shortcode_class, 'init' ),
 					5,
 					0
 				);
 			}
 		}
 
-		// initialize buttons and ad pixel if not disabled
+		// initialize buttons, search timeline, and ad pixel if not disabled
 		foreach (
 			array(
-				\Twitter\WordPress\Features::FOLLOW_BUTTON    => 'Follow',
-				\Twitter\WordPress\Features::TWEET_BUTTON     => 'Share',
-				\Twitter\WordPress\Features::PERISCOPE_ON_AIR => 'PeriscopeOnAir',
-				\Twitter\WordPress\Features::TRACKING_PIXEL   => 'Tracking',
+				\Twitter\WordPress\Features::FOLLOW_BUTTON    => 'Buttons\\Follow',
+				\Twitter\WordPress\Features::TWEET_BUTTON     => 'Buttons\\Share',
+				\Twitter\WordPress\Features::PERISCOPE_ON_AIR => 'Buttons\\Periscope\\OnAir',
+				\Twitter\WordPress\Features::EMBED_SEARCH     => 'Embeds\\Timeline\\Search',
+				\Twitter\WordPress\Features::TRACKING_PIXEL   => 'Advertising\\Tracking',
 			) as $feature => $shortcode_class
 		) {
 			if ( ! isset( $features[ $feature ] ) ) {

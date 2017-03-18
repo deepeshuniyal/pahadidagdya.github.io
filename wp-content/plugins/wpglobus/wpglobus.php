@@ -4,7 +4,7 @@
  *
  * @package   WPGlobus
  * @author    TIV.NET INC, Alex Gor (alexgff) and Gregory Karpinsky (tivnet)
- * @copyright 2015-2016 TIV.NET INC. / WPGlobus
+ * @copyright 2015-2017 TIV.NET INC. / WPGlobus
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License, version 3
  */
 
@@ -15,9 +15,9 @@
  * Description: A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!
  * Text Domain: wpglobus
  * Domain Path: /languages/
- * Version: 1.7.1
+ * Version: 1.7.9
  * Author: WPGlobus
- * Author URI: http://www.wpglobus.com/
+ * Author URI: https://wpglobus.com/
  * Network: false
  * License: GPL-3.0
  * License URI: http://www.gnu.org/licenses/gpl.txt
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPGLOBUS_VERSION', '1.7.1' );
+define( 'WPGLOBUS_VERSION', '1.7.9' );
 define( 'WPGLOBUS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
@@ -50,10 +50,7 @@ define( 'WPGLOBUS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
  *
  * @since   1.6.4
  */
-if (
-	! defined( 'DOING_AJAX' ) && ! defined( 'DOING_CRON' ) && is_admin()
-	&& is_readable( dirname( __FILE__ ) . '/vendor/bemailr/wp-requirements/wpr-loader.php' )
-) {
+if ( is_readable( dirname( __FILE__ ) . '/vendor/bemailr/wp-requirements/wpr-loader.php' ) ) {
 	require_once dirname( __FILE__ ) . '/vendor/bemailr/wp-requirements/wpr-loader.php';
 }
 
@@ -117,7 +114,7 @@ require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-customize-opt
 WPGlobus_Customize_Options::controller();
 
 // TODO remove this old updater.
-require_once dirname( __FILE__ ) . '/updater/class-wpglobus-updater.php';
+//require_once dirname( __FILE__ ) . '/updater/class-wpglobus-updater.php';
 
 /**
  * TIVWP Updater.
@@ -150,15 +147,35 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 	 */
 	require_once dirname( __FILE__ ) . '/includes/admin/helpdesk/class-wpglobus-admin-helpdesk.php';
 	WPGlobus_Admin_HelpDesk::construct();
-	
+
 	/**
 	 * Admin page central.
 	 *
 	 * @since 1.6.6
-	 */	
+	 */
 	require_once dirname( __FILE__ ) . '/includes/admin/central/class-wpglobus-admin-central.php';
 	WPGlobus_Admin_Central::construct();
 
-endif;
+	/**
+	 * WPGlobus News admin dashboard widget.
+	 * @since 1.7.7
+	 */
+	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-dashboard-news.php';
+	new WPGlobus_Dashboard_News();
 
-/*EOF*/
+	/**
+	 * WPGlobus News admin dashboard widget.
+	 * @since 1.7.8
+	 */
+	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-admin-menu.php';
+	WPGlobus_Admin_Menu::construct();
+
+	/**
+	 * Disable "Redux Blast"
+	 * @see ReduxFramework::__construct
+	 * (wpglobus/lib/ReduxCore/framework.php:416)
+	 * @since 1.7.9
+	 */
+	$GLOBALS['redux_notice_check'] = 1;
+
+endif;

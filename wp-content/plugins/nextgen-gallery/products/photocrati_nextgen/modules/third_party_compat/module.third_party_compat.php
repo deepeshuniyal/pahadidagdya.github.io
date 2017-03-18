@@ -1,7 +1,14 @@
 <?php
 class M_Third_Party_Compat extends C_Base_Module
 {
-    function define()
+    function define($id = 'pope-module',
+                    $name = 'Pope Module',
+                    $description = '',
+                    $version = '',
+                    $uri = '',
+                    $author = '',
+                    $author_uri = '',
+                    $context = FALSE)
     {
         parent::define(
             'photocrati-third_party_compat',
@@ -9,7 +16,7 @@ class M_Third_Party_Compat extends C_Base_Module
             "Adds Third party compatibility hacks, adjustments, and modifications",
             '0.6',
             'https://www.imagely.com/wordpress-gallery-plugin/nextgen-gallery/',
-            'Photocrati Media',
+            'Imagely',
             'https://www.imagely.com'
         );
 

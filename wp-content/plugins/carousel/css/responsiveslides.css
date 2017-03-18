@@ -1,0 +1,54 @@
+/*! http://responsiveslides.com v1.55 by @viljamis */
+.rslides_container {
+  float: left;
+  margin-bottom: 50px;
+  position: relative;
+  width: 100%;
+}
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+.rslides_container ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.rslides_container ul li {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.rslides_container ul li a {
+  box-shadow: none;
+  height: 10px;
+  margin-right: 5px;
+  outline: medium none;
+  width: 10px;
+}
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  }

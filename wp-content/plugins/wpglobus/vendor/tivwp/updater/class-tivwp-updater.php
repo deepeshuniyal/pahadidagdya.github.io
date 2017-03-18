@@ -22,6 +22,13 @@ class TIVWP_Updater {
 	const KEY_ERROR = 'error';
 
 	/**
+	 * Array key where additional response info is stored.
+	 *
+	 * @var string
+	 */
+	const KEY_ADDITIONAL_INFO = 'additional info';
+
+	/**
 	 * Active status.
 	 *
 	 * @var string
@@ -120,6 +127,15 @@ class TIVWP_Updater {
 	protected $slug = '';
 
 	/**
+	 * Getter for `slug`.
+	 *
+	 * @return string
+	 */
+	public function getSlug() {
+		return $this->slug;
+	}
+
+	/**
 	 * The current domain name.
 	 *
 	 * @var string
@@ -135,8 +151,27 @@ class TIVWP_Updater {
 
 		$this->_initialize_class_variables( $args );
 
+		// Note: these settings are for a specific plugin, so cannot do it at the loader.
+		$ok_to_run = true;
+
 		// Continue only if there is no version control folder.
-		if ( ! is_dir( dirname( $this->plugin_file ) . '/.git' ) ) {
+		if ( is_dir( dirname( $this->plugin_file ) . '/.git' ) ) {
+			$ok_to_run = false;
+		}
+
+		/**
+		 * Override the $ok_to_run value.
+		 * @example
+		 * <code>
+		 *    add_filter( 'tivwp-updater-ok-to-run', '__return_true' );
+		 * </code>
+		 *
+		 * @param bool          $ok_to_run The value.
+		 * @param TIVWP_Updater $this      The Updater class instance.
+		 */
+		$ok_to_run = apply_filters( 'tivwp-updater-ok-to-run', $ok_to_run, $this );
+
+		if ( $ok_to_run ) {
 			$this->_set_hooks();
 		}
 
@@ -587,10 +622,15 @@ class TIVWP_Updater {
 			'platform'    => $this->platform,
 		), $args );
 
-		return esc_url_raw(
-			add_query_arg( 'wc-api', 'am-software-api', $this->url_product ) . '&' .
-			http_build_query( $args )
-		);
+
+		$url = add_query_arg( 'wc-api', 'am-software-api', $this->url_product ) . '&' .
+		       http_build_query( $args );
+
+		if ( class_exists('TIVWP_Debug_Bar') ) {
+			TIVWP_Debug_Bar::print_link( $url );
+		}
+
+		return esc_url_raw( $url );
 	}
 
 	/**
@@ -871,6 +911,20 @@ class TIVWP_Updater {
 		$result = $this->deactivate();
 		if ( ! empty( $result[ self::KEY_ERROR ] ) ) {
 			$this->_notification_add( $result[ self::KEY_ERROR ] );
+			if ( ! empty( $result[ self::KEY_ADDITIONAL_INFO ] ) ) {
+				$this->_notification_add( $result[ self::KEY_ADDITIONAL_INFO ] );
+			}
+			/**
+			 * If the server returns status "inactive" then we assume that the
+			 * combination "instance-key-email" is not in the database.
+			 * In that case, let's set the local status as inactive.
+			 * Otherwise, all fields are disabled and the user is "stuck".
+			 * @since 1.0.7
+			 */
+			if ( isset( $result['activated'] ) && self::STATUS_INACTIVE === $result['activated'] ) {
+				$this->status = self::STATUS_INACTIVE;
+			}
+
 		} elseif ( isset( $result['deactivated'] )
 		           && $result['deactivated']
 		) {

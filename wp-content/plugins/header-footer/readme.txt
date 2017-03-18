@@ -1,8 +1,8 @@
-=== Header and Footer ===
-Tags: header, footer, blog, page, single, post, head, tracking, facebook, og meta tag, open graph, ads, adsense, injections, analytics
-Requires at least: 2.9
-Tested up to: 4.5.2
-Stable tag: 2.0.3
+=== Head, Footer and Post Injections ===
+Tags: header, footer, blog, page, single, post, head, tracking, facebook, og meta tag, open graph, ads, adsense, injections, analytics, amp, pixel
+Requires at least: 3.0
+Tested up to: 4.7.2
+Stable tag: 3.0.6
 Donate link: http://www.satollo.net/donations
 Contributors: satollo
 
@@ -16,36 +16,47 @@ remove my plugin, and it's not the case.
 
 = Head and Footer Codes =
 
-Why you have to install 10 plugins to add Google Analytics code, custom
-tracking code, Google Webmaster/Alexa/Bing/Tradedoubler verificaton code (and so on...) 
-on head of footer section of your blog pages?
+Why you have to install 10 plugins to add Google Analytics, Facebook Pixel, custom
+tracking code, Google DFP code, Google Webmaster/Alexa/Bing/Tradedoubler verification code and so on...
 
 With Header and Footer plugin you can just copy the code those services give you
-in a centralized point to manage them all.
+in a centralized point to manage them all. And theme independent: you can change your theme
+without loosing the code injected!
 
-* manage the head section code
-* manage the footer code
-* manage the facebook og:image tag
-* recognize and execute PHP code to add logic
-* few SEO options
-* mobile detection
+= Injection points and features =
+
+* in the <head> page section where most if the codes are usually added
+* just after the <body> tag as required by some JavaScript SDK (like Facebook)
+* in the page footer (just before the </body> tag)
+* recognize and execute PHP code to add logic to your injections
+* distinct desktop and mobile injections
+
+= AMP =
+
+A new AMP dedicated section compatible with [AMP plugin](https://wordpress.org/plugins/amp) lets you to inject specific codes in
+AMP pages.
 
 = Post Top and Bottom Codes =
 
 Do you need to inject a banner over the post content or after it? No problem. With Header and
 Footer you can:
 
-* Add codes on top, bottom and in the middle of posts and pages
-* Differentiate between mobile and desktop (you don't display the same ad format on both, true?)
-* Separable post and page configuration
+* Add codes on _top_, _bottom_ and in the _middle_ of posts and pages
+* Differentiate between _mobile_ and _desktop_ (you don't display the same ad format on both, true?)
+* Separate post and page configuration
 * Native PHP code enabled
-* Shortcodes enbaled
+* Shortcodes enabled
 
 = Special Injections =
 
 * Just after the opening BODY tag
 * In the middle of post content (using configurable rules)
 * Everywhere on template (using placeholders)
+
+= bbPress =
+
+The specific bbPress injections are going to be removed. Switch to my
+[Ads for bbPress](https://wordpress.org/ads-bbpress), which is more flexible and complete.
 
 = Limits =
 
@@ -61,6 +72,7 @@ Other plugins by Stefano Lissa:
 * [Comment Plus](http://www.satollo.net/plugins/comment-plus)
 * [Thumbnails](http://www.satollo.net/plugins/thumbnails)
 * [PHP Text Widget](http://www.satollo.net/plugins/php-text-widget)
+* [Ads for bbPress](http://www.satollo.net/plugins/ads-bbpress)
 
 == Installation ==
 
@@ -78,9 +90,47 @@ FAQs are answered on [Header and Footer](http://www.satollo.net/plugins/header-f
 2. Configuration panel for post content
 3. Configuration panel for Facebook "og" tags
 4. Configurable snippets of code to be recalled on other configurations (to save time)
-5. BBPress integration
 
 == Changelog ==
+
+= 3.0.6 =
+
+* Moved the donate png inside the plugin
+
+= 3.0.5 =
+
+* Debug notices fix
+
+= 3.0.4 =
+
+* Debug notices fix
+
+= 3.0.3 =
+
+* Check on content length for injections "skipping" N characters
+* Removed obsolete code
+* Removed script handlers debugger
+* Fixed notice on $post_id
+
+= 3.0.2 =
+
+* Version error (grrr)
+
+= 3.0.1 =
+
+* Fixed an error on menu
+* Added the subscription box
+* Fixed CSS and JS in admin panel
+
+= 3.0.0 =
+
+* Start adding support for amp and [amp plugin](https://wordpress.org/plugins/amp/)
+* Removed the Open Graph support (it is now so complex that it became out of scope for this plugin)
+* Add a notice to use Ads for bbPress
+* Home page only injection fix
+* Removed old code
+* Little change to the name to be more descriptive
+* Removed local codemirror and added the one from cdnjs
 
 = 2.0.2 =
 

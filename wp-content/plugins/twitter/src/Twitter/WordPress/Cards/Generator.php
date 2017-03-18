@@ -32,6 +32,7 @@ namespace Twitter\WordPress\Cards;
  */
 class Generator
 {
+
 	/**
 	 * Card types supported by the Twitter plugin for WordPress
 	 *
@@ -77,6 +78,8 @@ class Generator
 		if ( static::isSupportedCardType( $card_type ) ) {
 			return (new static::$SUPPORTED_CARDS[ $card_type ]);
 		}
+
+		return null;
 	}
 
 	/**
@@ -94,7 +97,7 @@ class Generator
 	public static function getCardObject( $query_type = null, $object_id = null, $card_type = 'summary' )
 	{
 		if ( ! static::isSupportedCardType( $card_type ) ) {
-			return;
+			return null;
 		}
 		if ( ! ( is_string( $query_type ) && $query_type ) ) {
 			$query_type = null;
@@ -115,10 +118,10 @@ class Generator
 
 		$card = static::getCardForType( $card_type );
 		if ( ! ( $card && is_a( $card, '\Twitter\Cards\Card' ) ) ) {
-			return;
+			return null;
 		}
 
-		return static::addSiteAttribution( $card, ( $query_type === 'post' ? $object_id : null ) );
+		return static::addSiteAttribution( $card, ( ('post' === $query_type) ? $object_id : null ) );
 	}
 
 	/**
@@ -129,12 +132,12 @@ class Generator
 	 * @param \Twitter\Cards\Card $card    Twitter Card object
 	 * @param int|string          $post_id WP_Post->ID or proprietary post identifier
 	 *
-	 * @return \Twitter\Cards\Card Twitter Card object
+	 * @return \Twitter\Cards\Card|null Twitter Card object or null if passed card object is invalid
 	 */
 	public static function addSiteAttribution( $card, $post_id = null )
 	{
 		if ( ! is_a( $card, '\Twitter\Cards\Card' ) ) {
-			return;
+			return null;
 		}
 		if ( ! method_exists( $card, 'setSite' ) ) {
 			return $card;
@@ -166,6 +169,8 @@ class Generator
 		} else if ( is_archive() ) {
 			return static::buildArchiveCard();
 		}
+
+		return null;
 	}
 
 	/**
@@ -180,7 +185,7 @@ class Generator
 		$query_type = 'home';
 		$card = static::getCardObject( $query_type );
 		if ( ! $card ) {
-			return;
+			return null;
 		}
 
 		/**
@@ -237,13 +242,13 @@ class Generator
 	{
 		$author = get_queried_object();
 		if ( ! ( $author && isset( $author->ID ) ) ) {
-			return;
+			return null;
 		}
 
 		$query_type = 'author';
 		$card = static::getCardObject( $query_type, $author->ID );
 		if ( ! $card ) {
-			return;
+			return null;
 		}
 
 		/** This filter is documented in ::buildHomepageCard */
@@ -284,7 +289,7 @@ class Generator
 		$query_type = 'archive';
 		$card = static::getCardObject( $query_type );
 		if ( ! $card ) {
-			return;
+			return null;
 		}
 
 		// WP 4.1+ functions
@@ -320,41 +325,41 @@ class Generator
 		$post = get_post();
 
 		if ( ! $post || ! isset( $post->ID ) ) {
-			return;
+			return null;
 		}
 		setup_postdata( $post );
 
 		// do not publish card markup for password-protected posts
 		if ( ! empty( $post->post_password ) ) {
-			return;
+			return null;
 		}
 
 		// only publish card markup for public posts
 		$post_status_object = get_post_status_object( get_post_status( $post->ID ) );
 		if ( ! ( $post_status_object && isset( $post_status_object->public ) && $post_status_object->public ) ) {
-			return;
+			return null;
 		}
 
 		// only output Twitter Card markup for public post types
 		// don't waste page generation time if the page is not meant to be consumed by TwitterBot
 		$post_type = get_post_type( $post );
 		if ( ! $post_type ) {
-			return;
+			return null;
 		}
 		$post_type_object = get_post_type_object( $post_type );
 		if ( ! ( $post_type_object && isset( $post_type_object->public ) && $post_status_object->public ) ) {
-			return;
+			return null;
 		}
 
 		$query_type = 'post';
 		$card = static::getCardObject( $query_type, $post->ID, 'summary' );
 		if ( ! $card ) {
-			return;
+			return null;
 		}
 
 		$card_class = get_class( $card );
 		if ( ! $card_class ) {
-			return;
+			return null;
 		}
 
 		// get post-specific overrides
@@ -406,7 +411,6 @@ class Generator
 		if ( defined( $card_class . '::MIN_IMAGE_WIDTH' ) && defined( $card_class . '::MIN_IMAGE_HEIGHT' ) ) {
 			if ( method_exists( $card, 'setImage' ) ) {
 				// single image card type
-
 				$cards_image_handler = new \Twitter\WordPress\Cards\ImageHandler();
 				$cards_image_handler->setLimit( 1 );
 				$cards_image_handler->setMinWidth( $card::MIN_IMAGE_WIDTH );

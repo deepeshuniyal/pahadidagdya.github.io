@@ -85,6 +85,10 @@ $table_prefix  = 'wp_';
  */
 define('WP_DEBUG', false);
 define( 'WPCF7_VALIDATE_CONFIGURATION', false );
+
+
+
+define('WP_MEMORY_LIMIT', '64M');
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */

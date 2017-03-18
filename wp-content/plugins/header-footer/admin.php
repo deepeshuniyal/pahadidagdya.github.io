@@ -12,6 +12,9 @@ function hefo_admin_init() {
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
         wp_enqueue_style('thickbox');
+        wp_enqueue_style('header-footer', plugins_url('header-footer') . '/admin.css', array(), time());
+        wp_enqueue_style('header-footer-tabs', plugins_url('header-footer') . '/lib/easytabs/tabs.css', array(), time());
+        wp_enqueue_script('header-footer-tabs', plugins_url('header-footer') . '/lib/easytabs/jquery.easytabs.min.js', array(), time());
     }
 
     if (isset($hefo_options['page_add_tags'])) {
@@ -23,19 +26,11 @@ function hefo_admin_init() {
     }
 }
 
-add_action('admin_head', 'hefo_admin_head');
-
-function hefo_admin_head() {
-//    if (isset($_GET['page']) && strpos($_GET['page'], 'header-footer/') === 0) {
-//        echo '<link type="text/css" rel="stylesheet" href="' .
-//        get_option('siteurl') . '/wp-content/plugins/header-footer/admin.css"/>';
-//    }
-}
-
 add_action('admin_menu', 'hefo_admin_menu');
 
 function hefo_admin_menu() {
     add_options_page('Header and Footer', 'Header and Footer', 'manage_options', 'header-footer/options.php');
+
 }
 
 add_action('add_meta_boxes', 'hefo_add_meta_boxes');

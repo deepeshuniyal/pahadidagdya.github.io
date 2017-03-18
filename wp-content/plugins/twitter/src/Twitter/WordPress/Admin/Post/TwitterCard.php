@@ -65,16 +65,26 @@ class TwitterCard
 	 * Used by WordPress JSON API to expose programmatic editor beyond the post meta box display used in the HTML-based admin interface
 	 *
 	 * @since 1.0.0
-	 * @uses register_meta
+	 * @uses  register_meta
 	 *
 	 * @return void
 	 */
 	public static function registerPostMeta()
 	{
+		$args = array( get_called_class(), 'sanitizeFields' );
+		if ( function_exists( 'registered_meta_key_exists' ) ) {
+			$args = array(
+				'sanitize_callback' => $args,
+				'description'       => __( 'Customize title and description shown in Twitter link previews', 'twitter' ),
+				'show_in_rest'      => true,
+				'type'              => 'array',
+				'single'            => true,
+			);
+		}
 		register_meta(
 			'post',
 			static::META_KEY,
-			array( __CLASS__, 'sanitizeFields' )
+			$args
 		);
 	}
 
@@ -86,8 +96,8 @@ class TwitterCard
 	 * @param string $post_type post type
 	 *
 	 * @return array associative array of supported fields {
-	 *   @type string field name (examples: title, description)
-	 *   @type bool exists boolean for easy key reference
+	 *   @type   string field name (examples: title, description)
+	 *   @type   bool   exists boolean for easy key reference
 	 * }
 	 */
 	public static function supportedCardFieldsByPostType( $post_type )
@@ -133,7 +143,10 @@ class TwitterCard
 		}
 
 		// separate Twitter Cards content from Intent content above
-		echo '<hr' . \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement() . '>';
+		echo '<hr';
+		// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement();
+		echo '>';
 
 		echo '<h3>' . esc_html( __( 'Twitter Card', 'twitter' ) ) . '</h3>';
 
@@ -151,7 +164,9 @@ class TwitterCard
 				echo ' placeholder="' . esc_attr( get_the_title( $post ) ) . '"';
 			}
 
-			echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement() . '></td>';
+			// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
+			echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement();
+			echo '></td>';
 			echo '</tr>';
 		}
 
@@ -162,7 +177,9 @@ class TwitterCard
 			if ( isset( $stored_values[ static::DESCRIPTION_KEY ] ) ) {
 				echo ' value="' . esc_attr( $stored_values[ static::DESCRIPTION_KEY ] ) . '"';
 			}
-			echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement() . '></td>';
+			// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
+			echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement();
+			echo '></td>';
 			echo '</tr>';
 		}
 
@@ -195,18 +212,18 @@ class TwitterCard
 		$cleaned_fields = array();
 
 		if ( isset( $fields[ static::TITLE_KEY ] ) ) {
-			$title = \Twitter\WordPress\Cards\Sanitize::sanitizePlainTextString( $fields[ static::TITLE_KEY ], /* remove breaks */ true );
+			$title = \Twitter\WordPress\Cards\Sanitize::sanitizePlainTextString( $fields[ static::TITLE_KEY ] );
 			if ( $title ) {
 				$cleaned_fields[ static::TITLE_KEY ] = $title;
 			}
-			unset($title);
+			unset( $title );
 		}
 		if ( isset( $fields[ static::DESCRIPTION_KEY ] ) ) {
-			$description = \Twitter\WordPress\Cards\Sanitize::sanitizePlainTextString( $fields[ static::DESCRIPTION_KEY ], /* remove breaks */ true );
+			$description = \Twitter\WordPress\Cards\Sanitize::sanitizePlainTextString( $fields[ static::DESCRIPTION_KEY ] );
 			if ( $description ) {
 				$cleaned_fields[ static::DESCRIPTION_KEY ] = $description;
 			}
-			unset($description);
+			unset( $description );
 		}
 
 		return $cleaned_fields;
@@ -219,7 +236,7 @@ class TwitterCard
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_Post $post WordPress post object
+	 * @param \WP_Post $post WordPress post object
 	 *
 	 * @return void
 	 */
@@ -241,7 +258,7 @@ class TwitterCard
 
 		$fields = static::sanitizeFields( $fields );
 		if ( empty( $fields ) ) {
-			delete_post_meta_by_key( static::META_KEY );
+			delete_post_meta( $post->ID, static::META_KEY );
 		} else {
 			update_post_meta( $post->ID, static::META_KEY, $fields );
 		}

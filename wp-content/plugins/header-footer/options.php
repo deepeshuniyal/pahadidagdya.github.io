@@ -31,7 +31,7 @@ function hefo_field_checkbox($name, $label = '', $tips = '', $attrs = '') {
 function hefo_base_checkbox($name, $label = '') {
     global $options;
     echo '<label>';
-    echo '<input type="checkbox" ' . $attrs . ' name="options[' . $name . ']" value="1" ' .
+    echo '<input type="checkbox" name="options[' . $name . ']" value="1" ' .
     (isset($options[$name]) ? 'checked' : '') . '>';
     echo $label;
     echo '</label>';
@@ -117,16 +117,18 @@ function hefo_field_textarea_cm($name, $label = '', $tips = '', $attrs = '') {
     echo '</td>';
 }
 
-function hefo_base_textarea_cm($name) {
+function hefo_base_textarea_cm($name, $type = '', $tips = '') {
     global $options;
 
+    if (!empty($type))
+        $type = '-' . $type;
     if (!isset($options[$name]))
         $options[$name] = '';
 
     if (is_array($options[$name]))
         $options[$name] = implode("\n", $options[$name]);
 
-    echo '<textarea class="hefo-cm" name="options[' . $name . ']" onfocus="hefo_cm_on(this)">';
+    echo '<textarea class="hefo-cm' . $type . '" name="options[' . $name . ']" onfocus="hefo_cm_on(this)">';
     echo htmlspecialchars($options[$name]);
     echo '</textarea>';
     echo '<p class="description">' . $tips . '</p>';
@@ -232,30 +234,54 @@ else {
     $options = get_option('hefo');
 }
 ?>
-<link rel="stylesheet" href="<?php echo plugins_url('header-footer') ?>/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="<?php echo plugins_url('header-footer') ?>/lib/easytabs/tabs.css">
-<link rel="stylesheet" href="<?php echo plugins_url('header-footer') ?>/admin.css">
 
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/lib/codemirror.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/xml/xml.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/css/css.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/javascript/javascript.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/clike/clike.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/codemirror/mode/php/php.js"></script>
-<script src="<?php echo plugins_url('header-footer') ?>/lib/easytabs/jquery.easytabs.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.css" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/addon/hint/show-hint.css">
+<style>
+    .CodeMirror {
+        border: 1px solid #ddd;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/xml/xml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/javascript/javascript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/css/css.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/htmlmixed/htmlmixed.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/clike/clike.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/php/php.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/addon/hint/show-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/addon/hint/css-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/addon/hint/xml-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/addon/hint/html-hint.js"></script>
+
+<script>
+    var templateEditor;
+    jQuery(document).ready(function () {
+        jQuery("textarea.hefo-cm").each(function () {
+            var cmOptions = {
+                lineNumbers: true,
+                mode: "php",
+                extraKeys: {"Ctrl-Space": "autocomplete"}
+            }
+            CodeMirror.fromTextArea(this, cmOptions);
+        });
+        jQuery("textarea.hefo-cm-css").each(function () {
+            var cmOptions = {
+                lineNumbers: true,
+                mode: "css",
+                extraKeys: {"Ctrl-Space": "autocomplete"}
+            }
+            CodeMirror.fromTextArea(this, cmOptions);
+        });
+    });
+</script>  
+
 <script>
     var hefo_cm;
 
     var hefo_tabs;
     jQuery(document).ready(function () {
-
-        jQuery("textarea.hefo-cm").each(function () {
-            CodeMirror.fromTextArea(this, {
-                lineNumbers: true,
-                mode: "php"
-            });
-        });
 
         jQuery('#upload-image').click(function () {
             tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
@@ -275,21 +301,53 @@ else {
 <div class="wrap">
     <!--https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8-->
 
-    <h2>Header and Footer</h2>
+    <h2>Head, Footer and Post Injections</h2>
 
     <?php if (!isset($dismissed['rate'])) { ?>
-        <div class="updated"><p>
+        <div class="notice notice-success"><p>
                 I never asked before and I'm curious: <a href="http://wordpress.org/extend/plugins/header-footer/" target="_blank"><strong>would you rate this plugin</strong></a>?
                 (takes only few seconds required - account on WordPress.org, every blog owner should have one...). <strong>Really appreciated, Stefano</strong>.
-                <a href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=rate&noheader=1') ?>">Dismiss</a>
+                <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=rate&noheader=1') ?>">&times;</a>
             </p>   
         </div>
     <?php } ?>
 
+    <?php if (!isset($dismissed['og'])) { ?>
+        <div class="notice notice-error"><p>
+                The Facebook open graph metatag are no more supported. Please install a specialized plugin, you can find many on wordpress.org/plugins.
+                The configuration panel is kept so you can get the original configurations.
+                <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=og&noheader=1') ?>">&times;</a>
+            </p>   
+        </div>
+    <?php } ?>
+
+    <?php if (!isset($dismissed['bbpress'])) { ?>
+        <div class="notice notice-warning"><p>
+                bbPress injections will be removed on future versions. Please use <a href="https://wordpresss.org/plugins/ads-bbpress" target="_blank">Ads for bbPress</a>
+                instead, thank you. It's mine, it's free.
+                <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=bbpress&noheader=1') ?>">&times;</a>
+            </p>   
+        </div>
+    <?php } ?>  
+    
+    <?php if (!isset($dismissed['newsletter'])) { ?>
+        <div class="notice notice-success"><p>
+                If you want to be informed of important updated of this plugin, you may want to subscribe to my (rare) newsletter<br>
+            <form action="http://www.satollo.net/?na=s" target="_blank" method="post">
+                <input type="hidden" value="header-footer" name="nr">
+                <input type="hidden" value="2" name="nl[]">
+                <input type="email" name="ne" value="<?php echo esc_attr(get_option('admin_email'))?>">
+                <input type="submit" value="Subscribe">
+            </form>
+            <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=newsletter&noheader=1') ?>">&times;</a>
+            </p>   
+        </div>
+    <?php } ?>      
+
     <div style="padding: 15px; background-color: #fff; border: 1px solid #eee; font-size: 16px; line-height: 22px">
         Did this plugin save you lot of time and troubles?    
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8" target="_blank"><img style="vertical-align: bottom" src="http://www.satollo.net/images/donate.png"></a>
-        To help children. Even <b>2$</b> helps. <a href="http://www.satollo.net/donations" target="_blank">Please read more</a>. Thank you.
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8" target="_blank"><img style="vertical-align: bottom" src="<?php echo plugins_url('header-footer')?>/images/donate.png"></a>
+        To help children. Even <b>2$</b> help. <a href="http://www.satollo.net/donations" target="_blank">Please read more</a>. Thank you.
         <br>
         Are you profitably using this free plugin for your customers? One more reason to consider a 
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8" target="_blank">donation</a>. Thank you.
@@ -297,11 +355,11 @@ else {
 
     <p>
         Other useful plugins:
-        <!--<a href="http://www.satollo.net/plugins/comment-plus?utm_source=header-footer&utm_medium=banner&utm_campaign=comment-plus" target="_blank">Comment Plus</a>,-->
         <a href="http://www.satollo.net/plugins/hyper-cache?utm_source=header-footer&utm_medium=banner&utm_campaign=hyper-cache" target="_blank">Hyper Cache</a>,
         <a href="http://www.satollo.net/plugins/include-me?utm_source=header-footer&utm_medium=banner&utm_campaign=include-me" target="_blank">Include Me</a>,
         <a href="http://www.thenewsletterplugin.com/?utm_source=header-footer&utm_medium=banner&utm_campaign=newsletter" target="_blank">Newsletter</a>,
-        <a href="http://www.thenewsletterplugin.com/?utm_source=header-footer&utm_medium=banner&utm_campaign=php-text-widget" target="_blank">PHP Text Widget</a>.
+        <a href="http://www.satollo.net/plugins/php-text-widget?utm_source=header-footer&utm_medium=link&utm_campaign=php-text-widget" target="_blank">PHP Text Widget</a>,
+        <a href="http://www.satollo.net/plugins/ads-bbpress?utm_source=header-footer&utm_medium=link&utm_campaign=ads-bbpress" target="_blank">Ads for bbPress</a>.
     </p>
 
     <p>
@@ -309,7 +367,9 @@ else {
     </p>
 
 
-    <p><?php _e('PHP is allowed on textareas below.'); ?> <?php _e('If you use bbPress, read the official page.'); ?></p>
+    <p>
+        <?php _e('PHP is allowed on textareas below.'); ?>
+    </p>
 
     <form method="post" action="">
         <?php wp_nonce_field('save') ?>
@@ -330,6 +390,7 @@ else {
                 <!--
                 <li><a href="#tabs-6a"><?php _e('Other post types', 'header-footer'); ?></a></li>
                 -->
+                <li class='tab'><a href="#tabs-amp"><?php _e('AMP', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-8"><?php _e('Advanced', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-7"><?php _e('Notes and...', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-thankyou"><?php _e('Thank you', 'header-footer'); ?></a></li>
@@ -440,8 +501,8 @@ else {
                     <!--<h3>Posts and pages</h3>-->
                     <table class="form-table">
                         <!--<tr valign="top"><?php hefo_field_checkbox('category', __('Enable injection on category pages', 'header-footer')); ?></tr>-->
-                        <tr valign="top"><?php //hefo_field_textarea('before', __('Code to be inserted before each post', 'header-footer'), '', 'rows="10"');         ?></tr>
-                        <tr valign="top"><?php //hefo_field_textarea('after', __('Code to be inserted after each post', 'header-footer'), '', 'rows="10"');         ?></tr>
+                        <tr valign="top"><?php //hefo_field_textarea('before', __('Code to be inserted before each post', 'header-footer'), '', 'rows="10"');           ?></tr>
+                        <tr valign="top"><?php //hefo_field_textarea('after', __('Code to be inserted after each post', 'header-footer'), '', 'rows="10"');           ?></tr>
                     </table>
 
                     <h3><?php _e('Injection on excerpts', 'header-footer'); ?></h3>
@@ -514,6 +575,9 @@ else {
 
 
                 <div id="tabs-4">
+                    <p>
+                        <strong>This panel is no more active. Please use a specialized plugin for Facebook Open Graph.</strong>
+                    </p>
 
                     <p>
                         <?php _e('If you use WordPress SEO or other plugin which already add the OpenGraph meta tag, leave these options disabled.') ?>
@@ -576,6 +640,67 @@ else {
                 </div>
 
 
+                <!-- AMP -->
+
+                <div id="tabs-amp">
+                    <p>
+                        You need the <a href="https://it.wordpress.org/plugins/amp/" target="_blank">AMP</a> plugin. Other AMP plugins could be supported
+                        in the near future.
+                    </p>
+
+                    <h3>&lt;head&gt; section</h3>
+                    <div class="row">
+                        <div class="col-1">
+                            <?php hefo_base_textarea_cm('amp_head'); ?>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <h3>Extra CSS</h3>
+                    <div class="row">
+                        <div class="col-1">
+                            <?php hefo_base_textarea_cm('amp_css', 'css'); ?>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <h3>Before the post content</h3>
+                    <div class="row">
+                        <div class="col-1">
+
+                            <?php hefo_base_textarea_cm('amp_post_before'); ?>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <h3>After the post content</h3>
+                    <div class="row">
+
+                        <div class="col-1">
+
+                            <?php hefo_base_textarea_cm('amp_post_after'); ?>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                    <h3>Footer</h3>
+                    <div class="row">
+
+                        <div class="col-1">
+
+                            <?php hefo_base_textarea_cm('amp_footer'); ?>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                </div>
+
+
                 <div id="tabs-5">
                     <p>
                         <?php _e('Common snippets that can be used in any header or footer area referring them as [snippet_N] where N is the snippet number
@@ -591,6 +716,9 @@ else {
                 </div>
 
                 <div id="tabs-6">
+                    <p>
+                        <strong>Please, use the new <a href="https://wordpress.org/plugins/ads-bbpress/" target="_blank">Ads for bbPress</a> plugin to inject code on bbPress pages.</strong>
+                    </p>
                     <p>
                         Injection points on bbPress default theme structure are not always clear to me, so consider this feature experimental.
                     </p>
@@ -661,11 +789,11 @@ else {
                     </p>
                 <?php $post_types = get_post_types(array('public' => true, '_builtin' => false), 'objects'); ?>
                 <?php foreach ($post_types as $post_type) { ?>
-                                                    <h3><?php echo esc_html($post_type->label) ?> (<?php echo esc_html($post_type->name) ?>)</h3>
-                                                    <table class="form-table">
-                                                    <tr><?php hefo_field_textarea($post_type->name . '_before', __('Before the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                    <tr><?php hefo_field_textarea($post_type->name . '_after', __('After the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                    </table>
+                                                            <h3><?php echo esc_html($post_type->label) ?> (<?php echo esc_html($post_type->name) ?>)</h3>
+                                                            <table class="form-table">
+                                                            <tr><?php hefo_field_textarea($post_type->name . '_before', __('Before the content', 'header-footer'), '', 'rows="10"'); ?></tr>
+                                                            <tr><?php hefo_field_textarea($post_type->name . '_after', __('After the content', 'header-footer'), '', 'rows="10"'); ?></tr>
+                                                            </table>
                 <?php } ?>
                 </div>            
                 -->
@@ -682,6 +810,7 @@ else {
                         </tr>
                     </table>
 
+                    <?php /*
                     <h3>Web performance</h3>
                     <p>
                         Some JavaScript can be marked to be loaded asynchronously, for example the comment-reply.js of WordPress.
@@ -693,6 +822,7 @@ else {
                     </p>
 
                     <table class="form-table">
+                        
                         <tr valign="top">
                             <th scope="row">
                                 Script handle debug
@@ -706,7 +836,8 @@ else {
                             ?>
                         </tr>
                     </table>
-
+                    */ ?>
+                    
                     <h3>Head meta links</h3>
                     <p>
                         WordPress automatically add some meta link on the head of the page, for example the RSS links, the previous and next

@@ -525,7 +525,7 @@ h6 {
     font-size: 1rem; } }
 
 a {
-  color: #99b897;
+  color: #AD1457;
   text-decoration: none;
   line-height: inherit;
   cursor: pointer; }
@@ -894,7 +894,7 @@ kbd {
     margin-left: 1rem; }
   .menu .active > a {
     color: #fefefe;
-    background: #99b897; }
+    background: #AD1457; }
 
 .menu-text {
   font-weight: bold;
@@ -920,7 +920,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 6px;
-    border-color: #99b897 transparent transparent;
+    border-color: #AD1457 transparent transparent;
     border-top-style: solid;
     border-bottom-width: 0;
     position: absolute;
@@ -956,7 +956,7 @@ kbd {
   width: 0;
   height: 0;
   border: inset 5px;
-  border-color: #99b897 transparent transparent;
+  border-color: #AD1457 transparent transparent;
   border-top-style: solid;
   border-bottom-width: 0;
   right: 5px;
@@ -989,7 +989,7 @@ kbd {
   width: 0;
   height: 0;
   border: inset 5px;
-  border-color: transparent #99b897 transparent transparent;
+  border-color: transparent #AD1457 transparent transparent;
   border-right-style: solid;
   border-left-width: 0; }
 
@@ -999,7 +999,7 @@ kbd {
   width: 0;
   height: 0;
   border: inset 5px;
-  border-color: transparent transparent transparent #99b897;
+  border-color: transparent transparent transparent #AD1457;
   border-left-style: solid;
   border-right-width: 0; }
 
@@ -1021,7 +1021,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: #99b897 transparent transparent;
+    border-color: #AD1457 transparent transparent;
     border-top-style: solid;
     border-bottom-width: 0;
     right: 5px;
@@ -1043,7 +1043,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent #99b897 transparent transparent;
+    border-color: transparent #AD1457 transparent transparent;
     border-right-style: solid;
     border-left-width: 0; }
   .dropdown.menu.medium-vertical > li.opens-right > a::after {
@@ -1052,7 +1052,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent transparent transparent #99b897;
+    border-color: transparent transparent transparent #AD1457;
     border-left-style: solid;
     border-right-width: 0; } }
 
@@ -1074,7 +1074,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: #99b897 transparent transparent;
+    border-color: #AD1457 transparent transparent;
     border-top-style: solid;
     border-bottom-width: 0;
     right: 5px;
@@ -1096,7 +1096,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent #99b897 transparent transparent;
+    border-color: transparent #AD1457 transparent transparent;
     border-right-style: solid;
     border-left-width: 0; }
   .dropdown.menu.large-vertical > li.opens-right > a::after {
@@ -1105,7 +1105,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent transparent transparent #99b897;
+    border-color: transparent transparent transparent #AD1457;
     border-left-style: solid;
     border-right-width: 0; } }
 
@@ -1154,7 +1154,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent #99b897 transparent transparent;
+    border-color: transparent #AD1457 transparent transparent;
     border-right-style: solid;
     border-left-width: 0; }
   .is-dropdown-submenu .is-dropdown-submenu-parent.opens-right > a::after {
@@ -1163,7 +1163,7 @@ kbd {
     width: 0;
     height: 0;
     border: inset 5px;
-    border-color: transparent transparent transparent #99b897;
+    border-color: transparent transparent transparent #AD1457;
     border-left-style: solid;
     border-right-width: 0; }
   .is-dropdown-submenu .is-dropdown-submenu {

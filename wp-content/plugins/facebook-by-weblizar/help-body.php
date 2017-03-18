@@ -535,7 +535,7 @@ if(isset($_POST['facebook-page-url']) && isset($_POST['fb-app-id'])){
 			<p><strong>Facebook Like Box Widget</strong></p>
 			<hr>
 			<p>You can use the widget to display your Facebook Like Box in any theme Widget Sections.</p>
-			<p>Simple go to your <a href="<?php echo get_site_url(); ?>/wp-admin/widgets.php"><strong>Widgets</strong></a> section and activate available <strong>"Facebook By Weblizar"</strong> widget in any sidebar section, like in left sidebar, right sidebar or footer sidebar.</p>
+			<p>Simple go to your <a href="<?php echo get_site_url(); ?>/wp-admin/widgets.php"><strong>Widgets</strong></a> section and activate available <strong>"Facebook By Weblizar"</strong> widget in any sidebar section, like in left sidebar, right sidebar or barter sidebar.</p>
 			<br><br>
 			
 			<p><strong>Facebook Like Box Shoertcode [FBW]</strong></p>

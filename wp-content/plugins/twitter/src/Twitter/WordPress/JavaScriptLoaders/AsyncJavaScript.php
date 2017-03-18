@@ -44,11 +44,42 @@ abstract class AsyncJavaScript
 	 */
 	public static function dnsPrefetch()
 	{
-		if ( ! ( defined( get_called_class() . '::FQDN' ) && static::FQDN ) ) {
+		$classname = get_called_class();
+		if ( ! ( defined( $classname . '::FQDN' ) && $classname::FQDN ) ) {
 			return;
 		}
 
-		echo '<link rel="dns-prefetch" href="//' . esc_attr( static::FQDN ) . '"' . \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement() . '>' . "\n";
+		// Output a resource hint link element at a priority later than wp_resource_hints
+		add_action( 'wp_head', array( $classname, 'printDNSPrefetchElement' ) );
+
+		// Use wp_resource_hints if available
+		add_filter( 'wp_resource_hints',
+			(static function ( $urls, $relation_type ) use ( $classname ) {
+				if ( 'dns-prefetch' === $relation_type ) {
+					$urls[] = $classname::FQDN;
+
+					// WordPress will output the resource hint link
+					remove_action( 'wp_head', array( $classname, 'printDNSPrefetchElement' ) );
+				}
+				return $urls;
+			}),
+			10,
+		2 );
+	}
+
+	/**
+	 * Proactively resolve FQDN DNS using a resource hint link
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return void
+	 */
+	public static function printDNSPrefetchElement()
+	{
+		echo '<link rel="dns-prefetch" href="//' . esc_attr( static::FQDN ) . '"';
+		// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo \Twitter\WordPress\Helpers\HTMLBuilder::closeVoidHTMLElement();
+		echo '>' . "\n";
 	}
 
 	/**
@@ -62,10 +93,12 @@ abstract class AsyncJavaScript
 	 */
 	public static function register()
 	{
+		// match global use in Core
+		// @codingStandardsIgnoreLine Squiz.PHP.GlobalKeyword.NotAllowed
 		global $wp_scripts;
 
 		$classname = get_called_class();
-		if ( ! ( defined( $classname . '::QUEUE_HANDLE' ) && static::QUEUE_HANDLE && defined( $classname . '::URI' ) && static::URI ) ) {
+		if ( ! ( defined( $classname . '::QUEUE_HANDLE' ) && $classname::QUEUE_HANDLE && defined( $classname . '::URI' ) && $classname::URI ) ) {
 			return false;
 		}
 
@@ -83,7 +116,7 @@ abstract class AsyncJavaScript
 		}
 
 		// replace standard script element with async script element
-		add_filter( 'script_loader_src', array( get_called_class(), 'asyncScriptLoaderSrc' ), 1, 2 );
+		add_filter( 'script_loader_src', array( $classname, 'asyncScriptLoaderSrc' ), 1, 2 );
 
 		if ( defined( $classname . '::SCRIPT_EXTRA' ) && is_string( static::SCRIPT_EXTRA ) && static::SCRIPT_EXTRA ) {
 			$script = static::SCRIPT_EXTRA;
@@ -171,7 +204,7 @@ abstract class AsyncJavaScript
 			return '';
 		}
 
-		if ( ! ( is_string( $handle ) && $handle === static::QUEUE_HANDLE ) ) {
+		if ( ! ( is_string( $handle ) && static::QUEUE_HANDLE === $handle ) ) {
 			return $tag;
 		}
 
@@ -187,15 +220,17 @@ abstract class AsyncJavaScript
 	 *
 	 * @param string $src    script URL
 	 * @param string $handle WordPress registered script handle
-	 * @global WP_Scripts $wp_scripts match concatenation preferences
+	 * @global \WP_Scripts $wp_scripts match concatenation preferences
 	 *
 	 * @return string empty string if our queue handle requested, else give back the src variable
 	 */
 	public static function asyncScriptLoaderSrc( $src, $handle )
 	{
+		// match global use in Core
+		// @codingStandardsIgnoreLine Squiz.PHP.GlobalKeyword.NotAllowed
 		global $wp_scripts;
 
-		if ( ! ( is_string( $handle ) && defined( get_called_class() . '::QUEUE_HANDLE' ) && $handle === static::QUEUE_HANDLE ) ) {
+		if ( ! ( is_string( $handle ) && defined( get_called_class() . '::QUEUE_HANDLE' ) && static::QUEUE_HANDLE === $handle ) ) {
 			return $src;
 		}
 
@@ -204,6 +239,8 @@ abstract class AsyncJavaScript
 		if ( isset( $wp_scripts ) && $wp_scripts->do_concat ) {
 			$wp_scripts->print_html .= $html;
 		} else {
+			// escaped when building element
+			// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
 			echo $html;
 		}
 
@@ -229,7 +266,7 @@ abstract class AsyncJavaScript
 			return '';
 		}
 
-		$script = '(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src=' . json_encode( static::URI ) . ';fjs.parentNode.insertBefore(js,fjs);}(document,"script",' . json_encode( static::QUEUE_HANDLE ) . '));';
+		$script = '(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src=' . wp_json_encode( static::URI ) . ';fjs.parentNode.insertBefore(js,fjs);}(document,"script",' . wp_json_encode( static::QUEUE_HANDLE ) . '));';
 
 		if ( $include_script_element_wrapper ) {
 			return '<script>' . $script . '</script>';

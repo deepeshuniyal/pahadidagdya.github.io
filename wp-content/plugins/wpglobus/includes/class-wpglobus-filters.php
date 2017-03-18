@@ -50,7 +50,7 @@ class WPGlobus_Filters {
 	 * @return array
 	 * @since 1.0.14
 	 */
-	public static function filter__the_posts( $posts, &$query ) {
+	public static function filter__the_posts( $posts, $query ) {
 
 		if ( $query->is_main_query() || $query->get( 'wpglobus_force_filter__the_posts' ) ) {
 			foreach ( $posts as $post ) {
@@ -115,7 +115,7 @@ class WPGlobus_Filters {
 	 * Filter @see get_the_terms
 	 * @scope admin
 	 *
-	 * @param object[]|WP_Error $terms List of attached terms, or WP_Error on failure.
+	 * @param stdClass[]|WP_Error $terms List of attached terms, or WP_Error on failure.
 	 *
 	 * @return array
 	 */
@@ -132,8 +132,10 @@ class WPGlobus_Filters {
 		 * @todo     Keep watching this
 		 */
 
-		if ( ! is_wp_error( $terms ) && WPGlobus_Utils::is_function_in_backtrace( 'single_row' ) ) {
+		if ( ! is_wp_error( $terms ) && WPGlobus_WP::is_function_in_backtrace( 'single_row' ) ) {
 
+			// Casting $terms to (array) causes syntax error in PHP 5.3 and older.
+			/* @noinspection ForeachSourceInspection */
 			foreach ( $terms as &$_term ) {
 				WPGlobus_Core::translate_term( $_term, WPGlobus::Config()->language );
 			}
@@ -199,7 +201,7 @@ class WPGlobus_Filters {
 		/**
 		 * Don't filter term names for bulk edit post from edit.php page
 		 */
-		if ( is_admin() && WPGlobus_Utils::is_function_in_backtrace( 'bulk_edit_posts' ) ) {
+		if ( is_admin() && WPGlobus_WP::is_function_in_backtrace( 'bulk_edit_posts' ) ) {
 			return $terms;
 		}
 
@@ -217,7 +219,7 @@ class WPGlobus_Filters {
 		if ( WPGlobus_WP::is_http_post_action( 'inline-save' ) &&
 		     WPGlobus_WP::is_pagenow( 'admin-ajax.php' )
 		) {
-			if ( ! WPGlobus_Utils::is_function_in_backtrace( 'single_row' ) ) {
+			if ( ! WPGlobus_WP::is_function_in_backtrace( 'single_row' ) ) {
 				return $terms;
 			}
 
@@ -236,10 +238,11 @@ class WPGlobus_Filters {
 		/**
 		 * Don't filter term name at time generate checklist categories in metabox
 		 */
-		if ( is_admin() &&
-		     WPGlobus_WP::is_pagenow( 'post.php' ) &&
-		     empty( $_POST ) &&
-		     WPGlobus_Utils::is_function_in_backtrace( 'wp_terms_checklist' )
+		if (
+			empty( $_POST ) &&
+			is_admin() &&
+			WPGlobus_WP::is_pagenow( 'post.php' ) &&
+			WPGlobus_WP::is_function_in_backtrace( 'wp_terms_checklist' )
 		) {
 			return $terms;
 		}
@@ -357,7 +360,7 @@ class WPGlobus_Filters {
 	 * @param string $taxonomy Taxonomy slug.
 	 *
 	 * @return string
-	 */	
+	 */
 	public static function filter__pre_insert_term( $term, $taxonomy  ) {
 
 		$multilingual_term = esc_sql( $term );
@@ -375,10 +378,10 @@ class WPGlobus_Filters {
 			 */
 			return '';
 		}
-		
+
 		return $term;
-	}	
-	
+	}
+
 	/**
 	 * Localize home_url
 	 * Should be processed on:
@@ -751,6 +754,8 @@ class WPGlobus_Filters {
 		$text, $num_words, $more, $original_text
 	) {
 
+		// Method argument is ignored.
+		/* @noinspection SuspiciousAssignmentsInspection */
 		$text = WPGlobus_Core::text_filter( $original_text, WPGlobus::Config()->language );
 
 		if ( null === $more ) {
@@ -918,24 +923,28 @@ class WPGlobus_Filters {
 	 * Localize feed url
 	 * @since 1.5.3
 	 *
-	 * @scope front
+	 * @scope both (RSS are shown in admin dashboard "News" widgets).
+	 *
+	 * @param SimplePie $obj
 	 */
 	public static function fetch_feed_options( $obj ) {
 
+		$need_to_localize = true;
 		/**
 		 * Filter to disable localize feed url.
 		 * @since 1.5.3
 		 *
-		 * @param boolean			True is value by default.
-		 * @param SimplePie object  $obj.
-		 * @return boolean
+		 * @param bool      $need_to_localize True is value by default.
+		 * @param SimplePie $obj The feed object.
+		 *
+		 * @return bool
 		 */
-		if ( apply_filters( 'wpglobus_localize_feed_url', true, $obj ) ) {
-			if ( ! empty( $obj->feed_url ) ) {
-				$obj->feed_url = WPGlobus_Utils::localize_url( $obj->feed_url );
-			}
+		$need_to_localize = apply_filters( 'wpglobus_localize_feed_url', $need_to_localize, $obj );
 
+		if ( ! empty( $obj->feed_url ) && $need_to_localize ) {
+			$obj->feed_url = WPGlobus_Utils::localize_url( $obj->feed_url );
 		}
+
 	}
 
 	/**

@@ -41,7 +41,7 @@ class WidgetsMetaElements
 	 */
 	public static function getWidgetOptions()
 	{
-		return get_option( \Twitter\WordPress\Admin\Settings\Theme::OPTION_NAME );
+		return get_option( \Twitter\WordPress\Admin\Settings\Embeds\Theme::OPTION_NAME );
 	}
 
 	/**
@@ -157,8 +157,7 @@ class WidgetsMetaElements
 	public static function outputMetaElements()
 	{
 		// escaped in markup builder
-		// @codingStandardsIgnoreStart WordPress.XSS.EscapeOutput
+		// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
 		echo static::buildMetaElements();
-		// @codingStandardsIgnoreEnd WordPress.XSS.EscapeOutput
 	}
 }

@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) )
+
+	die("Can't load this file directly");	
+ ?>
+ 
 <div class="wrap">
 	<h2 class="tpcarousel-admin-htwo">Upgrade Pro</h2>
 	<div class="postbox tpcarousel-admin-extra">
@@ -28,5 +34,4 @@
 		<p><a target="_blank" href="http://themepoints.com/product/carousel-shortcode-pro/" class="button button-primary">Upgrade to Pro Version</a></p>
 	</div>
 </div>
-
 

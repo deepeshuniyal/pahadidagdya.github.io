@@ -116,19 +116,19 @@
   position: relative;
   padding: 15px;
 }
-.modal-footer {
+.modal-barter {
   padding: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
 }
-.modal-footer .btn + .btn {
+.modal-barter .btn + .btn {
   margin-left: 5px;
   margin-bottom: 0;
 }
-.modal-footer .btn-group .btn + .btn {
+.modal-barter .btn-group .btn + .btn {
   margin-left: -1px;
 }
-.modal-footer .btn-block + .btn-block {
+.modal-barter .btn-block + .btn-block {
   margin-left: 0;
 }
 .modal-scrollbar-measure {

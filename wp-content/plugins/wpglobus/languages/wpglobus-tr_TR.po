@@ -1,13 +1,13 @@
-# Copyright (C) 2016 WPGlobus
+# Copyright (C) 2017 WPGlobus
 # This file is distributed under the GPL-3.0.
 # Translators:
 # BORAHAN CONKEROGLU <boracon@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: WPGlobus Multilingual\n"
-"Report-Msgid-Bugs-To: http://www.wpglobus.com/pg/contact-us/\n"
-"POT-Creation-Date: 2016-12-06 14:19:36+00:00\n"
-"PO-Revision-Date: 2016-09-11 16:42+0000\n"
+"Report-Msgid-Bugs-To: https://wpglobus.com/pg/contact-us/\n"
+"POT-Creation-Date: 2017-03-11 14:53:57+00:00\n"
+"PO-Revision-Date: 2017-03-11 14:18+0000\n"
 "Last-Translator: Gregory Karpinsky <gregory@tiv.net>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/wp-translations/"
 "wpglobus-multilingual/language/tr_TR/)\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-Bookmarks: \n"
-"X-Poedit-Country: United States\n"
 "X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
 "_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
 "esc_html_x:1,2c;\n"
@@ -39,13 +38,13 @@ msgstr "Rehber"
 msgid "WPGlobus Help Desk"
 msgstr ""
 
-#: includes/admin/central/class-wpglobus-admin-central.php:164
+#: includes/admin/central/class-wpglobus-admin-central.php:157
 #: includes/admin/class-wpglobus-about.php:36
+#: includes/admin/class-wpglobus-admin-menu.php:28
 #: includes/admin/class-wpglobus-clean.php:602
-#: includes/admin/class-wpglobus-customize-options.php:991
-#: includes/admin/class-wpglobus-customize-options.php:1023
+#: includes/admin/class-wpglobus-customize-options.php:999
+#: includes/admin/class-wpglobus-customize-options.php:1031
 #: includes/admin/helpdesk/wpglobus-admin-helpdesk-page.php:31
-#: includes/options/class-wpglobus-options.php:492
 msgid "Add-ons"
 msgstr "Eklentiler"
 
@@ -56,7 +55,7 @@ msgstr "Hızlı Başlangıç"
 #: includes/admin/class-wpglobus-about.php:48
 #: includes/admin/helpdesk/wpglobus-admin-helpdesk-page.php:43
 msgid "FAQ"
-msgstr ""
+msgstr "S.S.S."
 
 #: includes/admin/class-wpglobus-about.php:59
 msgid ""
@@ -72,7 +71,6 @@ msgid ""
 msgstr ""
 
 #: includes/admin/class-wpglobus-about.php:87
-#: includes/admin/class-wpglobus-addons.php:93
 msgid "Go to WPGlobus Settings"
 msgstr "WPGlobus Ayarlarına gidin"
 
@@ -179,8 +177,8 @@ msgstr ""
 "durumdalarsa, size özel kod yazmaları için %s WPGlobus Takımı' nı kiralamayı "
 "%s düşünebilirsiniz.  "
 
-#: includes/admin/class-wpglobus-addons.php:50
-msgid "WPGlobus Add-ons / Extensions"
+#: includes/admin/class-wpglobus-admin-menu.php:29
+msgid "View free and premium WPGlobus extensions"
 msgstr "WPGlobus Eklentileri / Uzantıları"
 
 #: includes/admin/class-wpglobus-admin-page.php:32
@@ -300,104 +298,104 @@ msgstr ""
 msgid "WPGlobus"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:544
+#: includes/admin/class-wpglobus-customize-options.php:552
 msgid ""
 "You need to update WordPress to 4.5 or later to get Fields Settings section"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:550
+#: includes/admin/class-wpglobus-customize-options.php:558
 msgid "Fields Settings"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:595
+#: includes/admin/class-wpglobus-customize-options.php:603
 msgid "WPGlobus Settings"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:631
+#: includes/admin/class-wpglobus-customize-options.php:639
 #: includes/options/class-wpglobus-options.php:325
 msgid "Languages"
 msgstr "Diller"
 
-#: includes/admin/class-wpglobus-customize-options.php:649
+#: includes/admin/class-wpglobus-customize-options.php:657
 #: includes/options/class-wpglobus-options.php:340
 msgid "Enabled Languages"
 msgstr "Etkinleştirilmiş Diller"
 
-#: includes/admin/class-wpglobus-customize-options.php:651
+#: includes/admin/class-wpglobus-customize-options.php:659
 #: includes/options/class-wpglobus-options.php:342
 msgid "These languages are currently enabled on your site."
 msgstr "Bu diller şu anda sitenizde etkindir."
 
-#: includes/admin/class-wpglobus-customize-options.php:678
+#: includes/admin/class-wpglobus-customize-options.php:686
 msgid ""
 "Choose a language you would like to enable. <br>Press the [Save & Publish] "
 "button to confirm."
 msgstr ""
 
 #. translators: %1$s and %2$s - placeholders to insert HTML link around 'here'
-#: includes/admin/class-wpglobus-customize-options.php:682
+#: includes/admin/class-wpglobus-customize-options.php:690
 #: includes/options/class-wpglobus-options.php:320
 msgid "or Add new Language %1$s here %2$s"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:694
+#: includes/admin/class-wpglobus-customize-options.php:702
 #: includes/options/class-wpglobus-options.php:350
 msgid "Add Languages"
 msgstr "Dil Ekleyin"
 
-#: includes/admin/class-wpglobus-customize-options.php:712
+#: includes/admin/class-wpglobus-customize-options.php:720
 #: includes/options/class-wpglobus-options.php:360
 msgid "Language Selector Mode"
 msgstr "Dil Değiştirici Biçimi"
 
-#: includes/admin/class-wpglobus-customize-options.php:717
+#: includes/admin/class-wpglobus-customize-options.php:725
 #: includes/options/class-wpglobus-options.php:369
 msgid "Two-letter Code with flag (en, ru, it, etc.)"
 msgstr "İki harfli Kod, bayrakla birlikte (tr, en, ru, it, vb)"
 
-#: includes/admin/class-wpglobus-customize-options.php:718
+#: includes/admin/class-wpglobus-customize-options.php:726
 #: includes/options/class-wpglobus-options.php:370
 msgid "Full Name (English, Russian, Italian, etc.)"
 msgstr "Tam İsim (Türkçe, English, vb)"
 
-#: includes/admin/class-wpglobus-customize-options.php:720
+#: includes/admin/class-wpglobus-customize-options.php:728
 #: includes/options/class-wpglobus-options.php:372
 msgid "Full Name with flag (English, Russian, Italian, etc.)"
 msgstr "Tam İsim, bayrakla birlikte (Türkçe, English, vb)"
 
-#: includes/admin/class-wpglobus-customize-options.php:721
+#: includes/admin/class-wpglobus-customize-options.php:729
 #: includes/options/class-wpglobus-options.php:373
 msgid "Flags only"
 msgstr "Sadece bayraklar"
 
-#: includes/admin/class-wpglobus-customize-options.php:723
+#: includes/admin/class-wpglobus-customize-options.php:731
 #: includes/options/class-wpglobus-options.php:363
 msgid ""
 "Choose the way language name and country flag are shown in the drop-down menu"
 msgstr "Açılan menüden dil adı ve bayrağın gösterilme şeklini seçin."
 
-#: includes/admin/class-wpglobus-customize-options.php:760
-#: includes/admin/class-wpglobus-customize-options.php:787
+#: includes/admin/class-wpglobus-customize-options.php:768
+#: includes/admin/class-wpglobus-customize-options.php:795
 #: includes/options/class-wpglobus-options.php:381
 msgid "Language Selector Menu"
 msgstr "Dil Seçimi Menüsü"
 
-#: includes/admin/class-wpglobus-customize-options.php:770
+#: includes/admin/class-wpglobus-customize-options.php:778
 msgid "No menus have been created yet. Create some."
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:771
-#: includes/admin/class-wpglobus-customize-options.php:792
+#: includes/admin/class-wpglobus-customize-options.php:779
+#: includes/admin/class-wpglobus-customize-options.php:800
 #: includes/options/class-wpglobus-options.php:384
 msgid "Choose the navigation menu where the language selector will be shown"
 msgstr "Dil değiştiricinin gösterileceği gezinti menüsünü seçin"
 
-#: includes/admin/class-wpglobus-customize-options.php:810
+#: includes/admin/class-wpglobus-customize-options.php:818
 #: includes/options/class-wpglobus-options.php:395
 msgid "\"All Pages\" menus Language selector"
 msgstr "\"Bütün Sayfalar\" menüleri Dil Değiştiricisi"
 
-#: includes/admin/class-wpglobus-customize-options.php:813
+#: includes/admin/class-wpglobus-customize-options.php:821
 #: includes/options/class-wpglobus-options.php:397
 msgid ""
 "Adds language selector to the menus that automatically list all existing "
@@ -406,12 +404,12 @@ msgstr ""
 "Dil seçiciyi otomatik olarak bütün mevcut sayfaları listeleyen menülere "
 "ekler (`wp_list_pages`i kullanarak)."
 
-#: includes/admin/class-wpglobus-customize-options.php:828
+#: includes/admin/class-wpglobus-customize-options.php:836
 #: includes/options/class-wpglobus-options.php:407
 msgid "Custom CSS"
 msgstr "Özel CSS"
 
-#: includes/admin/class-wpglobus-customize-options.php:832
+#: includes/admin/class-wpglobus-customize-options.php:840
 #: includes/options/class-wpglobus-options.php:411
 msgid ""
 "Here you can enter the CSS rules to adjust the language selector menu for "
@@ -420,45 +418,45 @@ msgstr ""
 "Burada temanızın dil seçimi menüsünü ayarlamak için CSS kuralları "
 "girebilirsiniz. `style-samples.css` dosyasındaki örneklere bakın."
 
-#: includes/admin/class-wpglobus-customize-options.php:849
-#: includes/options/class-wpglobus-options.php:481
+#: includes/admin/class-wpglobus-customize-options.php:857
+#: includes/options/class-wpglobus-options.php:493
 msgid "Post types"
 msgstr "Yazı tipleri"
 
-#: includes/admin/class-wpglobus-customize-options.php:955
-#: includes/options/class-wpglobus-options.php:451
+#: includes/admin/class-wpglobus-customize-options.php:963
+#: includes/options/class-wpglobus-options.php:463
 msgid "Uncheck to disable WPGlobus"
 msgstr "WPGlobus' u etkisizleştirmek için onay işaretini kaldırın"
 
-#: includes/admin/class-wpglobus-customize-options.php:1006
+#: includes/admin/class-wpglobus-customize-options.php:1014
 msgid "Title"
 msgstr "Başlık"
 
-#: includes/admin/class-wpglobus-customize-options.php:1007
+#: includes/admin/class-wpglobus-customize-options.php:1015
 msgid "Label"
 msgstr "Etiket"
 
-#: includes/admin/class-wpglobus-customize-options.php:1011
+#: includes/admin/class-wpglobus-customize-options.php:1019
 msgid "Description"
 msgstr "Tanım"
 
-#: includes/admin/class-wpglobus-customize-options.php:1075
+#: includes/admin/class-wpglobus-customize-options.php:1083
 msgid ""
 "Here you can specify which fields should be considered multilingual by "
 "WPGlobus. To exclude a field, uncheck it and then press the button below."
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:1081
+#: includes/admin/class-wpglobus-customize-options.php:1089
 #: includes/options/class-wpglobus-options.php:170
 msgid "Thank you for installing WPGlobus!"
 msgstr "WPGlobus' u kurduğunuz için teşekkür ederiz."
 
-#: includes/admin/class-wpglobus-customize-options.php:1085
+#: includes/admin/class-wpglobus-customize-options.php:1093
 #: includes/options/class-wpglobus-options.php:175
 msgid "Read About WPGlobus"
 msgstr "WPGlobus Hakkında'yı Okuyun"
 
-#: includes/admin/class-wpglobus-customize-options.php:1088
+#: includes/admin/class-wpglobus-customize-options.php:1096
 #: includes/options/class-wpglobus-options.php:178
 msgid ""
 "Click the <strong>[Languages]</strong> tab at the left to setup the options."
@@ -466,7 +464,7 @@ msgstr ""
 "Seçenekleri ayarlamak için sol tarafta bulunan <strong>[Diller]</strong> "
 "sekmesine tıklayın."
 
-#: includes/admin/class-wpglobus-customize-options.php:1093
+#: includes/admin/class-wpglobus-customize-options.php:1101
 #: includes/options/class-wpglobus-options.php:183
 msgid ""
 "Should you have any questions or comments, please do not hesitate to contact "
@@ -474,13 +472,13 @@ msgid ""
 msgstr ""
 "Sorularınız veya yorumlarınız olursa, lütfen bizi aramakta tereddüt etmeyin."
 
-#: includes/admin/class-wpglobus-customize-options.php:1097
+#: includes/admin/class-wpglobus-customize-options.php:1105
 #: includes/admin/helpdesk/wpglobus-admin-helpdesk-page.php:69
 #: includes/options/class-wpglobus-options.php:187
 msgid "Sincerely Yours,"
 msgstr "Saygılarımızla,"
 
-#: includes/admin/class-wpglobus-customize-options.php:1099
+#: includes/admin/class-wpglobus-customize-options.php:1107
 #: includes/admin/helpdesk/wpglobus-admin-helpdesk-page.php:70
 #: includes/options/class-wpglobus-options.php:189
 #: includes/options/wpglobus-options-header.php:29
@@ -488,14 +486,14 @@ msgid "The WPGlobus Team"
 msgstr "WPGlobus Takımı"
 
 #. translators: %?$s: HTML codes for hyperlink. Do not remove.
-#: includes/admin/class-wpglobus-customize-options.php:1118
+#: includes/admin/class-wpglobus-customize-options.php:1126
 #: includes/options/class-wpglobus-options.php:214
 msgid ""
 "We would hate to see you go. If something goes wrong, do not uninstall "
 "WPGlobus yet. Please %1$stalk to us%2$s and let us help!"
 msgstr ""
 
-#: includes/admin/class-wpglobus-customize-options.php:1125
+#: includes/admin/class-wpglobus-customize-options.php:1133
 #: includes/options/class-wpglobus-options.php:221
 msgid ""
 "Please note that if you deactivate WPGlobus, your site will show all the "
@@ -504,7 +502,7 @@ msgid ""
 msgstr ""
 
 #. translators: %s: link to the Clean-up Tool
-#: includes/admin/class-wpglobus-customize-options.php:1129
+#: includes/admin/class-wpglobus-customize-options.php:1137
 #: includes/options/class-wpglobus-options.php:225
 msgid ""
 "If there are just a few places, you should edit them manually. To "
@@ -514,19 +512,24 @@ msgid ""
 msgstr ""
 
 #. translators: %?$s: HTML codes for hyperlink. Do not remove.
-#: includes/admin/class-wpglobus-customize-options.php:1131
+#: includes/admin/class-wpglobus-customize-options.php:1139
 #: includes/options/class-wpglobus-options.php:227
 msgid "%1$sClean-up Tool%2$s"
 msgstr ""
 
 #. translators: %s: name of current theme
-#: includes/admin/class-wpglobus-customize-options.php:1142
+#: includes/admin/class-wpglobus-customize-options.php:1150
 msgid "Sorry, WPGlobus customizer doesn't support current theme %s."
 msgstr ""
 
 #. translators: %?$s: HTML codes for hyperlink. Do not remove.
-#: includes/admin/class-wpglobus-customize-options.php:1147
+#: includes/admin/class-wpglobus-customize-options.php:1155
 msgid "Please use %1$sWPGlobus options page%2$s instead."
+msgstr ""
+
+#: includes/admin/class-wpglobus-dashboard-news.php:43
+#: includes/admin/class-wpglobus-dashboard-news.php:59
+msgid "WPGlobus News"
 msgstr ""
 
 #: includes/admin/class-wpglobus-language-edit.php:146
@@ -624,19 +627,19 @@ msgstr "Değişiklikleri Kaydet"
 msgid "Back to the WPGlobus Settings"
 msgstr "WPGlobus Ayarları' na Geri Dön"
 
-#: includes/admin/class-wpglobus-plugin-install.php:297
+#: includes/admin/class-wpglobus-plugin-install.php:306
 msgid "Current Version"
 msgstr "Geçerli Sürüm"
 
-#: includes/admin/class-wpglobus-plugin-install.php:298
+#: includes/admin/class-wpglobus-plugin-install.php:307
 msgid "Get it now!"
 msgstr ""
 
-#: includes/admin/class-wpglobus-plugin-install.php:299
+#: includes/admin/class-wpglobus-plugin-install.php:308
 msgid "Premium add-on"
 msgstr ""
 
-#: includes/admin/class-wpglobus-plugin-install.php:300
+#: includes/admin/class-wpglobus-plugin-install.php:309
 #: includes/options/fields/table/table-languages.php:396
 msgid "Installed"
 msgstr "Yüklü"
@@ -736,20 +739,20 @@ msgstr "Açılan menü, bayraklı"
 msgid "Selector type"
 msgstr "Değiştirici tipi"
 
-#: includes/class-wpglobus.php:1033
+#: includes/class-wpglobus.php:1047
 msgid "You cannot disable the main language."
 msgstr "Asıl dili etkisizleştiremezsiniz."
 
-#: includes/class-wpglobus.php:1235
+#: includes/class-wpglobus.php:1249
 msgid "*) Available after the menu is saved."
 msgstr "*) Menü kaydedildikten sonra kullanılabilir."
 
-#: includes/class-wpglobus.php:3213
+#: includes/class-wpglobus.php:3212
 msgid "You must enable Pretty Permalinks to use WPGlobus."
 msgstr ""
 "WPGlobus' u kullanabilmek için Pretty Permalinks' i etkinleştirmelisiniz."
 
-#: includes/class-wpglobus.php:3215
+#: includes/class-wpglobus.php:3214
 msgid ""
 "Please go to Settings > Permalinks > Common Settings and choose a non-"
 "default option."
@@ -757,7 +760,7 @@ msgstr ""
 "Varsayılan olmayan bir seçeneği seçmek için lütfen Ayarlar>Kalıcı "
 "Bağlantılar>Genel Ayarlar' a gidin."
 
-#: includes/class-wpglobus.php:3354
+#: includes/class-wpglobus.php:3355
 msgid "Add"
 msgstr "Ekle"
 
@@ -840,7 +843,7 @@ msgid "Instructions:"
 msgstr "Yönergeler:"
 
 #: includes/options/class-wpglobus-options.php:332
-#: includes/options/class-wpglobus-options.php:431
+#: includes/options/class-wpglobus-options.php:443
 msgid "NOTE: you cannot remove the main language."
 msgstr "NOT: Asıl dili kaldıramazsınız."
 
@@ -860,43 +863,51 @@ msgstr "Etkinleştir"
 msgid "(Optional)"
 msgstr "(İsteğe bağlı)"
 
+#: includes/options/class-wpglobus-options.php:419
+msgid "Custom JS Code"
+msgstr ""
+
 #: includes/options/class-wpglobus-options.php:424
+msgid "(Paste your JS code here.)"
+msgstr ""
+
+#: includes/options/class-wpglobus-options.php:436
 msgid "Languages table"
 msgstr "Diller tablosu"
 
-#: includes/options/class-wpglobus-options.php:430
+#: includes/options/class-wpglobus-options.php:442
 msgid "Use this table to add, edit or delete languages."
 msgstr "Dil eklemek, düzenlemek veya silmek için bu tabloyu kullanın."
 
-#: includes/options/class-wpglobus-options.php:639
+#: includes/options/class-wpglobus-options.php:640
 msgid "Read the Quick Start Guide"
 msgstr "Hızlı Başlangıç Rehberini Okuyun"
 
-#: includes/options/class-wpglobus-options.php:644
+#: includes/options/class-wpglobus-options.php:645
 msgid "Visit our website"
 msgstr "Web sitemizi ziyaret edin"
 
-#: includes/options/class-wpglobus-options.php:649
+#: includes/options/class-wpglobus-options.php:650
 msgid "Buy WooCommerce WPGlobus extension"
 msgstr "WooCommerce WPGlobus eklentisini Satınalın"
 
-#: includes/options/class-wpglobus-options.php:654
+#: includes/options/class-wpglobus-options.php:655
 msgid "Collaborate on GitHub"
 msgstr "GitHub' da işbirliği yapın"
 
-#: includes/options/class-wpglobus-options.php:660
+#: includes/options/class-wpglobus-options.php:661
 msgid "Like us on Facebook"
 msgstr "Bizi Facebook' ta Beğenin"
 
-#: includes/options/class-wpglobus-options.php:665
+#: includes/options/class-wpglobus-options.php:666
 msgid "Follow us on Twitter"
 msgstr "Bizi Twitter' da takip edin"
 
-#: includes/options/class-wpglobus-options.php:670
+#: includes/options/class-wpglobus-options.php:671
 msgid "Find us on LinkedIn"
 msgstr "Bizi LinkedIn' de bulun"
 
-#: includes/options/class-wpglobus-options.php:675
+#: includes/options/class-wpglobus-options.php:676
 msgid "Circle us on Google+"
 msgstr "Bizi Google+' da daire içine alın."
 
@@ -1155,5 +1166,5 @@ msgstr ""
 "Menüler, parçacıklar ve hatta özel alanlar - birçok dilde!"
 
 #. Author URI of the plugin/theme
-msgid "http://www.wpglobus.com/"
+msgid "https://wpglobus.com/"
 msgstr ""

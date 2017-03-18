@@ -306,7 +306,7 @@ class WPGlobus_Options {
 		$desc_languages_intro = implode( '', array(
 			'<ul style="list-style: disc; list-style-position: inside;">',
 			// translators: %s placeholder for the icon (actual picture)
-			'<li>' . sprintf( __( 'Place the <strong>main language</strong> of your site at the top of the list by dragging the %s icons.', 'wpglobus' ), '<i class="el el-move icon-large"></i>' ) . '</li>',
+			'<li>' . sprintf( __( 'Place the <strong>main language</strong> of your site at the top of the list by dragging the %s icons.', 'wpglobus' ), '<i class="dashicons dashicons-move"></i>' ) . '</li>',
 			'<li>' . __( '<strong>Uncheck</strong> the languages you do not plan to use.', 'wpglobus' ) . '</li>',
 			'<li>' . __( '<strong>Add</strong> more languages using the section below.', 'wpglobus' ) . '</li>',
 			'<li>' . __( 'When done, click the [Save Changes] button.', 'wpglobus' ) . '</li>',
@@ -412,6 +412,18 @@ class WPGlobus_Options {
 					'subtitle' => __( '(Optional)', 'wpglobus' ),
 					'default'  => '',
 					'rows'     => 15
+				),
+				array(
+					'id'       => 'js_editor',
+					'type'     => 'wpglobus_ace_editor',
+					'title'    => __( 'Custom JS Code', 'wpglobus' ),
+					'mode'     => 'javascript',
+					'theme'    => 'chrome',
+					'compiler' => 'false',
+					'desc'     => __( '', 'wpglobus' ),
+					'subtitle' => __( '(Paste your JS code here.)', 'wpglobus' ),
+					'default'  => '',
+					'rows'     => 15
 				)
 			)
 		);
@@ -457,7 +469,7 @@ class WPGlobus_Options {
 		$default         = array();
 		$open_post_types = array();
 		foreach ( $post_types as $post_type ) {
-			if ( ! in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ), true ) ) {
+			if ( ! in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset' ), true ) ) {
 				$open_post_types[ $post_type ] = $post_type;
 				$default[ $post_type ]         = true;
 			}
@@ -481,17 +493,6 @@ class WPGlobus_Options {
 			'title'       => __( 'Post types', 'wpglobus' ),
 			'icon'        => 'el-icon-th-list',
 			'fields'      => $fields
-		);
-
-		/**
-		 * SECTION: Add-ons
-		 * We need add it for menu item only
-		 */
-		$this->sections[] = array(
-			'wpglobus_id' => 'add_ons',
-			'title'       => __( 'Add-ons', 'wpglobus' ),
-			'icon'        => 'el-icon-th-list',
-			'class'       => 'wpglobus-addons-group hidden'
 		);
 
 		/**
@@ -635,17 +636,17 @@ class WPGlobus_Options {
 		$ga_campaign = '?utm_source=wpglobus-options-socials&utm_medium=link&utm_campaign=options-panel';
 
 		$this->args['share_icons'][] = array(
-			'url'   => 'http://www.wpglobus.com/quick-start/' . $ga_campaign,
+			'url'   => WPGlobus::URL_WPGLOBUS_SITE . 'quick-start/' . $ga_campaign,
 			'title' => esc_html__( 'Read the Quick Start Guide', 'wpglobus' ),
 			'icon'  => 'el el-question-sign'
 		);
 		$this->args['share_icons'][] = array(
-			'url'   => 'http://www.wpglobus.com/' . $ga_campaign,
+			'url'   => WPGlobus::URL_WPGLOBUS_SITE . $ga_campaign,
 			'title' => esc_html__( 'Visit our website', 'wpglobus' ),
 			'icon'  => 'el el-globe'
 		);
 		$this->args['share_icons'][] = array(
-			'url'   => 'http://www.wpglobus.com/shop/extensions/woocommerce-wpglobus/' . $ga_campaign,
+			'url'   => WPGlobus::URL_WPGLOBUS_SITE . 'product/woocommerce-wpglobus/' . $ga_campaign,
 			'title' => esc_html__( 'Buy WooCommerce WPGlobus extension', 'wpglobus' ),
 			'icon'  => 'el el-icon-shopping-cart'
 		);

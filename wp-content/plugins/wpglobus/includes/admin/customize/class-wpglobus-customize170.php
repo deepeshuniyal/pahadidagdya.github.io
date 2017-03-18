@@ -170,6 +170,15 @@ if ( ! class_exists( 'WPGlobus_Customize' ) ) :
 			$disabled_setting_mask[] = 'vimeo';
 			/** since 1.6.0 */
 			$disabled_setting_mask[] = 'yelp';
+			
+			/** 
+			 * Exclude fields from Static Front Page section.
+			 * It may be added to customizer in many themes.
+			 * 
+			 * @since 1.7.6 
+			 */
+			$disabled_setting_mask[] = 'page_on_front';
+			$disabled_setting_mask[] = 'page_for_posts';
 
 			/**
 			 * Filter to disable fields in customizer.
@@ -252,6 +261,14 @@ if ( ! class_exists( 'WPGlobus_Customize' ) ) :
 									'<span class="wpglobus-globe"></span>'
 								);
 
+			/**
+			 * Since 1.7.9
+			 */
+			$changeset_uuid = null;
+			if ( ! empty( $_GET['changeset_uuid'] ) ) {
+				$changeset_uuid = $_GET['changeset_uuid'];
+			}
+			
 			wp_enqueue_script(
 				'wpglobus-customize-control170',
 				WPGlobus::$PLUGIN_DIR_URL . 'includes/js/wpglobus-customize-control170' . WPGlobus::SCRIPT_SUFFIX() . '.js',
@@ -271,6 +288,7 @@ if ( ! class_exists( 'WPGlobus_Customize' ) ) :
 					'setLinkBy'				=> $set_link_by,
 					'disabledSections'		=> $disabled_sections,
 					'controlClass'			=> 'wpglobus-customize-control',
+					'changeset_uuid'		=> $changeset_uuid
 				)
 			);
 

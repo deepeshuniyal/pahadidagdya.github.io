@@ -14,7 +14,7 @@ class WPGlobus {
 	const LOCALE_TAG_OPEN = '{:';
 	const LOCALE_TAG_CLOSE = '}';
 
-	const URL_WPGLOBUS_SITE = 'http://www.wpglobus.com/';
+	const URL_WPGLOBUS_SITE = 'https://wpglobus.com/';
 
 	/**
 	 * @var string
@@ -35,11 +35,6 @@ class WPGlobus {
 	 * WPGlobus about page
 	 */
 	const PAGE_WPGLOBUS_ABOUT = 'wpglobus-about';
-
-	/**
-	 * WPGlobus addons page
-	 */
-	const PAGE_WPGLOBUS_ADDONS = 'wpglobus-addons';
 
 	/**
 	 * WPGlobus clean page
@@ -174,11 +169,12 @@ class WPGlobus {
 		 */
 		$this->vendors_scripts['ACF']    = false;
 		$this->vendors_scripts['ACFPRO'] = false;
-		/** Set to true in @see WPGlobus_WPSEO::controller */
-		$this->vendors_scripts['WPSEO']       = false;
-		$this->vendors_scripts['WOOCOMMERCE'] = false;
-		$this->vendors_scripts['AIOSEOP']     = false; // All In One SEO Pack
-		$this->vendors_scripts['WPCF7']       = false; // Contact Form 7
+		/** Set to true in @see WPGlobus_WPSEO::controller or WPGlobus_YoastSEO::controller */
+		$this->vendors_scripts['WPSEO']       	= false;
+		$this->vendors_scripts['WPSEO_PREMIUM'] = false;
+		$this->vendors_scripts['WOOCOMMERCE']	= false;
+		$this->vendors_scripts['AIOSEOP']     	= false; // All In One SEO Pack
+		$this->vendors_scripts['WPCF7']       	= false; // Contact Form 7
 
 		if ( function_exists( 'acf' ) ) {
 
@@ -430,6 +426,20 @@ class WPGlobus {
 
 				}
 
+				/**
+				 * Add multilingual Caption, Alternative Text, Description to media files.
+				 * @since 1.7.3
+				 */
+				if ( version_compare( $GLOBALS['wp_version'], '4.6.999', '>' ) ) :
+					if (
+						WPGlobus_WP::is_pagenow( 'post.php' ) ||
+						( WPGlobus_WP::is_doing_ajax() && WPGlobus_WP::is_http_post_action('send-attachment-to-editor') )
+					) {
+						require_once 'admin/media/class-wpglobus-media.php';
+						WPGlobus_Media::get_instance();
+					}
+				endif;
+
 			}    // endif $devmode
 
 			if ( ( $this->vendors_scripts['ACF'] || $this->vendors_scripts['ACFPRO'] ) && WPGlobus_WP::is_pagenow( array(
@@ -460,7 +470,6 @@ class WPGlobus {
 				$this,
 				'on_admin_bar_menu'
 			) );
-
 
 			if ( WPGlobus_WP::is_pagenow( 'plugin-install.php' ) ) {
 				require_once 'admin/class-wpglobus-plugin-install.php';
@@ -510,6 +519,11 @@ class WPGlobus {
 				$this,
 				'on_wp_head'
 			), 11 );
+
+			add_action( 'wp_footer', array(
+				$this,
+				'on__wp_footer'
+			), 99 );
 
 			add_action( 'wp_head', array(
 				$this,
@@ -968,7 +982,7 @@ class WPGlobus {
 
 			if ( 'post.php' == $page || 'post-new.php' == $page ) {
 
-				$page_action = 'post-edit';
+				$page_action = 'post.php';
 
 				/**
 				 * We use $post_content, $post_title at edit post page
@@ -1304,11 +1318,10 @@ class WPGlobus {
 					foreach ( $tags as $tag ) {
 						$terms = self::_get_terms( $tag );
 						if ( ! empty( $terms ) ) {
-							$data['tags'][]                   = $tag;
-							$data['names'][ $tag ]            = 'tax_input[' . $tag . ']';
-							$data['tag'][ $tag ]              = $terms;
-							$data['value'][ $tag ]            = ''; // just init
-							$data['value'][ $tag ]['post_id'] = ''; // just init
+							$data['tags'][]        = $tag;
+							$data['names'][ $tag ] = 'tax_input[' . $tag . ']';
+							$data['tag'][ $tag ]   = $terms;
+							$data['value'][ $tag ] = array( 'post_id' => '' ); // just init
 						}
 					}
 				}
@@ -1380,9 +1393,8 @@ class WPGlobus {
 			 * WordPress 4.7+ needs a new version of our admin JS.
 			 * @since 1.7.0
 			 */
-			global $wp_version;
 			$version = '';
-			if ( version_compare( $wp_version, '4.6.999', '>' ) ) {
+			if ( version_compare( $GLOBALS['wp_version'], '4.6.999', '>' ) ) {
 				$version = '-47';
 			}
 
@@ -1433,6 +1445,7 @@ class WPGlobus {
 					'process_ajax' => __CLASS__ . '_process_ajax',
 					'flag_url'     => $config->flags_url,
 					'tabs'         => $tabs_suffix,
+					'currentTab'   => $config->default_language,
 					'i18n'         => $i18n,
 					'data'         => $data
 				)
@@ -1691,7 +1704,7 @@ class WPGlobus {
 
 		}
 
-		if ( in_array( $page, array( self::PAGE_WPGLOBUS_ADDONS, self::PAGE_WPGLOBUS_ABOUT ) ) ) {
+		if ( self::PAGE_WPGLOBUS_ABOUT === $page ) {
 			wp_register_style(
 				'wpglobus-special-pages',
 				self::$PLUGIN_DIR_URL . 'includes/css/wpglobus-special-pages' . WPGlobus::$_SCRIPT_SUFFIX . '.css',
@@ -1738,18 +1751,6 @@ class WPGlobus {
 			'',
 			'',
 			'administrator',
-			self::PAGE_WPGLOBUS_ADDONS,
-			array(
-				$this,
-				'wpglobus_addons'
-			)
-		);
-
-		add_submenu_page(
-			null,
-			'',
-			'',
-			'administrator',
 			self::PAGE_WPGLOBUS_CLEAN,
 			array(
 				$this,
@@ -1775,19 +1776,6 @@ class WPGlobus {
 	public function wpglobus_about() {
 		require_once 'admin/class-wpglobus-about.php';
 		WPGlobus_About::about_screen();
-	}
-
-	/**
-	 * Include file for WPGlobus addons page
-	 * @return void
-	 */
-	public function wpglobus_addons() {
-		/**
-		 * obsolete from 1.5.9
-		 * @todo remove after testing @see class WPGlobus_Plugin_Install
-		 */
-		//require_once 'admin/class-wpglobus-addons.php';
-		//WPGlobus_Addons::addons_screen();
 	}
 
 	/**
@@ -2999,6 +2987,17 @@ class WPGlobus {
 			}
 		}
 
+		/**
+		 * Filter the array of disabled entities returned for load tabs, scripts, styles.
+		 * @since 1.7.6
+		 *
+		 * @see 'wpglobus_disabled_entities' filter in 'admin_init' action.
+		 *
+		 * @param array $disabled_entities Array of disabled entities.
+		 * @return boolean
+		 */
+		$this->disabled_entities = apply_filters( 'wpglobus_disabled_entities', $this->disabled_entities );
+
 		if ( in_array( $entity, $this->disabled_entities ) ) {
 			return true;
 		}
@@ -3258,6 +3257,8 @@ class WPGlobus {
 		 * Filter the array of disabled entities returned for load tabs, scripts, styles.
 		 * @since 1.0.0
 		 *
+		 * @todo may be remove this filter @see 'wpglobus_disabled_entities' in disabled_entity().
+		 *
 		 * @param array $disabled_entities Array of disabled entities.
 		 */
 		$this->disabled_entities = apply_filters( 'wpglobus_disabled_entities', $this->disabled_entities );
@@ -3384,6 +3385,26 @@ class WPGlobus {
 			//]]>
 		</script>
 		<?php
+	}
+
+	/**
+	 * Add custom JS to footer section.
+	 *
+	 * @since 1.7.6
+	 * @return void
+	 */
+	public function on__wp_footer() {
+
+		$js = trim( WPGlobus::Config()->js_editor );
+
+		if ( ! empty( $js ) ) {
+			?>
+			<script type="text/javascript">
+				<?php echo $js; ?>
+			</script>
+			<?php
+		}
+
 	}
 
 }
