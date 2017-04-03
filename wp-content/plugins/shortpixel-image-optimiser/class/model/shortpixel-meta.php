@@ -12,6 +12,7 @@ class ShortPixelMeta extends ShortPixelEntity{
     protected $compressionType;
     protected $compressedSize;
     protected $thumbsOpt;
+    protected $thumbsMissing;
     protected $retinasOpt;
     protected $thumbsTodo;
     protected $keepExif;
@@ -30,6 +31,8 @@ class ShortPixelMeta extends ShortPixelEntity{
     protected $thumbs;
     
     const TABLE_SUFFIX = 'meta';
+    const WEBP_THUMB_PREFIX = 'sp-webp-';
+    const FOUND_THUMB_PREFIX = 'sp-found-';
     
     public function __construct($data = array()) {
         parent::__construct($data);
@@ -136,6 +139,15 @@ class ShortPixelMeta extends ShortPixelEntity{
     function setThumbsOpt($thumbsOpt) {
         $this->thumbsOpt = $thumbsOpt;
     }
+
+    function getThumbsMissing() {
+        return $this->thumbsMissing;
+    }
+
+    function setThumbsMissing($thumbsMissing) {
+        $this->thumbsMissing = $thumbsMissing;
+    }
+
     function getRetinasOpt() {
         return $this->retinasOpt;
     }
@@ -254,6 +266,9 @@ class ShortPixelMeta extends ShortPixelEntity{
 
     function setThumbs($thumbs) {
         $this->thumbs = $thumbs;
-    }    
-
+    }
+    
+    function addThumbs($thumbs) {
+        $this->thumbs = array_merge($this->thumbs, $thumbs);
+    }
 }

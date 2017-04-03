@@ -4,7 +4,7 @@
   Plugin Name: Head, Footer and Post Injections
   Plugin URI: http://www.satollo.net/plugins/header-footer
   Description: Header and Footer lets to add html/javascript code to the head and footer and posts of your blog. Some examples are provided on the <a href="http://www.satollo.net/plugins/header-footer">official page</a>.
-  Version: 3.0.6
+  Version: 3.0.7
   Author: Stefano Lissa
   Author URI: http://www.satollo.net
   Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -154,9 +154,13 @@ function hefo_wp_head_post() {
 
     $buffer .= hefo_replace($hefo_options['head']);
 
-    ob_start();
-    eval('?>' . $buffer);
-    ob_end_flush();
+    if (apply_filters('hefo_php_exec', true)) {
+        ob_start();
+        eval('?>' . $buffer);
+        ob_end_flush();
+    } else {
+        echo $buffer;
+    }
 }
 
 add_action('amp_post_template_head', 'hefo_amp_post_template_head', 100);
@@ -176,6 +180,7 @@ function hefo_amp_post_template_css() {
 }
 
 add_action('amp_post_template_footer', 'hefo_amp_post_template_footer', 100);
+
 function hefo_amp_post_template_footer() {
     global $hefo_options;
     echo "\n";
@@ -196,9 +201,13 @@ function hefo_wp_footer() {
 
     $buffer = hefo_replace($buffer);
 
-    ob_start();
-    eval('?>' . $buffer);
-    ob_end_flush();
+    if (apply_filters('hefo_php_exec', true)) {
+        ob_start();
+        eval('?>' . $buffer);
+        ob_end_flush();
+    } else {
+        echo $buffer;
+    }
 }
 
 // BBPRESS
@@ -379,7 +388,7 @@ function hefo_insert_before(&$content, $what, $marker, $starting_from = 0) {
     if (strlen($content) < $starting_from) {
         return false;
     }
-    
+
     if (empty($marker)) {
         $marker = ' ';
     }
@@ -396,11 +405,11 @@ function hefo_insert_after(&$content, $what, $marker, $starting_from = 0) {
     if (strlen($content) < $starting_from) {
         return false;
     }
-    
+
     if (empty($marker)) {
         $marker = ' ';
     }
-    
+
     $x = strpos($content, $marker, $starting_from);
 
     if ($x !== false) {
@@ -484,8 +493,10 @@ function hefo_execute($buffer) {
     if (empty($buffer)) {
         return '';
     }
-    ob_start();
-    eval('?>' . $buffer);
-    $buffer = ob_get_clean();
+    if (apply_filters('hefo_php_exec', true)) {
+        ob_start();
+        eval('?>' . $buffer);
+        $buffer = ob_get_clean();
+    }
     return $buffer;
 }

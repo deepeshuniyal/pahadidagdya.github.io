@@ -34,6 +34,14 @@ div.fb-like  {
 .sp-notice-success {
     border-left-color: #46b450;
 }
+li.sp-conflict-plugins-list {
+    line-height: 28px;
+    list-style: disc;
+    margin-left: 20px;
+}
+li.sp-conflict-plugins-list a.button {
+    margin-left: 10px;
+}
 div.short-pixel-bulk-page input.dial {
     font-size: 16px !important;
 }
@@ -72,6 +80,7 @@ div.sp-quota-exceeded-alert .bulk-progress-indicator {
 div.wrap.short-pixel-bulk-page .bulk-notice-container {
     margin-top: 15px;
     position: absolute;
+    width: 500px;
 }
 div.wrap.short-pixel-bulk-page .bulk-notice-container .bulk-notice-msg {
     text-align: center;
@@ -83,8 +92,14 @@ div.wrap.short-pixel-bulk-page .bulk-notice-container .bulk-notice-msg {
     padding: 7px 10px 10px;
     display: none;
     max-width: 600px;
+    margin-right:20px;
 }
 div.wrap.short-pixel-bulk-page .bulk-notice-container .bulk-notice-msg.bulk-error {
+    border: 1px solid #b5914d;
+    background-color: #ffe996;
+    margin-right:20px;
+}
+div.wrap.short-pixel-bulk-page .bulk-notice-container .bulk-notice-msg.bulk-error.bulk-error-fatal {
     border: 1px solid #c32525;
     background-color: #ff969d;
 }
@@ -379,9 +394,11 @@ li.shortpixel-hide {
 .sp-floating-block.bulk-slider-container {
     display: none;
 }
-.sp-floating-block.notice.bulk-notices-parent {
+.sp-floating-block.sp-notice.bulk-notices-parent {
     padding: 0;
     margin: 0;
+    float: right;
+    margin-right: 500px !important;
 }
 .bulk-slider-container {
     margin-top: 20px;
@@ -579,4 +596,9 @@ section#tab-resources p {
     .sp-double-width, .sp-full-width, .sp-single-width {
         width: 97%;
     }
+}
+
+/*workaround for bad style inline css in the plugin <<WooCommerce Remove /product & /product-category>> that's causing conflict*/
+.sp-tabs h2:before{
+    content:none;
 }

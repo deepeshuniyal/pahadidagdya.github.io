@@ -14,12 +14,15 @@ class ShortPixelAPI {
     const STATUS_NOT_FOUND = -5;
     const STATUS_NO_KEY = -6;
     const STATUS_RETRY = -7;
+    const STATUS_QUEUE_FULL = -404;
+    const STATUS_MAINTENANCE = -500;
     
     const ERR_FILE_NOT_FOUND = -2;
     const ERR_TIMEOUT = -3;
     const ERR_SAVE = -4;
     const ERR_SAVE_BKP = -5;
     const ERR_INCORRECT_FILE_SIZE = -6;
+    const ERR_DOWNLOAD = -7;
 
     private $_settings;
     private $_maxAttempts = 10;
@@ -66,19 +69,19 @@ class ShortPixelAPI {
             'body' => json_encode($requestParameters),
             'cookies' => array()
         );
+        //die(var_dump($requestParameters));
         //add this explicitely only for https, otherwise (for http) it slows down the request
         if($this->_settings->httpProto !== 'https') {
             unset($arguments['sslverify']);
         }
-        
-        WpShortPixel::log("Calling API with params : " . json_encode($arguments));
+        //WpShortPixel::log("Calling API with params : " . json_encode($arguments));
 
         $response = wp_remote_post($this->_apiEndPoint, $arguments );
         
         //only if $Blocking is true analyze the response
         if ( $Blocking )
         {
-            WpShortPixel::log("API response : " . json_encode($response));
+            //WpShortPixel::log("API response : " . json_encode($response));
             
             //die(var_dump(array('URL: ' => $this->_apiEndPoint, '<br><br>REQUEST:' => $arguments, '<br><br>RESPONSE: ' => $response )));
             //there was an error, save this error inside file's SP optimization field
@@ -138,7 +141,7 @@ class ShortPixelAPI {
      */
     private function processImageRecursive($URLs, $PATHs, $itemHandler = null, $startTime = 0) 
     {    
-        //#$meta = wp_get_attachment_metadata($ID);
+        //WPShortPixel::log("processImageRecursive ID: " . $itemHandler->getId() . " PATHs: " . json_encode($PATHs));
         
         $PATHs = self::CheckAndFixImagePaths($PATHs);//check for images to make sure they exist on disk
         if ( $PATHs === false  || isset($PATHs['error'])) {
@@ -183,7 +186,9 @@ class ShortPixelAPI {
         $meta = $itemHandler->getMeta();
         $compressionType = $meta->getCompressionType() !== null ? $meta->getCompressionType() : $this->_settings->compressionType;
         $response = $this->doRequests($URLs, true, $itemHandler, $compressionType);//send requests to API
-
+        
+        //die(var_dump($response));
+        
         if($response['response']['code'] != 200)//response <> 200 -> there was an error apparently?
             return array("Status" => self::STATUS_FAIL, "Message" => __('There was an error and your request was not processed.','shortpixel-image-optimiser'));
         
@@ -237,7 +242,7 @@ class ShortPixelAPI {
         
         if(!isset($APIresponse['Status'])) {
             WpShortPixel::log("API Response Status unfound : " . json_encode($APIresponse));
-            return array("Status" => self::STATUS_FAIL, "Message" => __('Unecognized API response. Please contact support.','shortpixel-image-optimiser'));
+            return array("Status" => self::STATUS_FAIL, "Message" => __('Unrecognized API response. Please contact support.','shortpixel-image-optimiser'));
         } else {
             switch($APIresponse['Status']->Code) 
             {            
@@ -246,6 +251,10 @@ class ShortPixelAPI {
                     $this->_settings->quotaExceeded = 1;
                     return array("Status" => self::STATUS_QUOTA_EXCEEDED, "Message" => __('Quota exceeded.','shortpixel-image-optimiser'));
                     break;                
+                case -404: 
+                    return array("Status" => self::STATUS_QUEUE_FULL, "Message" => $APIresponse['Status']->Message);
+                case -500: 
+                    return array("Status" => self::STATUS_MAINTENANCE, "Message" => $APIresponse['Status']->Message);
             }
 
             //sometimes the response array can be different
@@ -333,6 +342,7 @@ class ShortPixelAPI {
             @unlink($tempFile);
             $returnMessage = array(
                 "Status" => self::STATUS_ERROR, 
+                "Code" => self::ERR_DOWNLOAD,
                 "Message" => __('Error downloading file','shortpixel-image-optimiser') . " ({$fileData->$fileType}) " . $tempFile->get_error_message());
         } 
         //check response so that download is OK
@@ -341,10 +351,13 @@ class ShortPixelAPI {
             @unlink($tempFile);
             $returnMessage = array(
                 "Status" => self::STATUS_ERROR, 
+                "Code" => self::ERR_INCORRECT_FILE_SIZE,
                 "Message" => sprintf(__('Error downloading file - incorrect file size (downloaded: %s, correct: %s )','shortpixel-image-optimiser'),$size, $correctFileSize));
         }
         elseif (!file_exists($tempFile)) {
-            $returnMessage = array("Status" => self::STATUS_ERROR, "Message" => __('Unable to locate downloaded file','shortpixel-image-optimiser') . " " . $tempFile);
+            $returnMessage = array("Status" => self::STATUS_ERROR, 
+                "Code" => self::ERR_FILE_NOT_FOUND,
+                "Message" => __('Unable to locate downloaded file','shortpixel-image-optimiser') . " " . $tempFile);
         }
         return $returnMessage;        
     }
@@ -386,7 +399,7 @@ class ShortPixelAPI {
                     $tempFiles[$counter] = $downloadResult;
                 }
                 else { 
-                    return array("Status" => $downloadResult['Status'], "Message" => $downloadResult['Message']);
+                    return array("Status" => $downloadResult['Status'], "Code" => $downloadResult['Code'], "Message" => $downloadResult['Message']);
                 }
                 
             }    
@@ -397,9 +410,11 @@ class ShortPixelAPI {
         }
         
         //figure out in what SubDir files should land
-        $fullSubDir = str_replace(wp_normalize_path(get_home_path()), "", wp_normalize_path(dirname($itemHandler->getMeta()->getPath()))) . '/';
-        $SubDir = ShortPixelMetaFacade::returnSubDir($itemHandler->getMeta()->getPath(), $itemHandler->getType());
-        
+        //$fullSubDir = str_replace(wp_normalize_path(get_home_path()), "", wp_normalize_path(dirname($itemHandler->getMeta()->getPath()))) . '/';
+        //$SubDir = ShortPixelMetaFacade::returnSubDir($itemHandler->getMeta()->getPath(), $itemHandler->getType());
+        $mainPath = $itemHandler->getMeta()->getPath();
+        $fullSubDir = ShortPixelMetaFacade::returnSubDir($mainPath, $itemHandler->getType());
+
         //if backup is enabled - we try to save the images
         if( $this->_settings->backupImages )
         {
@@ -423,7 +438,7 @@ class ShortPixelAPI {
                 foreach ( $destination as $fileID => $filePATH )
                 {
                     if ( !file_exists($filePATH) )
-                    {         
+                    {  
                         if ( !@copy($source[$fileID], $filePATH) )
                         {//file couldn't be saved in backup folder
                             $msg = sprintf(__('Cannot save file <i>%s</i> in backup directory','shortpixel-image-optimiser'),self::MB_basename($source[$fileID]));
@@ -447,6 +462,8 @@ class ShortPixelAPI {
         $width = $height = null;
         $resize = $this->_settings->resizeImages;
         $retinas = 0;
+        $thumbsOpt = 0;
+        $webpSizes = array();
         
         if ( !empty($tempFiles) )
         {
@@ -456,12 +473,20 @@ class ShortPixelAPI {
                 if(!is_array($tempFile)) continue;
                 
                 $targetFile = $PATHs[$tempFileID];
-
+                $isRetina = ShortPixelMetaFacade::isRetina($targetFile);
+                
+                if(   ($tempFile['Status'] == self::STATUS_UNCHANGED || $tempFile['Status'] == self::STATUS_SUCCESS) && !$isRetina
+                   && $targetFile !== $mainPath) {
+                    $thumbsOpt++;
+                }
+                
                 if($tempFile['Status'] == self::STATUS_SUCCESS) { //if it's unchanged it will still be in the array but only for WebP (handled below)
                     $tempFilePATH = $tempFile["Message"];
                     if ( file_exists($tempFilePATH) && file_exists($PATHs[$tempFileID]) && is_writable($PATHs[$tempFileID]) ) {
                         copy($tempFilePATH, $targetFile);
-                        $retinas += ShortPixelMetaFacade::isRetina($targetFile) ? 1 : 0;
+                        if(ShortPixelMetaFacade::isRetina($targetFile)) {
+                            $retinas ++;
+                        }
                         if($resize && $itemHandler->getMeta()->getPath() == $targetFile) { //this is the main image
                             $size = getimagesize($PATHs[$tempFileID]);
                             $width = $size[0];
@@ -490,6 +515,10 @@ class ShortPixelAPI {
                 if(file_exists($tempWebpFilePATH)) {
                     $targetWebPFile = dirname($targetFile) . '/' . basename($targetFile, '.' . pathinfo($targetFile, PATHINFO_EXTENSION)) . ".webp";
                     copy($tempWebpFilePATH, $targetWebPFile);
+                    $webpSize = $itemHandler->getWebpSizeMeta($targetFile);
+                    if($webpSize) {
+                        $webpSizes[$webpSize['key']] = $webpSize['val'];
+                    }
                 }
                 @unlink($tempWebpFilePATH);
             }        
@@ -526,12 +555,13 @@ class ShortPixelAPI {
                 : "Couldn't compute thumbs optimization percent. Main image: " . $percentImprovement);
         WPShortPixel::log("HANDLE SUCCESS: Image optimization: ".$meta->getMessage());
         $meta->setCompressionType($compressionType);
-        $meta->setCompressedSize(filesize($meta->getPath()));
+        $meta->setCompressedSize(@filesize($meta->getPath()));
         $meta->setKeepExif($this->_settings->keepExif);
         $meta->setTsOptimized(date("Y-m-d H:i:s"));
-        $meta->setThumbsOpt(($meta->getThumbsTodo() ||  $this->_settings->processThumbnails) ? count($meta->getThumbs()) : 0);
+        $meta->setThumbsOpt(($meta->getThumbsTodo() ||  $this->_settings->processThumbnails) ? $thumbsOpt : 0);
         $meta->setRetinasOpt($retinas);
         $meta->setThumbsTodo(false);
+        //* Not yet as it doesn't seem to work... */$meta->addThumbs($webpSizes);
         if($width && $height) {
             $meta->setActualWidth($width);
             $meta->setActualHeight($height);
@@ -556,10 +586,10 @@ class ShortPixelAPI {
      * @param string $Path
      * @return string
      */
-    static public function MB_basename($Path){
+    static public function MB_basename($Path, $suffix = false){
         $Separator = " qq ";
         $Path = preg_replace("/[^ ]/u", $Separator."\$0".$Separator, $Path);
-        $Base = basename($Path);
+        $Base = basename($Path, $suffix);
         $Base = str_replace($Separator, "", $Base);
         return $Base;  
     }
@@ -587,8 +617,13 @@ class ShortPixelAPI {
                 if (file_exists($NewFile)) {
                     $PATHs[$Id] = $NewFile;
                 } else {
-                    $missingFiles[] = $File;
-                    $ErrorCount++;
+	            $NewFile = $uploadDir['basedir'] . "/" . $File;
+                    if (file_exists($NewFile)) {
+                        $PATHs[$Id] = $NewFile;
+                    } else {
+                        $missingFiles[] = $File;
+                        $ErrorCount++;
+                    }
                 }
             }
         }

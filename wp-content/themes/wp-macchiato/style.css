@@ -5,7 +5,7 @@ Theme URI: http://invictusthemes.com/themes/wp-macchiato/
 Author: Invictus Themes
 Author URI: http://invictusthemes.com/
 Description: WP Macchiato is a classic three column blogging theme which makes use of featured images to enhance posts on the home and archive pages. It is fully responsive and has some handy customization features allowing you to control the primary theme colours, as well as uploading your own logo and choosing whether or not to show the author bio on posts. There are right and left widget areas, as well as widgets for the footer and a banner widget in the header.
-Version: 2.4
+Version: 2.5
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp-macchiato
@@ -194,7 +194,7 @@ a.btn-info {
 	color:#FFFFFF;
 	}
 .navbar-default .navbar-nav > li > a:hover{
-	color:#777777;
+	color:#000000;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -273,6 +273,34 @@ a.btn-info {
 	color:#000000;
 }
 
+/* Text meant only for screen readers. */
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	color: #21759b;
+	display: block;
+	font-size: 14px;
+	font-size: 0.875rem;
+	font-weight: bold;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar. */
+}
 /*--------------------------------------------------------------
 4.0 Content
 --------------------------------------------------------------*/
@@ -680,7 +708,7 @@ aside ul li a:hover{
 	padding:0px 0px 8px;
 	margin: 0;
 	border-bottom: 1px solid #e4e4e4;
-	line-height:13px;
+	line-height:24px;
 	}
 .widget_wp_macchiato_recent_posts ul li{
 	margin-bottom:15px;

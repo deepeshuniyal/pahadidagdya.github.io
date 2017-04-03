@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php
-$wp_macchiato_home_layout =  get_theme_mod( 'wp_macchiato_home_layout' );
+$wp_macchiato_home_layout =  get_theme_mod( 'wp_macchiato_home_layout', 'three' );
 if($wp_macchiato_home_layout =='three'){
 ?>
     <div  class="row">

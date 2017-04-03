@@ -97,6 +97,19 @@ class ShortPixelQueue {
         WPShortPixel::log("PUSH: Updated: ".json_encode($_SESSION["wp-short-pixel-priorityQueue"]));//get_option("wp-short-pixel-priorityQueue")));
     }
 
+    public function enqueue($ID)//add an ID to priority queue as LAST
+    {
+        $priorityQueue = $_SESSION["wp-short-pixel-priorityQueue"]; //get_option("wp-short-pixel-priorityQueue");
+        WPShortPixel::log("PUSH: Push ID $ID into queue ".json_encode($priorityQueue));
+        array_unshift($priorityQueue, $ID);
+        $prioQ = array_unique($priorityQueue);
+        $_SESSION["wp-short-pixel-priorityQueue"] = $prioQ;
+        //push also to the options queue, in case the session gets killed retrieve from there
+        $this->settings->priorityQueue = $prioQ;
+
+        WPShortPixel::log("ENQUEUE: Updated: ".json_encode($_SESSION["wp-short-pixel-priorityQueue"]));//get_option("wp-short-pixel-priorityQueue")));
+    }
+
     public function getFirst($count = 1)//return the first values added to priority queue
     {
         $priorityQueue = $_SESSION["wp-short-pixel-priorityQueue"];//self::getOpt("wp-short-pixel-priorityQueue", array());
@@ -230,7 +243,7 @@ class ShortPixelQueue {
     
     public function setBulkPreviousPercent() {
         //processable and already processed
-        $res = WpShortPixelMediaLbraryAdapter::countAllProcessableFiles($this->getFlagBulkId(), $this->settings->stopBulkId);
+        $res = WpShortPixelMediaLbraryAdapter::countAllProcessableFiles($this->settings->optimizePdfs, $this->getFlagBulkId(), $this->settings->stopBulkId);
         $this->settings->bulkCount = $res["mainFiles"];
         
         //if compression type changed, add also the images with the other compression type

@@ -38,5 +38,20 @@ class ShortPixelTools {
 
         //If no checks triggered, we end up here - not an AJAX request.
         return false;
-    }    
+    }
+    
+    public static function commonPrefix($str1, $str2) {
+        $limit = min(strlen($str1), strlen($str2));
+        for ($i = 0; $i < $limit && $str1[$i] === $str2[$i]; $i++);
+        return substr($str1, 0, $i);
+    }
+    
+    /**
+     * This is a simplified wp_send_json made compatible with WP 3.2.x to 3.4.x
+     * @param type $response
+     */
+    public static function sendJSON($response) {
+        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+        die(json_encode($response));
+    }
 }

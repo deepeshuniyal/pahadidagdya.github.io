@@ -1,8 +1,8 @@
 === Head, Footer and Post Injections ===
 Tags: header, footer, blog, page, single, post, head, tracking, facebook, og meta tag, open graph, ads, adsense, injections, analytics, amp, pixel
 Requires at least: 3.0
-Tested up to: 4.7.2
-Stable tag: 3.0.6
+Tested up to: 4.7.3
+Stable tag: 3.0.7
 Donate link: http://www.satollo.net/donations
 Contributors: satollo
 
@@ -92,6 +92,10 @@ FAQs are answered on [Header and Footer](http://www.satollo.net/plugins/header-f
 4. Configurable snippets of code to be recalled on other configurations (to save time)
 
 == Changelog ==
+
+= 3.0.7 =
+
+* Added the filter "hefo_php_exec" to let a third party to disable the PHP execution 
 
 = 3.0.6 =
 

@@ -306,6 +306,11 @@ class ShortPixelCustomMetaDao {
         return $inserted;
     }
     
+    public function resetFailed() {
+        $sql = "UPDATE {$this->db->getPrefix()}shortpixel_meta SET status = 0, retries = 0 WHERE status < 0";
+        $this->db->query($sql);
+    }
+    
     public function getPaginatedMetas($hasNextGen, $count, $page, $orderby = false, $order = false) {
         $sql = "SELECT sm.id, sm.name, sm.path folder, "
                 . ($hasNextGen ? "CASE WHEN ng.gid IS NOT NULL THEN 'NextGen' ELSE 'Custom' END media_type, " : "'Custom' media_type, ")
@@ -340,14 +345,14 @@ class ShortPixelCustomMetaDao {
     public function getPendingMetaCount() {
         $res = $this->db->query("SELECT COUNT(sm.id) recCount from  {$this->db->getPrefix()}shortpixel_meta sm "
             . "INNER JOIN  {$this->db->getPrefix()}shortpixel_folders sf on sm.folder_id = sf.id "
-            . "WHERE sf.status <> -1 AND ( sm.status = 0 OR sm.status = 1 )");
+            . "WHERE sf.status <> -1 AND sm.status <> 3 AND ( sm.status = 0 OR sm.status = 1 OR (sm.status < 0 AND sm.retries < 3))");
         return isset($res[0]->recCount) ? $res[0]->recCount : null;
     }
     
     public function getCustomMetaCount() {
         $sql = "SELECT COUNT(sm.id) recCount FROM {$this->db->getPrefix()}shortpixel_meta sm "
             . "INNER JOIN  {$this->db->getPrefix()}shortpixel_folders sf on sm.folder_id = sf.id "
-            . "WHERE sf.status <> -1";
+            . "WHERE sf.status <> -1 AND sm.status <> 3";
         $res = $this->db->query($sql);
         return isset($res[0]->recCount) ? $res[0]->recCount : 0;
     }

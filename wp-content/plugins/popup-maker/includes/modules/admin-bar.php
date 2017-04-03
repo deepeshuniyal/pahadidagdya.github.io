@@ -24,7 +24,7 @@ class PUM_Modules_Admin_Bar {
 	 * Renders the admin debug bar when PUM Debug is enabled.
 	 */
 	public static function show_debug_bar() {
-		if ( Popup_Maker::debug_mode() ) {
+		if ( current_user_can( 'manage_options' ) && Popup_Maker::debug_mode() ) {
 			show_admin_bar( true );
 		}
 	}
@@ -404,7 +404,7 @@ class PUM_Modules_Admin_Bar {
 	 */
 	public static function toolbar_links( $wp_admin_bar ) {
 
-		if ( is_admin() || PUM_Options::get( 'disabled_admin_bar', false ) ) {
+		if ( is_admin() || ! is_admin_bar_showing() || PUM_Options::get( 'disabled_admin_bar', false ) ) {
 			return;
 		}
 
@@ -469,7 +469,7 @@ class PUM_Modules_Admin_Bar {
 
 				if ( pum_popup( $popup->ID )->has_conditions( array( 'js_only' => true ) ) ) {
 					$wp_admin_bar->add_node( array(
-						'id'     => $node_id . '-close',
+						'id'     => $node_id . '-conditions',
 						'title'  => __( 'Check Conditions', 'popup-maker' ),
 						'meta'   => array(
 							'onclick' => 'alert(PUM.checkConditions(' . $popup->ID . ') ? "Pass" : "Fail");',

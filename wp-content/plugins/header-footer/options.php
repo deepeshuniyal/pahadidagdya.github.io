@@ -329,14 +329,14 @@ else {
             </p>   
         </div>
     <?php } ?>  
-    
+
     <?php if (!isset($dismissed['newsletter'])) { ?>
         <div class="notice notice-success"><p>
                 If you want to be informed of important updated of this plugin, you may want to subscribe to my (rare) newsletter<br>
             <form action="http://www.satollo.net/?na=s" target="_blank" method="post">
                 <input type="hidden" value="header-footer" name="nr">
                 <input type="hidden" value="2" name="nl[]">
-                <input type="email" name="ne" value="<?php echo esc_attr(get_option('admin_email'))?>">
+                <input type="email" name="ne" value="<?php echo esc_attr(get_option('admin_email')) ?>">
                 <input type="submit" value="Subscribe">
             </form>
             <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=newsletter&noheader=1') ?>">&times;</a>
@@ -346,7 +346,7 @@ else {
 
     <div style="padding: 15px; background-color: #fff; border: 1px solid #eee; font-size: 16px; line-height: 22px">
         Did this plugin save you lot of time and troubles?    
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8" target="_blank"><img style="vertical-align: bottom" src="<?php echo plugins_url('header-footer')?>/images/donate.png"></a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5PHGDGNHAYLJ8" target="_blank"><img style="vertical-align: bottom" src="<?php echo plugins_url('header-footer') ?>/images/donate.png"></a>
         To help children. Even <b>2$</b> help. <a href="http://www.satollo.net/donations" target="_blank">Please read more</a>. Thank you.
         <br>
         Are you profitably using this free plugin for your customers? One more reason to consider a 
@@ -368,7 +368,13 @@ else {
 
 
     <p>
-        <?php _e('PHP is allowed on textareas below.'); ?>
+        <?php
+        if (apply_filters('hefo_php_exec', true)) {
+            _e('PHP is allowed in your code.');
+        } else {
+            _e('PHP is NOT allowed in your code (disable by your theme or a plugin)');
+        }
+        ?>
     </p>
 
     <form method="post" action="">
@@ -501,8 +507,8 @@ else {
                     <!--<h3>Posts and pages</h3>-->
                     <table class="form-table">
                         <!--<tr valign="top"><?php hefo_field_checkbox('category', __('Enable injection on category pages', 'header-footer')); ?></tr>-->
-                        <tr valign="top"><?php //hefo_field_textarea('before', __('Code to be inserted before each post', 'header-footer'), '', 'rows="10"');           ?></tr>
-                        <tr valign="top"><?php //hefo_field_textarea('after', __('Code to be inserted after each post', 'header-footer'), '', 'rows="10"');           ?></tr>
+                        <tr valign="top"><?php //hefo_field_textarea('before', __('Code to be inserted before each post', 'header-footer'), '', 'rows="10"');            ?></tr>
+                        <tr valign="top"><?php //hefo_field_textarea('after', __('Code to be inserted after each post', 'header-footer'), '', 'rows="10"');            ?></tr>
                     </table>
 
                     <h3><?php _e('Injection on excerpts', 'header-footer'); ?></h3>
@@ -686,7 +692,7 @@ else {
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    
+
                     <h3>Footer</h3>
                     <div class="row">
 
@@ -697,7 +703,7 @@ else {
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    
+
                 </div>
 
 
@@ -789,11 +795,11 @@ else {
                     </p>
                 <?php $post_types = get_post_types(array('public' => true, '_builtin' => false), 'objects'); ?>
                 <?php foreach ($post_types as $post_type) { ?>
-                                                            <h3><?php echo esc_html($post_type->label) ?> (<?php echo esc_html($post_type->name) ?>)</h3>
-                                                            <table class="form-table">
-                                                            <tr><?php hefo_field_textarea($post_type->name . '_before', __('Before the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                            <tr><?php hefo_field_textarea($post_type->name . '_after', __('After the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                            </table>
+                                                                <h3><?php echo esc_html($post_type->label) ?> (<?php echo esc_html($post_type->name) ?>)</h3>
+                                                                <table class="form-table">
+                                                                <tr><?php hefo_field_textarea($post_type->name . '_before', __('Before the content', 'header-footer'), '', 'rows="10"'); ?></tr>
+                                                                <tr><?php hefo_field_textarea($post_type->name . '_after', __('After the content', 'header-footer'), '', 'rows="10"'); ?></tr>
+                                                                </table>
                 <?php } ?>
                 </div>            
                 -->
@@ -811,33 +817,33 @@ else {
                     </table>
 
                     <?php /*
-                    <h3>Web performance</h3>
-                    <p>
-                        Some JavaScript can be marked to be loaded asynchronously, for example the comment-reply.js of WordPress.
-                        Not always asynchronous load work, for example jQuery cannot usually loaded in this way. Since WordPress does 
-                        not support this feature natively, here you can force thise feature on specific scripts.<br>
-                        Usually you can add comment-reply, akismet-form, admin-bar.<br>
-                        You can read more on <a href="http://www.satollo.net/javascript-asyn-load-for-wordpress-enqueued-scripts" target="_blank">this article</a>
-                        and/or ask on my <a href="http://www.satollo.net/forums" target="_blank">forum area</a>.
-                    </p>
+                      <h3>Web performance</h3>
+                      <p>
+                      Some JavaScript can be marked to be loaded asynchronously, for example the comment-reply.js of WordPress.
+                      Not always asynchronous load work, for example jQuery cannot usually loaded in this way. Since WordPress does
+                      not support this feature natively, here you can force thise feature on specific scripts.<br>
+                      Usually you can add comment-reply, akismet-form, admin-bar.<br>
+                      You can read more on <a href="http://www.satollo.net/javascript-asyn-load-for-wordpress-enqueued-scripts" target="_blank">this article</a>
+                      and/or ask on my <a href="http://www.satollo.net/forums" target="_blank">forum area</a>.
+                      </p>
 
-                    <table class="form-table">
-                        
-                        <tr valign="top">
-                            <th scope="row">
-                                Script handle debug
-                            </th>
-                            <?php hefo_field_checkbox_only('script_handle_debug', __('Activate in page debug info: see the source page to find the handles', 'header-footer')); ?>
+                      <table class="form-table">
 
-                        </tr>
-                        <tr valign="top">
-                            <?php
-                            hefo_field_textarea('script_async_handles', __('Script handles to load asynchronously', 'header-footer'), 'One per line', 'rows="10"');
-                            ?>
-                        </tr>
-                    </table>
-                    */ ?>
-                    
+                      <tr valign="top">
+                      <th scope="row">
+                      Script handle debug
+                      </th>
+                      <?php hefo_field_checkbox_only('script_handle_debug', __('Activate in page debug info: see the source page to find the handles', 'header-footer')); ?>
+
+                      </tr>
+                      <tr valign="top">
+                      <?php
+                      hefo_field_textarea('script_async_handles', __('Script handles to load asynchronously', 'header-footer'), 'One per line', 'rows="10"');
+                      ?>
+                      </tr>
+                      </table>
+                     */ ?>
+
                     <h3>Head meta links</h3>
                     <p>
                         WordPress automatically add some meta link on the head of the page, for example the RSS links, the previous and next

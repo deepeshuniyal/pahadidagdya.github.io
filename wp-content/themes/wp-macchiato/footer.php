@@ -20,7 +20,7 @@
                 <div class="col-md-12">
 					<?php echo __('&copy; ', 'wp-macchiato') . esc_attr( get_bloginfo( 'name', 'display' ) );  ?>
 						<?php if(is_home() && !is_paged()){?>            
-                        <?php _e('- Powered by ', 'wp-macchiato'); ?><a href="<?php echo esc_url( __( 'http://wordpress.org/', 'wp-macchiato' ) ); ?>" title="<?php esc_attr_e( '' ); ?>"><?php _e('WordPress' ,'wp-macchiato'); ?></a>
+                        <?php _e('- Powered by ', 'wp-macchiato'); ?><a href="<?php echo esc_url( __( 'http://wordpress.org/', 'wp-macchiato' ) ); ?>" title="<?php esc_attr_e( 'WordPress', 'wp-macchiato' ); ?>"><?php _e('WordPress' ,'wp-macchiato'); ?></a>
                         <?php _e(' and ', 'wp-macchiato'); ?><a href="<?php echo esc_url( __( 'http://invictusthemes.com/', 'wp-macchiato' ) ); ?>"><?php _e('Invictus Themes', 'wp-macchiato'); ?></a>
                     <?php } ?>
                 </div>

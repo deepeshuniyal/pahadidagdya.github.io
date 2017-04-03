@@ -16,11 +16,11 @@ class ShortPixelView {
     public function displayQuotaExceededAlert($quotaData, $averageCompression = false, $recheck = false) 
     { ?>    
         <br/>
-        <div class="wrap sp-quota-exceeded-alert">
+        <div class="wrap sp-quota-exceeded-alert"  id="short-pixel-notice-exceed">
             <?php if($averageCompression) { ?>
             <div style="float:right; margin-top: 10px">
-                <div class="bulk-progress-indicator">
-                    <div style="margin-bottom:5px"><?php _e('Average reduction','shortpixel-image-optimiser');?></div>
+                <div class="bulk-progress-indicator" style="height: 110px">
+                    <div style="margin-bottom:5px"><?php _e('Average image<br>reduction so far:','shortpixel-image-optimiser');?></div>
                     <div id="sp-avg-optimization"><input type="text" id="sp-avg-optimization-dial" value="<?php echo("" . round($averageCompression))?>" class="dial"></div>
                     <script>
                         jQuery(function() {
@@ -36,12 +36,12 @@ class ShortPixelView {
                      echo('<span style="color: red">' . __('You have no available image credits. If you just bought a package, please note that sometimes it takes a few minutes for the payment confirmation to be sent to us by the payment processor.','shortpixel-image-optimiser') . '</span><br>');
                 }
                 printf(__('The plugin has optimized <strong>%s images</strong> and stopped because it reached the available quota limit.','shortpixel-image-optimiser'), 
-                      number_format($quotaData['APICallsMadeNumeric'] + $quotaData['APICallsMadeOneTimeNumeric']));?> 
+                      number_format(max(0, $quotaData['APICallsMadeNumeric'] + $quotaData['APICallsMadeOneTimeNumeric'])));?> 
             <?php if($quotaData['totalProcessedFiles'] < $quotaData['totalFiles']) { ?>
                 <?php 
                     printf(__('<strong>%s images and %s thumbnails</strong> are not yet optimized by ShortPixel.','shortpixel-image-optimiser'),
-                        number_format($quotaData['mainFiles'] - $quotaData['mainProcessedFiles']), 
-                        number_format(($quotaData['totalFiles'] - $quotaData['mainFiles']) - ($quotaData['totalProcessedFiles'] - $quotaData['mainProcessedFiles']))); ?>
+                        number_format(max(0, $quotaData['mainFiles'] - $quotaData['mainProcessedFiles'])), 
+                        number_format(max(0, ($quotaData['totalFiles'] - $quotaData['mainFiles']) - ($quotaData['totalProcessedFiles'] - $quotaData['mainProcessedFiles'])))); ?>
                 <?php } ?></p>
             <div> <!-- style='float:right;margin-top:20px;'> -->
                 <a class='button button-primary' href='https://shortpixel.com/login/<?php echo($this->ctrl->getApiKey());?>' target='_blank'><?php _e('Upgrade','shortpixel-image-optimiser');?></a>
@@ -68,12 +68,16 @@ class ShortPixelView {
     <?php
     }
     
-    public static function displayActivationNotice($when = 'activate')  { ?>
-        <div class='notice notice-warning' id='short-pixel-notice-<?php echo($when);?>'>
+    public static function displayActivationNotice($when = 'activate', $extra = '')  { 
+        $extraStyle = $when == 'compat' ? "style='border-left: 4px solid#ff0000;'" : '';
+        ?>
+        <div class='notice notice-warning' id='short-pixel-notice-<?php echo($when);?>' <?php echo($extraStyle);?>>
             <?php if($when != 'activate') { ?>
             <div style="float:right;"><a href="javascript:dismissShortPixelNotice('<?php echo($when);?>')" class="button" style="margin-top:10px;"><?php _e('Dismiss','shortpixel-image-optimiser');?></a></div>
             <?php } ?>
-            <h3><?php _e('ShortPixel Optimization','shortpixel-image-optimiser');?></h3> <?php
+            <h3><?php 
+            if($when == 'compat') {_e('Warning','shortpixel-image-optimiser'); echo(' - ');}
+            _e('ShortPixel Image Optimizer','shortpixel-image-optimiser');?></h3> <?php
             switch($when) {
                 case '2h' : 
                     _e("Action needed. Please <a href='https://shortpixel.com/wp-apikey' target='_blank'>get your API key</a> to activate your ShortPixel plugin.",'shortpixel-image-optimiser') . "<BR><BR>";
@@ -83,6 +87,16 @@ class ShortPixelView {
                     break;
                 case 'activate':
                     self::displayApiKeyAlert();
+                    break;
+                case 'compat' :
+                    _e("Using ShortPixel while other image optimization plugins are active can lead to unpredictable results. We recommend to deactivate the following plugin(s): ",'shortpixel-image-optimiser');
+                    echo('<ul>');
+                    foreach($extra as $plugin) {
+                        echo('<li class="sp-conflict-plugins-list"><strong>' . $plugin['name'] . '</strong>');
+                        echo('<a href="' . wp_nonce_url( admin_url( 'admin-post.php?action=shortpixel_deactivate_plugin&plugin=' . urlencode( $plugin['path'] ) ), 'sp_deactivate_plugin_nonce' ) . '" class="button">'
+                                . __( 'Deactivate', 'shortpixel_image_optimiser' ) . '</a>');
+                    }
+                    echo("</ul>");
                     break;
             }
             ?>
@@ -288,8 +302,8 @@ class ShortPixelView {
                 $todo = $reopt = false;
                 if($quotaData['totalProcessedFiles'] < $quotaData['totalFiles']) { 
                     $todo = true;
-                    $mainNotProcessed = $quotaData['mainFiles'] - $quotaData['mainProcessedFiles'];
-                    $thumbsNotProcessed = ($quotaData['totalFiles'] - $quotaData['mainFiles']) - ($quotaData['totalProcessedFiles'] - $quotaData['mainProcessedFiles']);
+                    $mainNotProcessed = max(0, $quotaData['mainFiles'] - $quotaData['mainProcessedFiles']);
+                    $thumbsNotProcessed = max(0, ($quotaData['totalFiles'] - $quotaData['mainFiles']) - ($quotaData['totalProcessedFiles'] - $quotaData['mainProcessedFiles']));
                     ?>
                     <p>
                         <?php 
@@ -380,12 +394,20 @@ class ShortPixelView {
             </div>
             <?php } ?>
 
-            <div class="sp-floating-block notice bulk-notices-parent">
+            <div class="sp-floating-block sp-notice bulk-notices-parent">
                 <div class="bulk-notice-container">
                     <div class="bulk-notice-msg bulk-lengthy">
                         <img src="<?php echo(plugins_url( 'shortpixel-image-optimiser/res/img/loading-dark-big.gif' ));?>">
                         <?php _e('Lengthy operation in progress:','shortpixel-image-optimiser');?><br>
                         <?php _e('Optimizing image','shortpixel-image-optimiser');?> <a href="#" data-href="<?php echo(get_admin_url());?>/post.php?post=__ID__&action=edit" target="_blank">placeholder.png</a>
+                    </div>
+                    <div class="bulk-notice-msg bulk-maintenance">
+                        <img src="<?php echo(plugins_url( 'shortpixel-image-optimiser/res/img/loading-dark-big.gif' ));?>">
+                        <?php _e("The ShortPixel API is in maintenance mode. Please don't close this window. The bulk will resume automatically as soon as the API is back online.",'shortpixel-image-optimiser');?>
+                    </div>
+                    <div class="bulk-notice-msg bulk-queue-full">
+                        <img src="<?php echo(plugins_url( 'shortpixel-image-optimiser/res/img/loading-dark-big.gif' ));?>">
+                        <?php _e("Too many images processing simultaneously for your site, automatically retrying in 1 min. Please don't close this window.",'shortpixel-image-optimiser');?>
                     </div>
                     <div class="bulk-notice-msg bulk-error" id="bulk-error-template">
                         <div style="float: right; margin-top: -4px; margin-right: -8px;">
@@ -760,6 +782,7 @@ class ShortPixelView {
         $createWebp = ($settings->createWebp ? 'checked' : '');
         $autoMediaLibrary = ($settings->autoMediaLibrary ? 'checked' : '');
         $optimizeRetina = ($settings->optimizeRetina ? 'checked' : '');
+        $optimizePdfs = ($settings->optimizePdfs ? 'checked' : '');
         ?>
         <div class="wp-shortpixel-options">
         <?php if(!$this->ctrl->getVerifiedKey()) { ?>
@@ -882,6 +905,12 @@ class ShortPixelView {
                     </td>
                 </tr>
                 <tr>
+                    <th scope="row"><label for="optimizePdfs"><?php _e('Optimize PDFs','shortpixel-image-optimiser');?></label></th>
+                    <td>
+                        <input name="optimizePdfs" type="checkbox" id="optimizePdfs" <?php echo( $optimizePdfs );?>> <?php _e('Optimize PDF documents.','shortpixel-image-optimiser');?>
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row"><label for="authentication"><?php _e('HTTP AUTH credentials','shortpixel-image-optimiser');?></label></th>
                     <td>
                         <input name="siteAuthUser" type="text" id="siteAuthUser" value="<?php echo( $settings->siteAuthUser );?>" class="regular-text" placeholder="<?php _e('User','shortpixel-image-optimiser');?>"><br>
@@ -951,9 +980,13 @@ class ShortPixelView {
                 <tr>
                     <th scope="row" bgcolor="#ffffff"><label for="apiQuota"><?php _e('Your monthly plan','shortpixel-image-optimiser');?>:</label></th>
                     <td bgcolor="#ffffff">
-                        <?php printf(__('%s/month, renews in %s  days, on %s ( <a href="https://shortpixel.com/login/%s" target="_blank">Need More? See the options available</a> )','shortpixel-image-optimiser'),
-                                $quotaData['APICallsQuota'], floor(30 + (strtotime($quotaData['APILastRenewalDate']) - time()) / 86400),
-                                date('M d, Y', strtotime($quotaData['APILastRenewalDate']. ' + 30 days')), $this->ctrl->getApiKey());?><br/>
+                        <?php 
+                            $DateNow = time();
+                            $DateSubscription = strtotime($quotaData['APILastRenewalDate']);
+                            $DaysToReset = 30 - ((($DateNow  - $DateSubscription) / 84600) % 30);
+                            printf(__('%s/month, renews in %s  days, on %s ( <a href="https://shortpixel.com/login/%s" target="_blank">Need More? See the options available</a> )','shortpixel-image-optimiser'),
+                                $quotaData['APICallsQuota'], $DaysToReset,
+                                date('M d, Y', strtotime(date('M d, Y') . ' + ' . $DaysToReset . ' days')), $this->ctrl->getApiKey());?><br/>
                         <?php printf(__('<a href="https://shortpixel.com/login/%s/tell-a-friend" target="_blank">Join our friend referral system</a> to win more credits. For each user that joins, you receive +100 images credits/month.','shortpixel-image-optimiser'),
                                 $this->ctrl->getApiKey());?>
                     </td>
@@ -992,7 +1025,9 @@ class ShortPixelView {
                     <th scope="row"><label for="sizeBackup"><?php _e('Original images are stored in a backup folder. Your backup folder size is now:','shortpixel-image-optimiser');?></label></th>
                     <td>
                         <form action="" method="POST">
-                            <?php echo($backupFolderSize);?>
+                            <?php if ($backupFolderSize === null) { ?> 
+                                <span id='backup-folder-size'>Calculating...</span>
+                            <?php } else { echo($backupFolderSize); }?>
                             <input type="submit"  style="margin-left: 15px; vertical-align: middle;" class="button button-secondary" name="emptyBackup" value="<?php _e('Empty backups','shortpixel-image-optimiser');?>"/>
                         </form>
                     </td>
@@ -1053,9 +1088,18 @@ class ShortPixelView {
                 case 'imgOptimized': 
                     $successText = $this->getSuccessText($data['percent'],$data['bonus'],$data['type'],$data['thumbsOpt'],$data['thumbsTotal'], $data['retinasOpt']);
                     if($extended) {
+                        $missingThumbs = '';
+                        if(count($data['thumbsMissing'])) {
+                            $missingThumbs .= "<br><span style='font-weight: bold;'>" . __("Missing thumbs:", 'shortpixel-image-optimiser');
+                            foreach($data['thumbsMissing'] as $miss) {
+                                $missingThumbs .= "<br> &#8226; " . $miss;
+                            }
+                            $missingThumbs .= '</span>';
+                        }
                         $successText .= ($data['webpCount'] ? "<br>+" . $data['webpCount'] . __(" WebP images", 'shortpixel-image-optimiser') : "")
                                 . "<br>EXIF: " . ($data['exifKept'] ? __('kept','shortpixel-image-optimiser') :  __('removed','shortpixel-image-optimiser')) 
-                                . "<br>" . __("Optimized on", 'shortpixel-image-optimiser') . ": " . $data['date']; 
+                                . "<br>" . __("Optimized on", 'shortpixel-image-optimiser') . ": " . $data['date']
+                                . $missingThumbs; 
                     }
                     $this->renderListCell($id, $data['showActions'], 
                             !$data['thumbsOpt'] && $data['thumbsTotal'], $data['thumbsTotal'], $data['backup'], $data['type'], $successText);

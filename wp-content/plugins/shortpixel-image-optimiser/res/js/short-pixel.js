@@ -11,6 +11,10 @@ jQuery(document).ready(function($){
     
     ShortPixel.setOptions(ShortPixelConstants);
 
+    if(jQuery('#backup-folder-size').length) {
+        jQuery('#backup-folder-size').html(ShortPixel.getBackupSize());
+    }
+    
     if( ShortPixel.MEDIA_ALERT == 'todo' && jQuery('div.media-frame.mode-grid').length > 0) {
         //the media table is not in the list mode, alert the user
         jQuery('div.media-frame.mode-grid').before('<div id="short-pixel-media-alert" class="notice notice-warning"><p>' 
@@ -135,7 +139,7 @@ var ShortPixel = function() {
     }
     
     function adjustSettingsTabsHeight(){
-        var sectionHeight = jQuery('section#tab-settings .wp-shortpixel-options').height() + 60;
+        var sectionHeight = jQuery('section#tab-settings .wp-shortpixel-options').height() + 90;
         sectionHeight = Math.max(sectionHeight, jQuery('section#tab-adv-settings .wp-shortpixel-options').height() + 20);
         sectionHeight = Math.max(sectionHeight, jQuery('section#tab-resources .area1').height() + 60);
         jQuery('#shortpixel-settings-tabs').css('height', sectionHeight);
@@ -164,7 +168,7 @@ var ShortPixel = function() {
     }
     
     function successMsg(id, percent, type, thumbsCount, retinasCount) {
-        return (percent > 0 ? "<div class='sp-column-info'>" + _spTr.reducedBy + " <span class='percent'><strong>" + percent + "%</strong></span> " : "")
+        return (percent > 0 ? "<div class='sp-column-info'>" + _spTr.reducedBy + " <strong><span class='percent'>" + percent + "%</span></strong> " : "")
              + (percent > 0 && percent < 5 ? "<br>" : '')
              + (percent < 5 ? _spTr.bonusProcessing : '')
              + (type.length > 0 ? " ("+type+")" : "")
@@ -218,13 +222,28 @@ var ShortPixel = function() {
             console.log("Invalid response from server (Error: " + msg + "). Retrying pass " + (ShortPixel.retries + 1) +  "...");
             setTimeout(checkBulkProgress, 5000);
         } else {
-            ShortPixel.bulkShowError(-1,"Invalid response from server received 6 times. Please retry later by reloading this page, or contact support. (Error: " + msg + ")", "");
+            ShortPixel.bulkShowError(-1,"Invalid response from server received 6 times. Please retry later by reloading this page, or <a href='https://shortpixel.com/contact' target='_blank'>contact support</a>. (Error: " + msg + ")", "");
             console.log("Invalid response from server 6 times. Giving up.");                    
         }
     }
     
     function browseContent(browseData) {
         browseData.action = 'shortpixel_browse_content';
+        var browseResponse = "";
+        jQuery.ajax({
+            type: "POST",
+            url: ShortPixel.AJAX_URL, 
+            data: browseData, 
+            success: function(response) {
+                 browseResponse = response;
+            },
+            async: false
+        });
+        return browseResponse;
+    }
+    
+    function getBackupSize() {
+        var browseData = { 'action': 'shortpixel_get_backup_size'};
         var browseResponse = "";
         jQuery.ajax({
             type: "POST",
@@ -277,11 +296,20 @@ var ShortPixel = function() {
         }
         
         notice.css("display", "block");
-
     }
     
     function bulkHideLengthyMsg(){
         jQuery(".bulk-notice-msg.bulk-lengthy").css("display", "none");
+    }
+    
+    function bulkShowMaintenanceMsg(type){
+        var notice = jQuery(".bulk-notice-msg.bulk-" + type);
+        if(notice.length == 0) return;
+        notice.css("display", "block");
+    }
+    
+    function bulkHideMaintenanceMsg(type){
+        jQuery(".bulk-notice-msg.bulk-" + type).css("display", "none");
     }
     
     function bulkShowError(id, msg, fileName, customLink) {
@@ -291,8 +319,12 @@ var ShortPixel = function() {
         notice.attr("id", "bulk-error-" + id);
         if(id == -1) {
             jQuery("span.sp-err-title", notice).remove();
+            notice.addClass("bulk-error-fatal");
+        } else {
+            jQuery("img", notice).remove();
+            jQuery("#bulk-error-" . id).remove();
         }
-        jQuery("span.sp-err-content", notice).text(msg);
+        jQuery("span.sp-err-content", notice).html(msg);
         var link = jQuery("a.sp-post-link", notice);
         if(customLink) {
             link.attr("href", customLink);
@@ -335,8 +367,11 @@ var ShortPixel = function() {
         retry               : retry,
         initFolderSelector  : initFolderSelector,
         browseContent       : browseContent,
+        getBackupSize       : getBackupSize,
         bulkShowLengthyMsg  : bulkShowLengthyMsg,
         bulkHideLengthyMsg  : bulkHideLengthyMsg,
+        bulkShowMaintenanceMsg  : bulkShowMaintenanceMsg,
+        bulkHideMaintenanceMsg  : bulkHideMaintenanceMsg,
         bulkShowError       : bulkShowError,
         removeBulkMsg       : removeBulkMsg,
         isCustomImageId     : isCustomImageId,
@@ -407,9 +442,29 @@ function checkQuotaExceededAlert() {
  * calls itself until receives an Empty queue message
  */
 function checkBulkProgress() {
-    //the replace stands for malformed urls on some sites, like wp-admin//upload.php which are accepted by the browser.
-    var url = window.location.href.toLowerCase().replace(/\/\//g , "/");
-    var adminUrl = ShortPixel.WP_ADMIN_URL.toLowerCase().replace(/\/\//g , "/");
+    //the replace stands for malformed urls on some sites, like wp-admin//upload.php which are accepted by the browser. 
+    //using a replacer function to avoid replacing the first occurence (https:// ...)
+    var replacer = function(match) {
+        if(!first) {
+            first = true;
+            return match;
+        }
+        return '/';
+    };
+
+    var first = false; //arm replacer
+    var url = window.location.href.toLowerCase().replace(/\/\//g , replacer);
+    
+    first = false; //rearm replacer
+    var adminUrl = ShortPixel.WP_ADMIN_URL.toLowerCase().replace(/\/\//g , replacer);
+    
+    //handle possible Punycode domain names.
+    if(url.search(adminUrl) < 0) {
+        var parser = document.createElement('a');
+        parser.href = url;
+        url = url.replace(parser.protocol + '//' + parser.hostname,  parser.protocol + '//' + parser.hostname.split('.').map(function(part) {return sp_punycode.toASCII(part)}).join('.'));
+    }
+    
     if(   url.search(adminUrl + "upload.php") < 0
        && url.search(adminUrl + "edit.php") < 0
        && url.search(adminUrl + "edit-tags.php") < 0
@@ -517,6 +572,7 @@ function checkBulkProcessingCallApi(){
                     case ShortPixel.STATUS_SUCCESS:
                         if(isBulkPage) {
                             ShortPixel.bulkHideLengthyMsg();
+                            ShortPixel.bulkHideMaintenanceMsg();
                         }
                         var percent = data["PercentImprovement"];
 
@@ -572,8 +628,16 @@ function checkBulkProcessingCallApi(){
                         }
                         setTimeout(checkBulkProgress, 5000);
                         break;
+                    case ShortPixel.STATUS_MAINTENANCE:
+                        ShortPixel.bulkShowMaintenanceMsg('maintenance');
+                        setTimeout(checkBulkProgress, 60000);
+                        break;
+                    case ShortPixel.STATUS_QUEUE_FULL:
+                        ShortPixel.bulkShowMaintenanceMsg('queue-full');
+                        setTimeout(checkBulkProgress, 60000);
+                        break;
                     default:
-                        ShortPixel.retry(e.message);
+                        ShortPixel.retry("Unknown status " + data["Status"] + ". Retrying...");
                         break;
                 }
             }
@@ -655,6 +719,19 @@ function optimizeThumbs(id) {
             setCellMessage(id, typeof data["Message"] !== "undefined" ? data["Message"] : _spTr.thisContentNotProcessable, "");
         }
     });
+}
+
+function dismissShortPixelNoticeExceed(e) {
+    jQuery("#wp-admin-bar-shortpixel_processing").hide();
+    var data = { action  : 'shortpixel_dismiss_notice',
+                 notice_id: 'exceed'};
+    jQuery.get(ShortPixel.AJAX_URL, data, function(response) {
+        data = JSON.parse(response);
+        if(data["Status"] == ShortPixel.STATUS_SUCCESS) {
+            console.log("dismissed");
+        }
+    });
+    e.preventDefault();
 }
 
 function dismissShortPixelNotice(id) {

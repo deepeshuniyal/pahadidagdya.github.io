@@ -3,15 +3,15 @@
 * WP Macchiato Register 'macchiato Recent Posts' widget Functionality
 *
 */
-add_action( 'widgets_init', 'init_wp_macchiato_recent_posts' );
-if ( ! function_exists( 'init_wp_macchiato_recent_posts' ) ) {
-	function init_wp_macchiato_recent_posts() { return register_widget('wp_macchiato_recent_posts'); }
-}
+add_action( 'widgets_init', 'wp_macchiato_init_recent_posts' );
+
+function wp_macchiato_init_recent_posts() { return register_widget('wp_macchiato_recent_posts'); }
 
 class wp_macchiato_recent_posts extends WP_Widget {
 	/** constructor */
-	function wp_macchiato_recent_posts() {
-		parent::WP_Widget( 'wp_macchiato_recent_posts', $name = 'WP Macchiato Recent Post' );
+	function __construct() {
+		// Instantiate the parent object
+		parent::__construct( false, __( 'WP Macchiato Recent Post', 'wp-macchiato' ) );
 	}
 
 	// Widget	
@@ -19,7 +19,7 @@ class wp_macchiato_recent_posts extends WP_Widget {
 		global $post;
 		extract($args);
 		// Widget options
-		$title 	 = apply_filters('widget_title', $instance['title'] ); // Title		
+		$title 	 = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'WP Macchiato Recent Post', 'wp-macchiato' ) : $instance['title'], $instance, $this->id_base ); // Title	
 		/*$cpt 	 = $instance['types'];*/ // Post type(s) 		
 	    $types   = 'post';
 		$number	 = $instance['number']; // Number of posts to show
@@ -45,7 +45,7 @@ class wp_macchiato_recent_posts extends WP_Widget {
                             <span class="meta-info-date"><?php the_time('F j, Y');  ?></span>
                         </div>
                     </li>
-            <?php wp_reset_query(); 
+            <?php wp_reset_postdata(); 
             endwhile; ?>
 		</ul>			
 		<?php endif; ?>			
@@ -83,7 +83,7 @@ class wp_macchiato_recent_posts extends WP_Widget {
 			?>
 			<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"> Title:</label>
-			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if(isset($title)) { echo $title; } ?>" class="widefat" />
+			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if(isset($title)) { echo esc_attr($title); } ?>" class="widefat" />
 			</p>
 			<p>
             	<input type="checkbox" name="<?php echo $this->get_field_name('display_featured_image'); ?>"  <?php checked( $display_featured_image, 1 ); ?> value="1" /> 			

@@ -43,7 +43,7 @@ class ShortPixelListTable extends WP_List_Table {
     function column_default( $item, $column_name ) {
         switch( $column_name ) { 
             case 'name':
-                $title = '<a href="" title="'.$item->folder.'"><strong>' . $item->name . '</strong></a>';
+                $title = '<a href="' . ShortPixelMetaFacade::pathToWebPath($item->folder) . '" title="'.$item->folder.'" target="_blank"><strong>' . $item->name . '</strong></a>';
 
                 $url = ShortPixelMetaFacade::pathToWebPath($item->folder);
                 $actions = array(
@@ -102,7 +102,7 @@ class ShortPixelListTable extends WP_List_Table {
                         if($item->status < 0) {
                             $msg = $item->message . "(" . __('code','shortpixel-image-optimiser') . ": " . $item->status . ")";
                         } else {
-                            $msg = "";
+                            $msg = "<span style='display:none;'>" . $item->status . "</span>";
                         }
                 }
                 return "<div id='sp-cust-msg-C-" . $item->id . "'>" . $msg . "</div>";

@@ -35,6 +35,7 @@ class WPShortPixelSettings {
         'siteAuthUser' => 'wp-short-pixel-site-auth-user',
         'siteAuthPass' => 'wp-short-pixel-site-auth-pass',
         'autoMediaLibrary' => 'wp-short-pixel-auto-media-library',
+        'optimizePdfs' => 'wp-short-pixel-optimize-pdfs',
         
         //optimize other images than the ones in Media Library
         'includeNextGen' => 'wp-short-pixel-include-next-gen',
@@ -100,6 +101,7 @@ class WPShortPixelSettings {
         // the following lines practically set defaults for options if they're not set
         self::getOpt('wp-short-pixel-auto-media-library', 1);
         self::getOpt('wp-short-pixel-optimize-retina', 1);
+        self::getOpt('wp-short-pixel-optimize-pdfs', 1);
         self::getOpt( 'wp-short-pixel-fileCount', 0);
         self::getOpt( 'wp-short-pixel-thumbnail-count', 0);//amount of optimized thumbnails               
         self::getOpt( 'wp-short-pixel-files-under-5-percent', 0);//amount of optimized thumbnails                       
@@ -131,6 +133,12 @@ class WPShortPixelSettings {
         }
         update_option( 'wp-short-pixel-activation-date', time());
         delete_option( 'wp-short-pixel-bulk-last-status');
+        $dismissed = get_option('wp-short-pixel-dismissed-notices', array());
+        if(isset($dismissed['compat'])) {
+            unset($dismissed['compat']);
+            update_option('wp-short-pixel-dismissed-notices', $dismissed);
+        }
+
     }
     
     public static function onDeactivate() {
