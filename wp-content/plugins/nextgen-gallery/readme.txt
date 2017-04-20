@@ -2,11 +2,11 @@
 Contributors: photocrati, imagely
 Tags: wordpress gallery plugin, gallery, nextgen, nextgen gallery, photo gallery, image gallery, photography, slideshow, images, photo, photo album, watermark
 Requires at least: 4.0.0
-Stable tag: 2.2.1
+Stable tag: 2.2.3
 Tested up to: 4.7.3
 License: GPLv2
 
-The most popular WordPress gallery plugin and one of the most popular plugins of all time with over 16.5 million downloads.
+The most popular WordPress gallery plugin and one of the most popular plugins of all time with over 17 million downloads.
 
 == Description ==
 
@@ -186,6 +186,15 @@ For more information, feel free to visit the official website for the NextGEN Ga
 
 
 == Changelog ==
+
+= V2.2.3 - 04.05.2017 =
+* Fixed:    E_WARNING on Gallery Settings page due to improper use of array_combine() on PHP <= 5.3
+
+= V2.2.2 -  04.04.2017 =
+* Fixed:    Hyperlinks in image descriptions
+* Fixed:    WordPress SEO sitemap image count
+* Fixed:    Removed id parameter in shortcodes
+* Fixed:    Fatal error in Freemius code
 
 = V2.2.1 - 03.13.2017 =
 * NEW:      Template mechanism for all display types

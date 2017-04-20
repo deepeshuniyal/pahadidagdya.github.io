@@ -2435,8 +2435,8 @@ msgid "Server Settings"
 msgstr "Serverinställningar"
 
 #: products/photocrati_nextgen/modules/ngglegacy/admin/overview.php:97
-msgid "NextGEN Gallery is one of the most popular WordPress plugins of all time with over 12 million downloads."
-msgstr "NextGEN Gallery är en av de mest populära WordPress-tilläggen genom tiderna med över 12 miljoner nedladdningar."
+msgid "NextGEN Gallery is one of the most popular WordPress plugins of all time with over 17 million downloads."
+msgstr "NextGEN Gallery är en av de mest populära WordPress-tilläggen genom tiderna med över 17 miljoner nedladdningar."
 
 # Missed by NextGEN, translated string is displayed.
 #: products/photocrati_nextgen/modules/ngglegacy/admin/overview.php:97

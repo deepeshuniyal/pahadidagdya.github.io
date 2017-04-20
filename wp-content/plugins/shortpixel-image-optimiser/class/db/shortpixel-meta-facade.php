@@ -49,7 +49,7 @@ class ShortPixelMetaFacade {
         $path = get_attached_file($ID);
         return new ShortPixelMeta(array(
                     "id" => $ID,
-                    "name" => basename($path),
+                    "name" => ShortPixelAPI::MB_basename($path),
                     "path" => $path,
                     "webPath" => (isset($rawMeta["file"]) ? $rawMeta["file"] : null),
                     "thumbs" => (isset($rawMeta["sizes"]) ? $rawMeta["sizes"] : array()),
@@ -84,7 +84,7 @@ class ShortPixelMetaFacade {
         return $rawMeta;
     }
     
-    function updateMeta($newMeta = null) {
+    function updateMeta($newMeta = null, $replaceThumbs = false) {
         if($newMeta) {
             $this->meta = $newMeta;
         }
@@ -100,7 +100,16 @@ class ShortPixelMetaFacade {
                 $rawMeta = $this->sanitizeMeta(wp_get_attachment_metadata($_ID));
 
                 if(is_array($rawMeta['sizes'])) {
-                    $rawMeta['sizes'] = array_merge($rawMeta['sizes'], $this->meta->getThumbs());
+                    if($replaceThumbs) {
+                        $rawMeta['sizes'] = $this->meta->getThumbs();                    
+                    } else {
+                        //use this instead of array_merge because we don't want to duplicate numeric keys
+                        foreach($this->meta->getThumbs() as $key => $val) {
+                            if(!isset($rawMeta['sizes'][$key])) {
+                                $rawMeta['sizes'][$key] = $val;
+                            }
+                        }
+                    }
                 }
 
                 if(null === $this->meta->getCompressionType()) {
@@ -145,7 +154,7 @@ class ShortPixelMetaFacade {
                 if($this->meta->getThumbsTodo()) {
                     $rawMeta['ShortPixel']['thumbsTodo'] = true;
                 } else {
-                    if($this->meta->getStatus() > 0) {
+                    if($this->meta->getStatus() > 1) {
                         $rawMeta['ShortPixelImprovement'] = "".round($this->meta->getImprovementPercent(),2);
                     }
                     unset($rawMeta['ShortPixel']['thumbsTodo']);

@@ -5,7 +5,7 @@ Tags: image optimizer, image optimization, compress pdf, compress jpeg, compress
 
 Requires at least: 3.2.0
 Tested up to: 4.7
-Stable tag: 4.2.7
+Stable tag: 4.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -216,6 +216,16 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 9. Check other optimized images status - themes or other plugins' images. (Media>Other Media)
 
 == Changelog ==
+
+= 4.2.9 =
+
+* fix bug when thumbnails had numeric indexes in the sizes metadata array
+* fix bug when bulk reoptimizing on some specific conditions
+
+= 4.2.8 =
+
+* fix bug when searching for thumbanils of files with same prefix
+* fix bug when several successive images have all files missing
 
 = 4.2.7 =
 

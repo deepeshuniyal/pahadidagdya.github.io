@@ -2423,7 +2423,7 @@ class Mixin_Display_Type_Form extends Mixin
             /* Scan for template files and create array */
             $files = scandir($dir);
             $template_files = preg_grep('/^.+\\-template.php$/i', $files);
-            $template_files = array_combine($template_files, $template_files);
+            $template_files = $template_files ? array_combine($template_files, $template_files) : array();
             /* For custom templates only, append directory name placeholder */
             foreach ($template_files as $key => $value) {
                 if ($dir_name !== 'default') {

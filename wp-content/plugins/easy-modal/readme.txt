@@ -1,16 +1,25 @@
 === Easy Modal ===
-Contributors: danieliser, waltmesser
-Author URI: http://wizardinternetsolutions.com
-Plugin URI: https://easy-modal.com
+Contributors: danieliser, wppopupmaker
+Author URI: https://wizardis.com/
+Plugin URI: https://wppopupmaker.com/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQTG2JYUKSLFW
 Tags: modal,modal box,modal form,modal window,popup,popup box,popup form,popup window,ajax forms, lightbox
-Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 2.0.17
+Requires at least: 3.3.0
+Tested up to: 4.7.3
+Stable tag: 2.1.0
+
 The #1 WordPress Popup Plugin! Make glorious & powerful popups and market your content like never before - all in minutes!
 
 == Description ==
-Easy Modal 3.0 has transformed into Popup Maker! Popup Maker delivers the ultimate, most versatile, all-in-one popup plugin to WordPress.
+
+Did you know, that Easy Modal has a fancy new replacement called **[Popup Maker](https://wordpress.org/plugins/popup-maker/)**? It is the highest user rated popup & modal plugin available for WordPress.
+
+* Unlimited themes
+* Precision Targeting, Triggers & Cookies
+* Customize everything
+* Full line of extensions
+* Extensive Documentation & Developer APIs
+* [Learn more](https://wordpress.org/plugins/popup-maker/)!
 
 We hope you enjoy using Popup Maker to destroy your old conversion rates!
 
@@ -18,16 +27,18 @@ We hope you enjoy using Popup Maker to destroy your old conversion rates!
 
 If you're an existing Easy Modal user, transitioning from Easy Modal to Popup Maker is a snap with our custom Importer! [See How!](https://wppopupmaker.com/kb/upgrading-easy-modal-popup-maker "Upgrade from Easy Modal to Popup Maker")
 
-If you own Easy Modal Addons, you can upgrade to Popup Maker for free.
-* [Yes, I want to upgrade for free!](https://wppopupmaker.com/easy-modal-customer-upgrade "Upgrade Your Easy Modal Product for Free") (recommended)
-* No thanks! I just [need support on my Easy Modal product](https://easy-modal.com/support "Get Support on Your Easy Modal Product").
-
 == Installation ==
 1. Login to WordPress and update to/install EasyModal version 2.0.13.
 2. For current users, settings from previously existing functionality will be imported to the appropriate Addons containing respective functionality automatically.
 4. Theme, customize, and make a popup in minutes.
 
 == Changelog ==
+
+= v2.1.0 =
+* Tweak: Added a dismissible notice to the admin to let users know about **[Popup Maker](https://wordpress.org/plugins/popup-maker/)**.
+* Fix: Patched minor security vulnerability.
+  * Discovered with DefenseCode ThunderScan Source Code Security Analyzer by Neven Biruski
+  * This can only be exploited by a user who already has access to the admin with a valid nonce.
 
 = v2.0.17 =
 * Tweak: Updated language domain information for upcoming translation by glotpress.

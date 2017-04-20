@@ -1,6 +1,15 @@
 NextGEN Gallery
 by Imagely
 
+= V2.2.3 - 04.05.2017 =
+* Fixed:    E_WARNING on Gallery Settings page due to improper use of array_combine() on PHP <= 5.3
+
+= V2.2.2 -  04.04.2017 =
+* Fixed:    Hyperlinks in image descriptions
+* Fixed:    WordPress SEO sitemap image count
+* Fixed:    Removed id parameter in shortcodes
+* Fixed:    Fatal error in Freemius code
+
 = V2.2.1 - 03.13.2017 =
 * NEW:      Template mechanism for all display types
 * NEW:      Review notices

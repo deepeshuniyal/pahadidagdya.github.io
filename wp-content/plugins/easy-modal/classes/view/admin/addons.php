@@ -1,12 +1,16 @@
 <?php class EModal_View_Admin_Addons extends EModal_View {
 	public function output()
 	{
-		extract($this->values);?>
+		extract($this->values);
+
+		?>
 		<div class="wrap">
 			<h2><?php esc_html_e(__($title, 'easy-modal' ) );?></h2>
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder">
 					<div id="post-body-content"><?php
+                        /*
+
 					    $addons = EModal_License::available_addons();?>
 					    <ul class="addons-available">
 					        <?php
@@ -102,6 +106,21 @@
 						        <?php endforeach;				
 							}?>
 				    </ul>
+
+                        */
+
+                        $url = esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=popup-maker' ), 'install-plugin_popup-maker' ) );  ?>
+                        <p>Did you know, that Easy Modal has a fancy new replacement called <strong><a href="https://wordpress.org/plugins/popup-maker/" target="_blank">Popup Maker</a></strong>? It is the highest user rated popup & modal plugin available for WordPress.</p>
+                        <ul class="ul-square">
+                            <li>Unlimited themes</li>
+                            <li>Precision Targeting, Triggers & Cookies</li>
+                            <li>Customize everything</li>
+                            <li>Full line of extensions</li>
+                            <li>Extensive Documentation & Developer APIs</li>
+                            <li><a href="https://wordpress.org/plugins/popup-maker/" target="_blank">Learn more</a> or <a href="<?php echo esc_url( $url ); ?>">Install it now!</a></li>
+                        </ul>
+
+                        <p>Easy Modal's addons have not been available for some time, for any premium functionality we recommend you move to Popup Maker.</p>
 					</div>
 				</div>
 				<br class="clear"/>

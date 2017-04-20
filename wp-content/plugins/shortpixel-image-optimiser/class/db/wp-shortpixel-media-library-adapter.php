@@ -141,9 +141,33 @@ class WpShortPixelMediaLbraryAdapter {
         return $count;
     }
     
-    public static function thumbsSearchPattern($mainFile) {
+    public static function cleanupFoundThumbs($itemHandler) {
+        $meta = $itemHandler->getMeta();
+        $sizesAll = $meta->getThumbs();
+        $sizes = array();
+        $files = array();
+        foreach($sizesAll as $key => $size) {
+           if(strpos($key, ShortPixelMeta::FOUND_THUMB_PREFIX) === 0) continue;
+           if(in_array($size['file'], $files)) continue;
+           $sizes[$key] = $size;
+           $files[] = $size['file'];
+        }
+        $meta->setThumbs($sizes);
+        $itemHandler->updateMeta($meta, true);
+    }
+    
+    public static function findThumbs($mainFile) {
         $ext = pathinfo($mainFile, PATHINFO_EXTENSION);
-        return substr($mainFile, 0, strlen($mainFile) - strlen($ext) - 1) . "*[0-9]x*[0-9]." . $ext;
+        $base = substr($mainFile, 0, strlen($mainFile) - strlen($ext) - 1);
+        $pattern = '/' . preg_quote($base, '/') . '-\d+x\d+\.'. $ext .'/';
+        $thumbsCandidates = @glob($base . "-*." . $ext);
+        $thumbs = array();
+        foreach($thumbsCandidates as $th) {
+            if(preg_match($pattern, $th)) {
+                $thumbs[]= $th;
+            }
+        }
+        return $thumbs;
     }
 
     protected static function getOptimalChunkSize() {

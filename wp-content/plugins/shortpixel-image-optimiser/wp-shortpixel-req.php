@@ -5,6 +5,7 @@ if(defined('SHORTPIXEL_DEBUG') && SHORTPIXEL_DEBUG === true) {
     define('SHORTPIXEL_DEBUG', false);
 }
 
+require_once('class/wp-short-pixel.php');
 require_once('class/wp-shortpixel-settings.php');
 require_once('shortpixel_api.php');
 require_once('class/shortpixel_queue.php');

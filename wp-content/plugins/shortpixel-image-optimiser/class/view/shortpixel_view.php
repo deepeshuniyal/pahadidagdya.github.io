@@ -907,7 +907,7 @@ class ShortPixelView {
                 <tr>
                     <th scope="row"><label for="optimizePdfs"><?php _e('Optimize PDFs','shortpixel-image-optimiser');?></label></th>
                     <td>
-                        <input name="optimizePdfs" type="checkbox" id="optimizePdfs" <?php echo( $optimizePdfs );?>> <?php _e('Optimize PDF documents.','shortpixel-image-optimiser');?>
+                        <input name="optimizePdfs" type="checkbox" id="optimizePdfs" <?php echo( $optimizePdfs );?>> <?php _e('Automatically optimize PDF documents.','shortpixel-image-optimiser');?>
                     </td>
                 </tr>
                 <tr>

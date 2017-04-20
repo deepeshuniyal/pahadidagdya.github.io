@@ -43,6 +43,11 @@ class ShortPixelAPI {
      * @return response from wp_remote_post or error
      */
     public function doRequests($URLs, $Blocking, $itemHandler, $compressionType = false, $refresh = false) {
+        
+        if(!count($URLs)) {
+            throw new Exception(__('Image files are missing.','shortpixel-image-optimiser'));
+        }
+        
         $requestParameters = array(
             'plugin_version' => PLUGIN_VERSION,
             'key' => $this->_settings->apiKey,
