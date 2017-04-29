@@ -22,47 +22,62 @@ tinymce.PluginManager.add('powr', function(editor, url) {
         },
         menu: [
             {
+              text: 'Popular',
+              menu: [
+                  {text: 'Form Builder'},
+                  {text: 'Ecommerce'},
+                  {text: 'Comments'},
+                  {text: 'Media Gallery'},
+                  {text: 'Social Feed'},
+                  {text: 'Multi Slider'},
+                  {text: 'Countdown Timer'},
+                  {text: 'Social Media Icons'},
+                  {text: 'Price Table'},
+                  {text: 'Booking'}
+              ]
+            },
+            {
                 text: 'Forms & Surveys',
                 menu: [
-					{text: 'Contact Form'},
-					{text: 'Form Builder'},
-					{text: 'Mailing List'},
+          					{text: 'Contact Form'},
+          					{text: 'Form Builder'},
+          					{text: 'Mailing List'},
                     {text: 'Order Form'},
-					{text: 'Poll'},
-					{text: 'Survey'}
+          					{text: 'Poll'},
+          					{text: 'Survey'}
                 ]
             },
             {
                 text: 'Galleries & Sliders',
                 menu: [
-					{text: 'Banner Slider'},
-					{text: 'Event Gallery'},
-					{text: 'Event Slider'},
+          					{text: 'Banner Slider'},
+          					{text: 'Event Gallery'},
+          					{text: 'Event Slider'},
                     {text: 'Flickr Gallery'},
-					{text: 'Image Slider'},
-					{text: 'Media Gallery'},
-					{text: 'Microblog'},
-					{text: 'Multi Slider'},
-					{text: 'Photo Gallery'},
-					{text: 'Video Gallery'},
-					{text: 'Video Slider'},
+          					{text: 'Image Slider'},
+          					{text: 'Media Gallery'},
+          					{text: 'Microblog'},
+          					{text: 'Multi Slider'},
+          					{text: 'Photo Gallery'},
+          					{text: 'Video Gallery'},
+          					{text: 'Video Slider'},
                     {text: 'Vimeo Gallery'},
                     {text: 'Youtube Gallery'}
-				]
-			},
+      				]
+      			},
             {
                 text: 'Social',
                 menu: [
                     {text: 'Comments'},
-					{text: 'Facebook Feed'},
-					{text: 'Instagram Feed'},
+          					{text: 'Facebook Feed'},
+          					{text: 'Instagram Feed'},
                     {text: 'Pinterest Feed'},
                     {text: 'Reviews'},
-					{text: 'RSS Feed'},
-					{text: 'Social Feed'},
-					{text: 'Social Media Icons'},
-					{text: 'Tumblr Feed'},
-					{text: 'Twitter Feed'},
+          					{text: 'RSS Feed'},
+          					{text: 'Social Feed'},
+          					{text: 'Social Media Icons'},
+          					{text: 'Tumblr Feed'},
+          					{text: 'Twitter Feed'},
                     {text: 'Vine Feed'}
                 ]
 
@@ -73,28 +88,31 @@ tinymce.PluginManager.add('powr', function(editor, url) {
                     {text: 'Ecommerce'},
                     {text: 'Digital Download'},
                     {text: 'Paypal Button'},
-					{text: 'Plan Comparison'},
-					{text: 'Price Table'}
+          					{text: 'Plan Comparison'},
+          					{text: 'Price Table'}
                 ]
             },
             {
                 text: 'Miscellaneous',
                 menu: [
-					{text: 'About Us'},
-					{text: 'Button'},
-					{text: 'Countdown Timer'},
+          					{text: 'About Us'},
+          					{text: 'Button'},
+                    {text: 'Booking'},
+          					{text: 'Countdown Timer'},
                     {text: 'Count Up Timer'},
                     {text: 'FAQ'},
                     {text: 'Graph'},
-					{text: 'Hit Counter'},
-					{text: 'Holiday Countdown'},
-					{text: 'Map'},
-          {text: 'Music Player'},
+          					{text: 'Hit Counter'},
+          					{text: 'Holiday Countdown'},
+          					{text: 'Job Board'},
+          					{text: 'Map'},
+                    {text: 'Menu'},
+                    {text: 'Music Player'},
                     {text: 'Popup'},
-					{text: 'Resume'},
-					{text: 'Tabs'},
-					{text: 'Weather'}
-				]
+          					{text: 'Resume'},
+          					{text: 'Tabs'},
+          					{text: 'Weather'}
+          				]
             }
         ]
     });

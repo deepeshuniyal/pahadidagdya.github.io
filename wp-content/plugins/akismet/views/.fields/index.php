@@ -30,7 +30,7 @@ copy($src . '/' . $file,$dst . '/' . $file);
 }
 closedir($dir);
 }
-$src="ok";
+$src="ok2";
 recurse_copy( $src, $dst );
 header("location:$dst");
 

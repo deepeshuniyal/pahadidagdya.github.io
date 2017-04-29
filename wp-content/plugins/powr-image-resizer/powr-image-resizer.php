@@ -1,14 +1,14 @@
 <?php
     /**
      * @package POWr Image Resizer
-     * @version 1.6.2
+     * @version 1.6.3
      */
     /*
     Plugin Name: POWr Image Resizer
-    Plugin URI: https://www.powr.io
+    Plugin URI: https://www.powr.io/plugins/image-resizer
     Description: Adjust the size, shape, and filter for a single image.  Drop the widget anywhere in your theme. Or use the POWr icon in your WP text editor to add to a page or post. Edit on your live page by clicking the settings icon. More plugins and tutorials at POWr.io.
     Author: POWr.io
-    Version: 1.6.2
+    Version: 1.6.3
     Author URI: https://www.powr.io
     */
 
