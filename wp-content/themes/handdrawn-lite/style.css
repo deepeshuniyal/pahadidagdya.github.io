@@ -87,7 +87,7 @@ th, td { padding: 0.4rem; }
 
 .main-header { background-color: #AD1457; color: #f8ecc9; }
 .main-header a { color: #f8ecc9; }
-.main-header .menu { font-size: 1.4rem; }
+.main-header .menu { font-size: 1.2rem; }
 
 .top-bar .dropdown.menu > li.is-dropdown-submenu-parent > a:after, .top-bar ul:first-of-type .dropdown.menu > li.is-dropdown-submenu-parent > a:after { border-color: #f8ecc9 transparent transparent; }
 .top-bar .is-dropdown-submenu .is-dropdown-submenu-parent.opens-right > a:after, .top-bar ul:first-of-type .is-dropdown-submenu .is-dropdown-submenu-parent.opens-right > a:after { border-color: transparent transparent transparent #f8ecc9; }
@@ -351,7 +351,7 @@ blockquote p { padding: 1.875rem 0; }
 .sidebar .widget-container li { list-style-type: none; }
 .sidebar .widget-title { margin-bottom: 1rem; text-align: center; }
 .sidebar .widget-title h3 { color: #AD1456; display: inline-block; font-size: 1.7rem; padding: 0.625rem 1.000rem 0.625rem; position: relative; text-align: center; z-index: 3; }
-@media screen and (min-width: 48rem) { .sidebar .widget-title h3 { font-size: 2rem; } }
+@media screen and (min-width: 48rem) { .sidebar .widget-title h3 { font-size: 1.8rem; } }
 .sidebar .search-fill { fill: #AD1457; }
 .sidebar .icon-search { color: #AD1457; }
 
@@ -371,7 +371,7 @@ blockquote p { padding: 1.875rem 0; }
 
 body, .comment-respond textarea { font-family: 'Source Sans Pro', sans-serif; }
 
-.handy { font-family: 'Caveat'; }
+.handy { font-family: 'Times New Roman'; }
 
 @font-face { font-family: 'icomoon'; src: url("font/icomoon.eot?hyasps"); src: url("font/icomoon.eot?hyasps#iefix") format("embedded-opentype"), url("font/icomoon.ttf?hyasps") format("truetype"), url("font/icomoon.woff?hyasps") format("woff"), url("font/icomoon.svg?hyasps#icomoon") format("svg"); font-weight: normal; font-style: normal; }
 
