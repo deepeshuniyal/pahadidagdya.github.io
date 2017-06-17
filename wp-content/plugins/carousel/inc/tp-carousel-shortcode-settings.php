@@ -17,7 +17,7 @@ small { font-size:11px; }
 
 <div class="wrap csp-admin" style="padding:0px; margin-top:20px;">
 
-    <h2><?php _e('Shortcode Option Settings', 'carosuelfree'); ?></h2>
+    <h2><?php _e('Shortcode Option Settings - <a target="_blank" href="https://themepoints.com/product/carousel-shortcode-pro/" style="color:red;font-weight:bold;text-decoration: none; outline: none;">Upgrade Pro</a>', 'carosuelfree'); ?></h2>
     <?php if ( isset($_REQUEST['settings-updated']) ) echo '<div id="message" class="updated fade"><p><strong>' . 'Shortcode' . '&nbsp;-&nbsp;' . __('Saved.','carosuelfree') . '</strong></p></div>' ?>
 
     <form method="post" action="options.php" id="form_shortcode">
@@ -385,6 +385,8 @@ small { font-size:11px; }
         </table>
 
         <br><br>
+        <strong><a target="_blank" href="https://themepoints.com/product/carousel-shortcode-pro/" style="color:red;font-weight:bold;text-decoration: none; outline: none;">View Pro Features</a>
+        </strong><br><br>
         <strong><?php _e('Note:- Save Changes. After copy and paste the shortcode below in a Post, Page or Widget (Text)', 'carosuelfree'); ?>
         </strong>
         <br><br>

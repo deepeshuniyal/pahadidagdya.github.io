@@ -1,33 +1,44 @@
 <?php
-/*
-Plugin Name:Carousels Ultimate
-Plugin URI: http://themepoints.com
-Description: Carousels ultimate allows you to use shortcode to display carousel, slider, post slider in post/page or widgets.
-Version: 1.4
-Author: themepoints
-Author URI: http://themepoints.com
-TextDomain: carosuelfree
-License: GPLv2
-*/
+	/*
+	Plugin Name:Carousels Ultimate
+	Plugin URI: http://themepoints.com/carouselpro/
+	Description: Carousel Ultimate WordPress Plugin allows you to easily create Responsive carousel/slider/post slider/logo showcase/ team etc. You can easily display multiple responsive carousel, slider, team, logo showcase, post slider in a same page or widget’s.
+	Version: 1.6
+	Author: themepoints
+	Author URI: https://themepoints.com
+	TextDomain: carosuelfree
+	License: GPLv2
+	*/
 
 
-if ( ! defined( 'ABSPATH' ) )
-	die( "Can't load this file directly" );
+	if ( ! defined( 'ABSPATH' ) )
+		die( "Can't load this file directly" );
+
+	define('THEMEPOINTS_CAROUSEL_PLUGIN_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
+	define('themepoints_carousel_plugin_dir', plugin_dir_path( __FILE__ ) );
+
+	add_filter('widget_text', 'do_shortcode');
+
+
+	// added version 1.3
+	require_once( plugin_dir_path( __FILE__ ) . 'inc/tp-carousel-settings.php');
+
+
+
+	function tp_ultimate_carousel_load_textdomain(){
+		load_plugin_textdomain('carosuelfree', false, dirname( plugin_basename( __FILE__ ) ) .'/languages/' );
+	}
+	add_action('plugins_loaded', 'tp_ultimate_carousel_load_textdomain');
 	
-define('THEMEPOINTS_CAROUSEL_PLUGIN_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
-define('themepoints_carousel_plugin_dir', plugin_dir_path( __FILE__ ) );
-
-add_filter('widget_text', 'do_shortcode');
-
-// added version 1.3
-require_once( plugin_dir_path( __FILE__ ) . 'inc/tp-carousel-settings.php');
-
-
-
-function tp_ultimate_carousel_load_textdomain(){
-	load_plugin_textdomain('carosuelfree', false, dirname( plugin_basename( __FILE__ ) ) .'/languages/' );
-}
-add_action('plugins_loaded', 'tp_ultimate_carousel_load_textdomain');
+	
+	function tp_ultimate_carousel_version_link( $links ) {
+	   $links[] = '<a style="color:red;font-weight:bold;" href="https://themepoints.com/product/carousel-shortcode-pro/" target="_blank">Upgrade Pro</a>';
+	   return $links;
+	}
+	add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'tp_ultimate_carousel_version_link' );	
+	
+	
+	
 
 /* carousels ultimate stylesheet */
 function tp_ultimate_carousel_script()
@@ -73,10 +84,9 @@ add_action( 'admin_init', 'tp_ultimate_carousel_register_settings' );
 
 function tp_ultimate_add_google_fonts() {
 
-wp_enqueue_style( 'example-google-fonts1', 'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300', false );
+wp_enqueue_style( 'example-google-fonts1', 'https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300', false );
 wp_enqueue_style( 'example-google-fonts2', 'https://fonts.googleapis.com/css?family=Tangerine', false ); 
 }
-
 add_action( 'wp_enqueue_scripts', 'tp_ultimate_add_google_fonts' );
 
 
@@ -225,7 +235,7 @@ add_action( 'init', 'tp_carousel_main_custom_post_post_build_taxonomies', 0);
 function tp_carousel_main_custom_post_wordpress_meta_box() {
 	add_meta_box(
 		'custom_meta_box', // $id
-		'Carousel Details', // $title
+		'Carousel Details - <a target="_blank" href="https://themepoints.com/product/carousel-shortcode-pro/">Available Pro</a>', // $title
 		'tp_carousel_main_custom_post_inner_custom_box', // $callback
 		'tpmfcarousel', // $page
 		'normal', // $context
@@ -1462,6 +1472,165 @@ function tp_carousel_main_custom_register_add_tinymce_plugin($buttons) {
    array_push($buttons, "carousel_tinymce_added_button");
    return $buttons;
 }
+
+
+
+
+
+
+
+
+	function tp_carousel_main_free_redirect_options_page( $plugin ) {
+		if ( $plugin == plugin_basename( __FILE__ ) ) {
+			exit( wp_redirect( admin_url( 'options-general.php' ) ) );
+		}
+	}
+
+	add_action( 'activated_plugin', 'tp_carousel_main_free_redirect_options_page' );	
+
+
+
+
+	// admin menu
+	function tp_carousel_main_free_plugins_options_framwrork() {
+		add_options_page( 'Carousel Pro Features', '', 'manage_options', 'tps-carousel-features', 'tps_caro_main_frees_options_framework' );
+	}
+	add_action( 'admin_menu', 'tp_carousel_main_free_plugins_options_framwrork' );
+
+
+	if ( is_admin() ) : // Load only if we are viewing an admin page
+
+	function tp_caromain_options_framework_settings() {
+		// Register settings and call sanitation functions
+		register_setting( 'accordion_free_options', 'tp_accordion_free_options', 'tpls_accordion_free_options' );
+	}
+	add_action( 'admin_init', 'tp_caromain_options_framework_settings' );
+
+
+
+	function tps_caro_main_frees_options_framework() {
+
+		if ( ! isset( $_REQUEST['updated'] ) ) {
+			$_REQUEST['updated'] = false;
+		} ?>
+
+
+		<div class="wrap about-wrap">
+			<h1>Welcome to Carousel Ultimate - V1.6</h1>
+
+			<div class="about-text">Thank you for using Carousel Ultimate plugin free version.</div>
+			<strong>Submit a Review</strong>			
+			<hr>
+
+			<p>We spend plenty of time to develop a plugin like this and give you freely. If you like this plugin, please <a style="color:red;font-weight:bold" href="https://wordpress.org/plugins/carousel/#reviews" target="_blank">rate it 5 stars</a>. If you have any problems with the plugin, please <a href="https://themepoints.com/questions-answer/" target="_blank">let us know</a> before leaving a review.</p>
+
+			<hr>
+
+			<h3>We create a <a target="_blank" href="https://themepoints.com/product/carousel-shortcode-pro/">premium version</a> of this plugin with some amazing cool features?</h3>
+			<br>
+
+			<hr>
+			<br>
+			<a target="_blank" class="button button-primary load-customize hide-if-no-customize" href="http://themepoints.com/carouselpro/">Live Preview</a>
+			<a target="_blank" class="button button-primary load-customize hide-if-no-customize" href="https://themepoints.com/product/carousel-shortcode-pro/">Unlimited License Only $13</a>
+			<a target="_blank" class="button button-primary load-customize hide-if-no-customize" href="https://themepoints.com/product/carousel-shortcode-pro/">Pro Version Features</a>
+			<br>
+			<br>
+			<hr>
+
+<!-- 			<div class="feature-section two-col">
+				<h2>Premium Version Amazing Features</h2>
+				<div class="col">
+					<ul>
+						<li><span class="dashicons dashicons-yes"></span> All Features of the free version.</li>
+						<li><span class="dashicons dashicons-yes"></span> Fully responsive.</li>
+						<li><span class="dashicons dashicons-yes"></span> 20 Slider Style & 60 Ready Skin.</li>
+						<li><span class="dashicons dashicons-yes"></span> 10 List Style & 30 Ready Skin.</li>
+						<li><span class="dashicons dashicons-yes"></span> 05 Grid Style & 15 Ready Skin.</li>
+						<li><span class="dashicons dashicons-yes"></span> 100+ Ready Shortcode.</li>
+						<li><span class="dashicons dashicons-yes"></span> Highly customized for User Experience.</li>
+						<li><span class="dashicons dashicons-yes"></span> Widget Ready.</li>
+						<li><span class="dashicons dashicons-yes"></span> License: Unlimited Domain</li>
+						<li><span class="dashicons dashicons-yes"></span> Supports unlimited Testimonial per page.</li>
+						<li><span class="dashicons dashicons-yes"></span> Touch & Swipe Enable per page.</li>
+						<li><span class="dashicons dashicons-yes"></span> Display Testimonial by Category.</li>
+						<li><span class="dashicons dashicons-yes"></span> Testimonial order_by (Publish date, Order, Random).</li>
+						<li><span class="dashicons dashicons-yes"></span> Testimonial order (DESC, ASC).</li>
+						<li><span class="dashicons dashicons-yes"></span> Create Testimonial by group.</li>
+						<li><span class="dashicons dashicons-yes"></span> Show all testimonials via a shortcode.</li>
+						<li><span class="dashicons dashicons-yes"></span> Testimonial Slider AutoPlay Option.</li>
+						<li><span class="dashicons dashicons-yes"></span> Testimonial Support Multiple Column.</li>
+						<li><span class="dashicons dashicons-yes"></span> Life Time Self hosted auto updated enable.</li>
+						<li><span class="dashicons dashicons-yes"></span> 24/7 dedicated support forum.</li>
+						<li><span class="dashicons dashicons-yes"></span> Cross-browser compatibility.</li>
+						<li><span class="dashicons dashicons-yes"></span> Use via short-codes.</li>				
+						<li><span class="dashicons dashicons-yes"></span> Well Documentation.</li>				
+						<li><span class="dashicons dashicons-yes"></span> & Many More...</li>				
+					</ul>
+				</div>
+				<div class="col">
+					<ul>
+						<li><span class="dashicons dashicons-yes"></span> Shortcode Parameters :</li>
+						<li><span class="dashicons dashicons-yes"></span> themes</li>
+						<li><span class="dashicons dashicons-yes"></span> navigation</li>
+						<li><span class="dashicons dashicons-yes"></span> navigation_color</li>
+						<li><span class="dashicons dashicons-yes"></span> navigation_bg_color</li>
+						<li><span class="dashicons dashicons-yes"></span> pagination</li>
+						<li><span class="dashicons dashicons-yes"></span> auto_play</li>
+						<li><span class="dashicons dashicons-yes"></span> autoplay_speed</li>
+						<li><span class="dashicons dashicons-yes"></span> text_align</li>
+						<li><span class="dashicons dashicons-yes"></span> stars_color</li>
+						<li><span class="dashicons dashicons-yes"></span> tcontent_color</li>
+						<li><span class="dashicons dashicons-yes"></span> tcontent_size</li>
+						<li><span class="dashicons dashicons-yes"></span> ttitle_color</li>
+						<li><span class="dashicons dashicons-yes"></span> ttitle_size</li>
+						<li><span class="dashicons dashicons-yes"></span> tsubtitle_size</li>
+						<li><span class="dashicons dashicons-yes"></span> tsubtitle_color</li>
+						<li><span class="dashicons dashicons-yes"></span> tbg_color</li>
+						<li><span class="dashicons dashicons-yes"></span> tborder_radious</li>
+						<li><span class="dashicons dashicons-yes"></span> columns_number</li>
+						<li><span class="dashicons dashicons-yes"></span> columns_tablet</li>
+						<li><span class="dashicons dashicons-yes"></span> tsubtitle_color</li>
+						<li><span class="dashicons dashicons-yes"></span> contentbg_color</li>
+						<li><span class="dashicons dashicons-yes"></span> tborder_color</li>
+						<li><span class="dashicons dashicons-yes"></span> And Many More</li>
+					</ul>
+				</div>
+			</div>
+
+			<h2><a href="https://themepoints.com/product/carousel-shortcode-pro/" class="button button-primary button-hero" target="_blank">Unlimited License Only $13</a>
+			</h2> -->
+			<br>
+			<br>
+			<br>
+			<br>
+
+		</div>
+
+		<?php
+	}
+
+
+	endif;  // EndIf is_admin()
+
+
+
+
+	register_activation_hook( __FILE__, 'tps_super_caro_free_plugin_active_hook' );
+	add_action( 'admin_init', 'tps_super_caro_free_main_active_redirect_hook' );
+
+	function tps_super_caro_free_plugin_active_hook() {
+		add_option( 'tps_super_main_plugin_active_free_redirect_hook', true );
+	}
+
+	function tps_super_caro_free_main_active_redirect_hook() {
+		if ( get_option( 'tps_super_main_plugin_active_free_redirect_hook', false ) ) {
+			delete_option( 'tps_super_main_plugin_active_free_redirect_hook' );
+			if ( ! isset( $_GET['activate-multi'] ) ) {
+				wp_redirect( "options-general.php?page=tps-carousel-features" );
+			}
+		}
+	}
 
 
 ?>

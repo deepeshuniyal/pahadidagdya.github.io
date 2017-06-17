@@ -15,7 +15,7 @@
  * Description: A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!
  * Text Domain: wpglobus
  * Domain Path: /languages/
- * Version: 1.7.11
+ * Version: 1.8.0
  * Author: WPGlobus
  * Author URI: https://wpglobus.com/
  * Network: false
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPGLOBUS_VERSION', '1.7.11' );
+define( 'WPGLOBUS_VERSION', '1.8.0' );
 define( 'WPGLOBUS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
@@ -172,10 +172,28 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 
 	/**
 	 * Disable "Redux Blast"
-	 * @see ReduxFramework::__construct
+	 * @see   ReduxFramework::__construct
 	 * (wpglobus/lib/ReduxCore/framework.php:416)
 	 * @since 1.7.9
 	 */
 	$GLOBALS['redux_notice_check'] = 1;
+
+endif;
+
+/**
+ * At the front
+ */
+if ( ! is_admin() && ! WPGlobus_WP::is_doing_ajax() ) :
+
+	/**
+	 * First-time automatic redirect to the primary language specified in the browser.
+	 * @since 1.8.0
+	 */
+
+	/* @noinspection NestedPositiveIfStatementsInspection */
+	if ( isset( WPGlobus::Config()->browser_redirect['redirect_by_language'] ) && WPGlobus::Config()->browser_redirect['redirect_by_language'] ) {
+		require_once dirname( __FILE__ ) . '/includes/class-wpglobus-redirect.php';
+		WPGlobus_Redirect::construct();
+	}
 
 endif;

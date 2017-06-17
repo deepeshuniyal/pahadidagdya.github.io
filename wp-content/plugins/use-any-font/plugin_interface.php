@@ -40,6 +40,7 @@ add_action("admin_print_scripts", 'adminjslibs');
 add_action("admin_print_styles", 'adminCsslibs');
 add_action('wp_enqueue_scripts', 'uaf_client_css');
 add_action('plugins_loaded', 'uaf_update_check');
+add_action('init', 'uaf_editor_setup');
 
 $uaf_disbale_editor_font_list_value = get_option('uaf_disbale_editor_font_list');
 if ($uaf_disbale_editor_font_list_value != 1):
@@ -91,8 +92,8 @@ function uaf_activate(){
 
 function uaf_update_check() { // MUST CHANGE WITH EVERY VERSION
     $uaf_version_check = get_option('uaf_current_version');
-	if ($uaf_version_check != '4.7.2'):
-		update_option('uaf_current_version', '4.7.2');
+	if ($uaf_version_check != '4.7.3'):
+		update_option('uaf_current_version', '4.7.3');
 		if ($uaf_version_check < 4.0):
 			uaf_create_folder();
 			uaf_move_file_to_newPath();
@@ -246,4 +247,6 @@ function uaf_write_css(){
 	update_option('uaf_css_updated_timestamp', time()); // Time entry for stylesheet version
 }
 
-include('includes/uaf_editor_setup.php');
+function uaf_editor_setup(){
+	include('includes/uaf_editor_setup.php');	
+}

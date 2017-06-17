@@ -66,7 +66,7 @@ if ($uaf_api_package == 'lite'){
                         <input name="uaf_api_key" type="text" style="width:350px; margin-left:50px;" />
                         <input type="submit" name="ucf_api_key_submit" class="button-primary" value="Verify" style="padding:2px;" />
                         <br/> <br/>                       
-                        Please keep the API key to start using this plugin. Offer your contribution (Free to $100) and get the API key from <a href="http://dnesscarkey.com/font-convertor/api/" target="_blank">here</a>.<br/>
+                        Please keep the API key to start using this plugin. Offer your contribution (Free for 1 font, $20 to $100) and get the API key from <a href="http://dnesscarkey.com/font-convertor/api/" target="_blank">here</a>.<br/>
                         <?php else: ?>
                         	<span class="active_key"><?php echo $uaf_api_key;  ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Active</span>							<input type="submit" name="ucf_api_key_remove" class="button-primary" value="Remove Key" style="padding:2px; margin-left:20px;" onclick="if(!confirm('<?php echo $delete_confirmation_msg; ?>')){return false;}" />
                         <?php endif;?>

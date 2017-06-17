@@ -41,7 +41,6 @@ function uaf_send_fonts_divi_list($fonts){
 }
 
 // SITE ORIGIN BUILDER
-
 add_filter('siteorigin_widgets_font_families', 'uaf_send_fonts_siteorigin_list',10,2);
 function uaf_send_fonts_siteorigin_list($fonts){
     $fontsRawData 	= get_option('uaf_font_data');
@@ -50,6 +49,44 @@ function uaf_send_fonts_siteorigin_list($fonts){
 	if (!empty($fontsData)):
 		foreach ($fontsData as $key=>$fontData):
 			$fonts_uaf[$fontData['font_name']] = $fontData['font_name'];
+		endforeach;
+	endif;
+  	return array_merge($fonts_uaf,$fonts);
+}
+
+// REDUX Framework
+if (class_exists( 'Redux' ) ) {
+   	global $opt_name;
+	add_filter('redux/'.$opt_name.'/field/typography/custom_fonts', 'uaf_send_fonts_redux_list' );
+}
+
+function uaf_send_fonts_redux_list( $custom_fonts ) {
+	$fontsRawData 	= get_option('uaf_font_data');
+	$fontsData		= json_decode($fontsRawData, true);
+	$fonts_uaf		= array('Use Any Fonts' => array());
+	if (!empty($fontsData)):
+		foreach ($fontsData as $key=>$fontData):
+			$fonts_uaf['Use Any Fonts'][$fontData['font_name']] = $fontData['font_name'];
+		endforeach;
+	endif;
+  	return $fonts_uaf;
+}
+
+
+// X Theme
+add_filter('x_fonts_data', 'uaf_send_fonts_x_theme_list',10,2);
+function uaf_send_fonts_x_theme_list($fonts){
+    $fontsRawData 	= get_option('uaf_font_data');
+	$fontsData		= json_decode($fontsRawData, true);
+	$fonts_uaf		= array();
+	if (!empty($fontsData)):
+		foreach ($fontsData as $key=>$fontData):
+			$fonts_uaf[$fontData['font_name']] = array(
+												'source'  => 'Use Any Font',
+												'family'  => $fontData['font_name'],
+												'stack'   => '"'.$fontData['font_name'].'"',
+												'weights' => array( '400' )
+												);
 		endforeach;
 	endif;
   	return array_merge($fonts_uaf,$fonts);
