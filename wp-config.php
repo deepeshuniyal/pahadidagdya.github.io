@@ -26,10 +26,10 @@ define('DB_NAME', 'pddb');
 define('DB_USER', 'gmst');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'gm123#321');
+define('DB_PASSWORD', 'gm123#123');
 
 /** MySQL hostname */
-define('DB_HOST', 'gmdba.chwqn2uswh9w.us-west-2.rds.amazonaws.com');
+define('DB_HOST', '127.0.0.1');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
@@ -38,7 +38,7 @@ define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 
 /** FTP Settings */
-define("FTP_HOST", "52.24.113.119");
+define("FTP_HOST", "35.154.150.23");
 define("FTP_USER", "ftpuser");
 ##Deny from all
 define("FTP_PASS", "bagoli@123");
