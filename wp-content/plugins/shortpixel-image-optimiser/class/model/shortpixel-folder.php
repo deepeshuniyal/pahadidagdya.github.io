@@ -11,10 +11,13 @@ class ShortPixelFolder extends ShortPixelEntity{
     protected $tsCreated;
     protected $tsUpdated;
     
+    protected $excludePatterns;
+    
     const TABLE_SUFFIX = 'folders';
     
-    public function __construct($data) {
+    public function __construct($data, $excludePatterns = false) {
         parent::__construct($data);
+        $this->excludePatterns = $excludePatterns;
     }
     
     public static function checkFolder($folder, $base) {
@@ -73,7 +76,7 @@ class ShortPixelFolder extends ShortPixelEntity{
         }
         $ignore = array('.','..');
         if(!is_writable($path)) {
-            throw new SpFileRightsException(sprintf(__('Folder %s is not writeable. Please check permissions and try again.','shortpixel-image-optimiser'),$path));
+            throw new ShortPixelFileRightsException(sprintf(__('Folder %s is not writeable. Please check permissions and try again.','shortpixel-image-optimiser'),$path));
         }
         $files = scandir($path);
         foreach($files as $t) {
@@ -81,7 +84,7 @@ class ShortPixelFolder extends ShortPixelEntity{
             if(in_array($t, $ignore)) continue;
             if (is_dir($tpath)) {
                 $size += $this->countFiles($tpath);
-            } elseif(WPShortPixel::isProcessablePath($tpath)) {
+            } elseif(WPShortPixel::_isProcessablePath($tpath, array(), $this->excludePatterns)) {
                 $size++;
             }   
         }
@@ -111,7 +114,7 @@ class ShortPixelFolder extends ShortPixelEntity{
             $tpath = trailingslashit($path) . $t;
             if (is_dir($tpath)) {
                 self::getFileListRecursive($tpath, $fileHandle, $onlyNewerThan);
-            } elseif($add && WPShortPixel::isProcessablePath($tpath)) {
+            } elseif($add && WPShortPixel::_isProcessablePath($tpath, array(), WPShortPixelSettings::getOpt('excludePatterns'))) {
                 fwrite($fileHandle, $tpath . "\n");
             }   
         }
@@ -132,7 +135,7 @@ class ShortPixelFolder extends ShortPixelEntity{
             $tpath = trailingslashit($path) . $t;
             if (is_dir($tpath)) {
                 self::checkFolderContentsRecursive($tpath, $callback);
-            } elseif(   WPShortPixel::isProcessablePath($tpath)
+            } elseif(   WPShortPixel::_isProcessablePath($tpath, array(), WPShortPixelSettings::getOpt('excludePatterns'))
                      && !(in_array($tpath, $reference) && $reference[$tpath]->compressedSize == filesize($tpath))) {
                 $changed[] = $tpath;
             }   
@@ -146,7 +149,7 @@ class ShortPixelFolder extends ShortPixelEntity{
     protected static function getFolderContentsChangeDateRecursive($path, $mtime, $refMtime) {
         $ignore = array('.','..');
         if(!is_writable($path)) {
-            throw new SpFileRightsException(sprintf(__('Folder %s is not writeable. Please check permissions and try again.','shortpixel-image-optimiser'),$path));
+            throw new ShortPixelFileRightsException(sprintf(__('Folder %s is not writeable. Please check permissions and try again.','shortpixel-image-optimiser'),$path));
         }
         $files = scandir($path);
         $mtime = max($mtime, filemtime($path));

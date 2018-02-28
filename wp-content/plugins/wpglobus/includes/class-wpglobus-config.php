@@ -194,6 +194,33 @@ class WPGlobus_Config {
 	public $browser_redirect;
 
 	/**
+	 * Used to temporarily store the language detected from the URL processed by oembed.
+	 * @var  string
+	 * @since 1.8.4
+	 */
+	protected $language_for_oembed = '';
+
+	/**
+	 * Can get it only once.
+	 * @return string
+	 * @since 1.8.4
+	 */
+	public function getAndResetLanguageForOembed() {
+		$to_return = $this->language_for_oembed;
+		$this->language_for_oembed = '';
+		return $to_return;
+	}
+
+	/**
+	 * Setter.
+	 * @param string $language_for_oembed
+	 * @since 1.8.4
+	 */
+	public function setLanguageForOembed( $language_for_oembed ) {
+		$this->language_for_oembed = $language_for_oembed;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -239,8 +266,8 @@ class WPGlobus_Config {
 			 * because it's always `admin-ajax`.
 			 * Therefore, we'll rely on the HTTP_REFERER (if it exists).
 			 */
-			if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
-				$url_to_check = $_SERVER['HTTP_REFERER'];
+			if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) { // WPCS: input var ok, sanitization ok.
+				$url_to_check = $_SERVER['HTTP_REFERER']; // WPCS: input var ok, sanitization ok.
 			}
 		} else {
 			/**
@@ -340,7 +367,24 @@ class WPGlobus_Config {
 	 * @return void
 	 */
 	public function on_load_textdomain() {
-		load_plugin_textdomain( 'wpglobus', false, basename( dirname( dirname( __FILE__ ) ) ) . '/languages' );
+//		load_plugin_textdomain( 'wpglobus', false, basename( dirname( dirname( __FILE__ ) ) ) . '/languages' );
+		self::load_mofile();
+	}
+
+	/**
+	 * Load .MO file from the plugin's `languages` folder.
+	 * Used instead of @see load_plugin_textdomain to ignore translation files from WordPress.org, which are incorrect.
+	 * To force loading from a different place, use the `load_textdomain_mofile` filter.
+	 * @since 1.9.6
+	 *
+	 */
+	protected function load_mofile() {
+		$domain = 'wpglobus';
+		$locale = apply_filters( 'plugin_locale', is_admin() ? get_user_locale() : get_locale(), $domain );
+
+		$mofile = WPGlobus::languages_path() . '/' . $domain . '-' . $locale . '.mo';
+
+		return load_textdomain( $domain, $mofile );
 	}
 
 	/**
@@ -440,7 +484,7 @@ class WPGlobus_Config {
 		 *
 		 * @link wp-admin/?wpglobus-reset-language-table=1
 		 */
-		if ( ! defined( 'DOING_AJAX' ) && ! empty( $_GET['wpglobus-reset-language-table'] ) && is_admin() ) {
+		if ( ! defined( 'DOING_AJAX' ) && ! empty( $_GET['wpglobus-reset-language-table'] ) && is_admin() ) { // WPCS: input var ok, sanitization ok.
 			delete_option( $this->option_language_names );
 		}
 
@@ -611,7 +655,7 @@ class WPGlobus_Config {
 		/**
 		 * WPGlobus devmode.
 		 */
-		if ( isset( $_GET['wpglobus'] ) && 'off' === $_GET['wpglobus'] ) {
+		if ( isset( $_GET['wpglobus'] ) && 'off' === $_GET['wpglobus'] ) { // WPCS: input var ok, sanitization ok.
 			$this->toggle = 'off';
 		} else {
 			$this->toggle = 'on';
@@ -624,10 +668,10 @@ class WPGlobus_Config {
 		 * @see WPGlobus::on_save_post_data
 		 */
 		if (
-			empty( $_SERVER['QUERY_STRING'] )
-			&& isset( $_SERVER['HTTP_REFERER'] )
+			empty( $_SERVER['QUERY_STRING'] ) // WPCS: input var ok, sanitization ok.
+			&& isset( $_SERVER['HTTP_REFERER'] ) // WPCS: input var ok, sanitization ok.
 			&& WPGlobus_WP::is_pagenow( 'post.php' )
-			&& false !== strpos( $_SERVER['HTTP_REFERER'], 'wpglobus=off' )
+			&& false !== strpos( $_SERVER['HTTP_REFERER'], 'wpglobus=off' ) // WPCS: input var ok, sanitization ok.
 		) {
 			$this->toggle = 'off';
 		}

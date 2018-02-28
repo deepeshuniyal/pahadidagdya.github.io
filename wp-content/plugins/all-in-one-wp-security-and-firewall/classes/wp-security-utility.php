@@ -1,4 +1,7 @@
 <?php
+if(!defined('ABSPATH')){
+    exit;//Exit if accessed directly
+}
 
 class AIOWPSecurity_Utility
 {
@@ -432,12 +435,13 @@ class AIOWPSecurity_Utility
     {
         global $wpdb;
         $login_lockdown_table = AIOWPSEC_TBL_LOGIN_LOCKDOWN;
-        $locked_ips = $wpdb->get_results("SELECT * FROM $login_lockdown_table " .
-            "WHERE release_date > now()", ARRAY_A);
-        if ($locked_ips != NULL) {
-            return $locked_ips;
-        } else {
+        $now = current_time( 'mysql' );
+	$locked_ips = $wpdb->get_results($wpdb->prepare("SELECT * FROM $login_lockdown_table WHERE release_date > %s", $now), ARRAY_A);
+        
+        if (empty($locked_ips)) {
             return FALSE;
+        } else {
+            return $locked_ips;
         }
     }
 

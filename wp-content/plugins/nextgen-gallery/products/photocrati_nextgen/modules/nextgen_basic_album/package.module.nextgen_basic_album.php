@@ -62,6 +62,11 @@ class A_NextGen_Album_Breadcrumbs extends Mixin
             } else {
                 $ids = $displayed_gallery->container_ids;
             }
+            // Prevent galleries with the same ID as the parent album being displayed as the root
+            // breadcrumb when viewing the album page
+            if (count($ids) == 1 && strpos($ids[0], 'a') !== 0) {
+                $ids = array();
+            }
             if (!empty($ds['original_album_entities'])) {
                 $breadcrumb_entities = $ds['original_album_entities'];
             } else {
@@ -86,7 +91,7 @@ class A_NextGen_Album_Breadcrumbs extends Mixin
                         $found[] = $album;
                         break;
                     } else {
-                        $found = $this->find_gallery_parent($gallery_id, $album->sortorder, $found);
+                        $found = $this->find_gallery_parent($gallery_id, $album->sortorder);
                         if ($found) {
                             $found[] = $album;
                             break;
@@ -428,7 +433,7 @@ class A_NextGen_Basic_Album_Controller extends Mixin_NextGen_Basic_Pagination
         if ($gallery && strpos($gallery, 'nggpage--') !== 0) {
             // basic albums only support one per post
             if (isset($GLOBALS['nggShowGallery'])) {
-                return;
+                return '';
             }
             $GLOBALS['nggShowGallery'] = TRUE;
             // Try finding the gallery by slug first. If nothing is found, we assume that
@@ -453,6 +458,7 @@ class A_NextGen_Basic_Album_Controller extends Mixin_NextGen_Basic_Pagination
             return $output;
         } else {
             if ($album = $this->param('album')) {
+                // Are we to display a sub-album?
                 $mapper = C_Album_Mapper::get_instance();
                 $result = $mapper->select()->where(array('slug = %s', $album))->limit(1)->run_query();
                 $result = array_pop($result);
@@ -827,7 +833,14 @@ class Mixin_NextGen_Basic_Album_Form extends Mixin_Display_Type_Form
     function _render_nextgen_basic_album_gallery_display_type_field($display_type)
     {
         $mapper = C_Display_Type_Mapper::get_instance();
-        return $this->render_partial('photocrati-nextgen_basic_album#nextgen_basic_album_gallery_display_type', array('display_type_name' => $display_type->name, 'gallery_display_type_label' => __('Display galleries as', 'nggallery'), 'gallery_display_type_help' => __('How would you like galleries to be displayed?', 'nggallery'), 'gallery_display_type' => $display_type->settings['gallery_display_type'], 'galleries_per_page_label' => __('Galleries per page', 'nggallery'), 'galleries_per_page' => $display_type->settings['galleries_per_page'], 'display_types' => $mapper->find_by_entity_type('image')), TRUE);
+        // Disallow hidden or inactive display types
+        $types = $mapper->find_by_entity_type('image');
+        foreach ($types as $ndx => $type) {
+            if (!empty($type->hidden_from_ui) && $type->hidden_from_ui) {
+                unset($types[$ndx]);
+            }
+        }
+        return $this->render_partial('photocrati-nextgen_basic_album#nextgen_basic_album_gallery_display_type', array('display_type_name' => $display_type->name, 'gallery_display_type_label' => __('Display galleries as', 'nggallery'), 'gallery_display_type_help' => __('How would you like galleries to be displayed?', 'nggallery'), 'gallery_display_type' => $display_type->settings['gallery_display_type'], 'galleries_per_page_label' => __('Galleries per page', 'nggallery'), 'galleries_per_page' => $display_type->settings['galleries_per_page'], 'display_types' => $types), TRUE);
     }
     /**
      * Renders the Galleries Per Page field
@@ -871,11 +884,7 @@ class A_NextGen_Basic_Extended_Album_Form extends Mixin_NextGen_Basic_Album_Form
      */
     function enqueue_static_resources()
     {
-        wp_enqueue_script('nextgen_basic_extended_albums_settings_script', $this->object->get_static_url('photocrati-nextgen_basic_album#extended_settings.js'), array('jquery.nextgen_radio_toggle'), NGG_SCRIPT_VERSION);
-        $atp = C_Attach_Controller::get_instance();
-        if ($atp != null) {
-            $atp->mark_script('nextgen_basic_extended_albums_settings_script');
-        }
+        $this->object->enqueue_script('nextgen_basic_extended_albums_settings_script', $this->object->get_static_url('photocrati-nextgen_basic_album#extended_settings.js'), array('jquery.nextgen_radio_toggle'));
     }
 }
 /**
@@ -903,10 +912,6 @@ class A_NextGen_Basic_Compact_Album_Form extends Mixin_NextGen_Basic_Album_Form
      */
     function enqueue_static_resources()
     {
-        wp_enqueue_script('nextgen_basic_compact_albums_settings_script', $this->object->get_static_url('photocrati-nextgen_basic_album#compact_settings.js'), array('jquery.nextgen_radio_toggle'), NGG_SCRIPT_VERSION);
-        $atp = C_Attach_Controller::get_instance();
-        if ($atp != null) {
-            $atp->mark_script('nextgen_basic_compact_albums_settings_script');
-        }
+        $this->object->enqueue_script('nextgen_basic_compact_albums_settings_script', $this->object->get_static_url('photocrati-nextgen_basic_album#compact_settings.js'), array('jquery.nextgen_radio_toggle'));
     }
 }

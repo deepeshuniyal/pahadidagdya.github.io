@@ -15,12 +15,12 @@
  * Description: A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!
  * Text Domain: wpglobus
  * Domain Path: /languages/
- * Version: 1.8.0
+ * Version: 1.9.9
  * Author: WPGlobus
  * Author URI: https://wpglobus.com/
  * Network: false
- * License: GPL-3.0
- * License URI: http://www.gnu.org/licenses/gpl.txt
+ * License: GPL-3.0-or-later
+ * License URI: https://spdx.org/licenses/GPL-3.0-or-later.html
  */
 // </editor-fold>
 // <editor-fold desc="GNU Clause">
@@ -42,7 +42,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPGLOBUS_VERSION', '1.8.0' );
+// Translate plugin name and description in the Admin/Plugins.
+if ( 0 ):
+	/// Plugin Name
+	__( 'WPGlobus', 'wpglobus' );
+	/// Plugin Description
+	__( 'A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!', 'wpglobus' );
+	/// Plugin URI
+	__( 'https://github.com/WPGlobus/WPGlobus', 'wpglobus' );
+	/// Plugin Author
+	__( 'WPGlobus', 'wpglobus' );
+	/// Plugin Author URI
+	__( 'https://wpglobus.com/', 'wpglobus' );
+endif;
+
+define( 'WPGLOBUS_VERSION', '1.9.9' );
 define( 'WPGLOBUS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
@@ -107,11 +121,18 @@ require_once dirname( __FILE__ ) . '/includes/wpglobus-yoastseo.php';
 require_once dirname( __FILE__ ) . '/includes/admin/customize/wpglobus-customize.php';
 
 /**
- * WPGlobus customize options
- * @since 1.4.6
+ * To disable WPGlobus Customizer Options, put this to wp-config:
+ * define( 'WPGLOBUS_CUSTOMIZE', false )
+ * @since 1.8.6
  */
-require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-customize-options.php';
-WPGlobus_Customize_Options::controller();
+if ( ! defined( 'WPGLOBUS_CUSTOMIZE' ) || WPGLOBUS_CUSTOMIZE ) {
+	/**
+	 * WPGlobus customize options
+	 * @since 1.4.6
+	 */
+	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-customize-options.php';
+	WPGlobus_Customize_Options::controller();
+}
 
 // TODO remove this old updater.
 //require_once dirname( __FILE__ ) . '/updater/class-wpglobus-updater.php';
@@ -149,12 +170,11 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 	WPGlobus_Admin_HelpDesk::construct();
 
 	/**
-	 * Admin page central.
+	 * WPGlobus Admin.
 	 *
-	 * @since 1.6.6
+	 * @since 1.8.1
 	 */
-	require_once dirname( __FILE__ ) . '/includes/admin/central/class-wpglobus-admin-central.php';
-	WPGlobus_Admin_Central::construct();
+	require_once dirname( __FILE__ ) . '/includes/admin/wpglobus-admin.php';
 
 	/**
 	 * WPGlobus News admin dashboard widget.
@@ -177,6 +197,17 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 	 * @since 1.7.9
 	 */
 	$GLOBALS['redux_notice_check'] = 1;
+
+	/**
+	 * WPGlobus Recommendations.
+	 * To disable recommendations, put this to wp-config:
+	 * define( 'WPGLOBUS_RECOMMENDATIONS', false );
+	 * @since 1.8.7
+	 */
+	if ( ! defined( 'WPGLOBUS_RECOMMENDATIONS' ) || WPGLOBUS_RECOMMENDATIONS ) {
+		require_once dirname( __FILE__ ) . '/includes/admin/recommendations/class-wpglobus-admin-recommendations.php';
+		WPGlobus_Admin_Recommendations::setup_hooks();
+	}
 
 endif;
 

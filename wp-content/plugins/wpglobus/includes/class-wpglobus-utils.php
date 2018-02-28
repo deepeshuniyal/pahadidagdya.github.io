@@ -16,13 +16,14 @@ class WPGlobus_Utils {
 	 * @param string          $url      URL to localize
 	 * @param string          $language Language code
 	 * @param WPGlobus_Config $config   Alternative configuration (i.e. Unit Test mock object)
+	 *
 	 * @return string
 	 */
 	public static function localize_url( $url = '', $language = '', WPGlobus_Config $config = null ) {
 		/**
 		 * Use the global configuration if alternative not passed
 		 */
-		if ( is_null( $config ) ) {
+		if ( null === $config ) {
 			// @codeCoverageIgnoreStart
 			$config = WPGlobus::Config();
 		}
@@ -126,6 +127,7 @@ class WPGlobus_Utils {
 	 *
 	 * @param string          $url
 	 * @param WPGlobus_Config $config Alternative configuration (i.e. Unit Test mock object)
+	 *
 	 * @return string
 	 */
 	public static function extract_language_from_url( $url = '', WPGlobus_Config $config = null ) {
@@ -139,7 +141,7 @@ class WPGlobus_Utils {
 		/**
 		 * Use the global configuration is alternative not passed
 		 */
-		if ( is_null( $config ) ) {
+		if ( null === $config ) {
 			// @codeCoverageIgnoreStart
 			$config = WPGlobus::Config();
 		}
@@ -177,6 +179,7 @@ class WPGlobus_Utils {
 	 */
 	public static function is_function_in_backtrace( $function_name ) {
 		_deprecated_function( __METHOD__, 'WPGlobus 1.7.7', 'WPGlobus_WP::is_function_in_backtrace()' );
+
 		return WPGlobus_WP::is_function_in_backtrace( $function_name );
 	}
 
@@ -185,6 +188,7 @@ class WPGlobus_Utils {
 	 * http://www.example.com becomes example.com
 	 *
 	 * @param string $url
+	 *
 	 * @return string
 	 * @since 1.0.12
 	 */
@@ -223,11 +227,10 @@ class WPGlobus_Utils {
 		 *
 		 * @link https://publicsuffix.org/list/
 		 */
-		$re = '/([a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6})$/';
+		$re         = '/([a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6})$/';
+		$domain_tld = $host;
 		if ( preg_match( $re, $host, $matches ) ) {
 			$domain_tld = $matches[1];
-		} else {
-			$domain_tld = $host;
 		}
 
 		return $domain_tld;
@@ -237,13 +240,14 @@ class WPGlobus_Utils {
 	 * Convert array of local texts to multilingual string (with WPGlobus delimiters)
 	 *
 	 * @param string[] $translations
+	 *
 	 * @return string
 	 */
 	public static function build_multilingual_string( $translations ) {
-		$sz = '';
-		$single = 1 == count( $translations ) ? true : false;
+		$sz     = '';
+		$single = ( 1 === count( $translations ) );
 		foreach ( $translations as $language => $text ) {
-			if ( $single && $language == WPGlobus::Config()->default_language ) {
+			if ( $single && $language === WPGlobus::Config()->default_language ) {
 				$sz = $text;
 			} else {
 				$sz .= WPGlobus::add_locale_marks( $text, $language );
@@ -268,14 +272,16 @@ class WPGlobus_Utils {
 	 * @since 1.1.1
 	 */
 	public static function current_url() {
-		return set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+		return set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); // WPCS: input var ok, sanitization ok.
 	}
 
 	/**
 	 * Build hreflang metas
 	 *
 	 * @since 1.1.1
+	 *
 	 * @param WPGlobus_Config $config Alternative configuration (i.e. Unit Test mock object)
+	 *
 	 * @return string[] Array of rel-alternate link tags
 	 */
 	public static function hreflangs( WPGlobus_Config $config = null ) {
@@ -308,12 +314,25 @@ class WPGlobus_Utils {
 	}
 
 	/**
+	 * Localize the current URL.
 	 * @since 1.2.3
-	 * @param string          $language
-	 * @param WPGlobus_Config $config Alternative configuration (i.e. Unit Test mock object)
+	 *
+	 * @param string          $language Language to localize the URL to.
+	 * @param WPGlobus_Config $config   Alternative configuration (i.e. Unit Test mock object)
+	 *
 	 * @return string
 	 */
 	public static function localize_current_url( $language = '', WPGlobus_Config $config = null ) {
+		/**
+		 * Filter the current URL before it is localized (a short-circuit filter).
+		 * If a non-empty string is returned by the filter, then the `localize_url()`
+		 * won't be called.
+		 *
+		 * @param string $url      Empty string is passed.
+		 * @param string $language The language that the URL is going to be localized to.
+		 *
+		 * @return string
+		 */
 		$url = apply_filters( 'wpglobus_pre_localize_current_url', '', $language );
 
 		if ( ! $url ) {
@@ -328,6 +347,18 @@ class WPGlobus_Utils {
 			$url = WPGlobus_Utils::localize_url( WPGlobus_Utils::current_url(), $language, $config );
 		}
 
+		/**
+		 * Filter the current URL after it was localized.
+		 *
+		 * @since 1.8.1
+		 *
+		 * @param string $url      The localized URL.
+		 * @param string $language The language it was localized to.
+		 *
+		 * @return string
+		 */
+		$url = apply_filters( 'wpglobus_after_localize_current_url', $url, $language );
+
 		return $url;
 	}
 
@@ -335,6 +366,7 @@ class WPGlobus_Utils {
 	 * Localize wpglobus.com for use in outgoing links
 	 *
 	 * @param WPGlobus_Config $config
+	 *
 	 * @return string
 	 * @since 1.2.6
 	 */
@@ -356,7 +388,9 @@ class WPGlobus_Utils {
 	/**
 	 * @codeCoverageIgnore
 	 * Return true if language is in array of enabled languages, otherwise false
+	 *
 	 * @param string $language
+	 *
 	 * @return bool
 	 */
 	public static function is_enabled( $language ) {
@@ -394,7 +428,9 @@ class WPGlobus_Utils {
 	 * @deprecated
 	 * @codeCoverageIgnore
 	 * Return true if language is in array of opened languages, otherwise false
+	 *
 	 * @param string $language
+	 *
 	 * @return bool
 	 */
 	public static function is_open( $language ) {
@@ -404,8 +440,10 @@ class WPGlobus_Utils {
 	/**
 	 * @deprecated
 	 * @codeCoverageIgnore
+	 *
 	 * @param string $s
 	 * @param string $n
+	 *
 	 * @return bool
 	 */
 	public static function starts_with( $s, $n ) {
@@ -413,10 +451,7 @@ class WPGlobus_Utils {
 			return false;
 		}
 
+		/* @noinspection SubStrUsedAsStrPosInspection */
 		return ( $n === substr( $s, 0, strlen( $n ) ) );
 	}
-
-
-} // class
-
-# --- EOF
+}

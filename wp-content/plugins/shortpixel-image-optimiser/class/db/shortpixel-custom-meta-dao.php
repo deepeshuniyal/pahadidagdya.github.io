@@ -2,7 +2,7 @@
 
 class ShortPixelCustomMetaDao {
     const META_VERSION = 1;
-    private $db;
+    private $db, $excludePatterns;
     
     private static $fields = array(
         ShortPixelMeta::TABLE_SUFFIX => array(
@@ -31,8 +31,9 @@ class ShortPixelCustomMetaDao {
         )
     );
     
-    public function __construct($db) {
+    public function __construct($db, $excludePatterns = false) {
         $this->db = $db;
+        $this->excludePatterns = $excludePatterns;
     }
     
     public static function getCreateFolderTableSQL($tablePrefix, $charsetCollate) {
@@ -42,7 +43,7 @@ class ShortPixelCustomMetaDao {
             name varchar(64),
             path_md5 char(32),
             file_count int,
-            status tinyint DEFAULT 0,
+            status SMALLINT NOT NULL DEFAULT 0,
             ts_updated timestamp,
             ts_created timestamp,
             UNIQUE KEY id (id)
@@ -66,8 +67,8 @@ class ShortPixelCustomMetaDao {
             resize_width smallint,
             resize_height smallint,
             backup tinyint,
-            status tinyint DEFAULT 0,
-            retries tinyint DEFAULT 0,
+            status SMALLINT NOT NULL DEFAULT 0,
+            retries tinyint NOT NULL DEFAULT 0,
             message varchar(255),
             ts_added timestamp,
             ts_optimized timestamp,
@@ -127,7 +128,7 @@ class ShortPixelCustomMetaDao {
         $rows = $this->db->query($sql);
         $folders = array();
         foreach($rows as $row) {
-            $folders[] = new ShortPixelFolder($row);
+            $folders[] = new ShortPixelFolder($row, $this->excludePatterns);
         }
         return $folders;
     }
@@ -137,7 +138,7 @@ class ShortPixelCustomMetaDao {
         $rows = $this->db->query($sql, array($path));
         $folders = array();
         foreach($rows as $row) {
-            return new ShortPixelFolder($row);
+            return new ShortPixelFolder($row, $this->excludePatterns);
         }
         return false;
     }
@@ -189,6 +190,9 @@ class ShortPixelCustomMetaDao {
     public function newFolderFromPath($path, $uploadPath, $rootPath) {
         WpShortPixelDb::checkCustomTables(); // check if custom tables are created, if not, create them
         $addedFolder = ShortPixelFolder::checkFolder($path, $uploadPath);
+        if(!$addedFolder) {
+            return __('Folder could not be found: ' . $uploadPath . $path ,'shortpixel-image-optimiser');
+        }
         $addedFolderReal = realpath($addedFolder);
         $addedFolder = wp_normalize_path($addedFolder); $addedFolderReal = wp_normalize_path($addedFolderReal); $rootPath = wp_normalize_path($rootPath);
         if(strpos($addedFolder, $rootPath) !== 0) {
@@ -201,10 +205,10 @@ class ShortPixelCustomMetaDao {
         if($this->getFolder($addedFolder)) {
             return __('Folder already added.','shortpixel-image-optimiser');
         }
-        $folder = new ShortPixelFolder(array("path" => $addedFolder));
+        $folder = new ShortPixelFolder(array("path" => $addedFolder), $this->excludePatterns);
         try {
             $folder->setFileCount($folder->countFiles());
-        } catch(SpFileRightsException $ex) {
+        } catch(ShortPixelFileRightsException $ex) {
             return $ex->getMessage();
         }
         if(ShortPixelMetaFacade::isMediaSubfolder($folder->getPath())) {
@@ -231,7 +235,7 @@ class ShortPixelCustomMetaDao {
         $addedPath = $folder->getPath();
         if($addedPath) {
             //first check if it does contain the Backups Folder - we don't allow that
-            if(ShortPixelFolder::checkFolderIsSubfolder(SP_BACKUP_FOLDER, $addedPath)) {
+            if(ShortPixelFolder::checkFolderIsSubfolder(SHORTPIXEL_BACKUP_FOLDER, $addedPath)) {
                 return __('This folder contains the ShortPixel Backups. Please select a different folder.','shortpixel-image-optimiser');
             }
             $customFolderPaths = array_map(array('ShortPixelFolder','path'), $this->getFolders());
@@ -285,7 +289,11 @@ class ShortPixelCustomMetaDao {
     
     public function batchInsertImages($pathsFile, $folderId) {
         $pathsFileHandle = fopen($pathsFile, 'r');
-            
+        
+        //facem un delete pe cele care nu au shortpixel_folder, pentru curatenie - am mai intalnit situatii in care stergerea s-a agatat (stop monitoring)
+        $sqlCleanup = "DELETE FROM {$this->db->getPrefix()}shortpixel_meta WHERE folder_id NOT IN (SELECT id FROM {$this->db->getPrefix()}shortpixel_folders)";
+        $this->db->query($sqlCleanup);
+        
         $values = ''; $inserted = 0;
         $sql = "INSERT IGNORE INTO {$this->db->getPrefix()}shortpixel_meta(folder_id, path, name, path_md5, status) VALUES ";
         for ($i = 0; ($path = fgets($pathsFileHandle)) !== false; $i++) {
@@ -311,15 +319,18 @@ class ShortPixelCustomMetaDao {
         $this->db->query($sql);
     }
     
-    public function getPaginatedMetas($hasNextGen, $count, $page, $orderby = false, $order = false) {
+    public function getPaginatedMetas($hasNextGen, $filters, $count, $page, $orderby = false, $order = false) {
         $sql = "SELECT sm.id, sm.name, sm.path folder, "
                 . ($hasNextGen ? "CASE WHEN ng.gid IS NOT NULL THEN 'NextGen' ELSE 'Custom' END media_type, " : "'Custom' media_type, ")
                 . "sm.status, sm.compression_type, sm.keep_exif, sm.cmyk2rgb, sm.resize, sm.resize_width, sm.resize_height, sm.message "
                 . "FROM {$this->db->getPrefix()}shortpixel_meta sm "
                 . "INNER JOIN  {$this->db->getPrefix()}shortpixel_folders sf on sm.folder_id = sf.id "
                 . ($hasNextGen ? "LEFT JOIN {$this->db->getPrefix()}ngg_gallery ng on sf.path = ng.path " : " ")
-                . "WHERE sf.status <> -1 "
-                . ($orderby ? "ORDER BY $orderby $order " : "")
+                . "WHERE sf.status <> -1 ";
+        foreach($filters as $field => $value) {
+            $sql .= " AND sm.$field " . $value->operator . " ". $value->value . " ";
+        }                
+        $sql  .= ($orderby ? "ORDER BY $orderby $order " : "")
                 . "LIMIT $count OFFSET " . ($page - 1) * $count;
                 
                 //die($sql);
@@ -349,10 +360,14 @@ class ShortPixelCustomMetaDao {
         return isset($res[0]->recCount) ? $res[0]->recCount : null;
     }
     
-    public function getCustomMetaCount() {
+    public function getCustomMetaCount($filters = array()) {
         $sql = "SELECT COUNT(sm.id) recCount FROM {$this->db->getPrefix()}shortpixel_meta sm "
             . "INNER JOIN  {$this->db->getPrefix()}shortpixel_folders sf on sm.folder_id = sf.id "
             . "WHERE sf.status <> -1 AND sm.status <> 3";
+        foreach($filters as $field => $value) {
+            $sql .= " AND sm.$field " . $value->operator . " ". $value->value . " ";
+        }
+            
         $res = $this->db->query($sql);
         return isset($res[0]->recCount) ? $res[0]->recCount : 0;
     }
@@ -414,6 +429,7 @@ class ShortPixelCustomMetaDao {
     public function countAllProcessableFiles() {
         $sql = "SELECT count(*) totalFiles, sum(CASE WHEN status = 2 THEN 1 ELSE 0 END) totalProcessedFiles,"
               ." sum(CASE WHEN status = 2 AND compression_type = 1 THEN 1 ELSE 0 END) totalProcLossyFiles,"
+              ." sum(CASE WHEN status = 2 AND compression_type = 2 THEN 1 ELSE 0 END) totalProcGlossyFiles,"
               ." sum(CASE WHEN status = 2 AND compression_type = 0 THEN 1 ELSE 0 END) totalProcLosslessFiles"
               ." FROM {$this->db->getPrefix()}shortpixel_meta WHERE status <> -1";
         $rows = $this->db->query($sql);
@@ -421,20 +437,31 @@ class ShortPixelCustomMetaDao {
         $filesWithErrors = array();
         $sql = "SELECT id, name, path, message FROM {$this->db->getPrefix()}shortpixel_meta WHERE status < -1 AND retries >= 3 LIMIT 30";
         $failRows = $this->db->query($sql);
-        $filesWithErrors = array();
+        $filesWithErrors = array(); $moreFilesWithErrors = 0;
         foreach($failRows as $failLine) {
-            $filesWithErrors['C-' . $failLine->id] = array('Name' => $failLine->name, 'Message' => $failLine->message, 'Path' => $failLine->path);
+            if(count($filesWithErrors) < 50){
+                $filesWithErrors['C-' . $failLine->id] = array('Name' => $failLine->name, 'Message' => $failLine->message, 'Path' => $failLine->path);
+            } else {
+                $moreFilesWithErrors++;
+            }
+        }
+        
+        if(!isset($rows[0])) {
+            $rows[0] = (object)array('totalFiles' => 0, 'totalProcessedFiles' => 0, 'totalProcLossyFiles' => 0, 'totalProcGlossyFiles' => 0, 'totalProcLosslessFiles' => 0);
         }
                 
         return array("totalFiles" => $rows[0]->totalFiles, "mainFiles" => $rows[0]->totalFiles, 
                      "totalProcessedFiles" => $rows[0]->totalProcessedFiles, "mainProcessedFiles" => $rows[0]->totalProcessedFiles,
                      "totalProcLossyFiles" => $rows[0]->totalProcLossyFiles, "mainProcLossyFiles" => $rows[0]->totalProcLossyFiles,
+                     "totalProcGlossyFiles" => $rows[0]->totalProcGlossyFiles, "mainProcGlossyFiles" => $rows[0]->totalProcGlossyFiles,
                      "totalProcLosslessFiles" => $rows[0]->totalProcLosslessFiles, "mainProcLosslessFiles" => $rows[0]->totalProcLosslessFiles,
                      "totalCustomFiles" => $rows[0]->totalFiles, "mainCustomFiles" => $rows[0]->totalFiles, 
                      "totalProcessedCustomFiles" => $rows[0]->totalProcessedFiles, "mainProcessedCustomFiles" => $rows[0]->totalProcessedFiles,
                      "totalProcLossyCustomFiles" => $rows[0]->totalProcLossyFiles, "mainProcLossyCustomFiles" => $rows[0]->totalProcLossyFiles,
+                     "totalProcGlossyCustomFiles" => $rows[0]->totalProcGlossyFiles, "mainProcGlossyCustomFiles" => $rows[0]->totalProcGlossyFiles,
                      "totalProcLosslessCustomFiles" => $rows[0]->totalProcLosslessFiles, "mainProcLosslessCustomFiles" => $rows[0]->totalProcLosslessFiles,
-                     "filesWithErrors" => $filesWithErrors
+                     "filesWithErrors" => $filesWithErrors,
+                     "moreFilesWithErrors" => $moreFilesWithErrors
                     );
        
     }

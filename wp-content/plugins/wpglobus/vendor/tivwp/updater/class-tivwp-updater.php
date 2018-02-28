@@ -713,7 +713,8 @@ class TIVWP_Updater {
 			}
 		}
 
-		return json_decode( $response_body, JSON_OBJECT_AS_ARRAY );
+		// The JSON_OBJECT_AS_ARRAY constant exists since PHP 5.4
+		return json_decode( $response_body, true );
 	}
 
 	/**

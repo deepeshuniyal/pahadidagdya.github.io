@@ -2,8 +2,8 @@
 Contributors: noahkagan
 Tags: recent tweets, twitter widget, twitter api v1.1, cache, twitter, tweets, social media
 Requires at least: 3.4.1
-Tested up to: 4.7
-Stable tag: 1.6.7
+Tested up to: 4.8
+Stable tag: 1.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,9 @@ You will need to visit [https://apps.twitter.com/](https://apps.twitter.com/ "Tw
 2. How it looks on frontend page
 
 == Changelog ==
+= 1.6.8 =
+Add translation support.
+
 = 1.6.7 =
 Minor widget CSS change.
 

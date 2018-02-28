@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Easy Media Download
-Version: 1.1.2
-Plugin URI: http://noorsplugin.com/easy-media-download-plugin-for-wordpress/
+Version: 1.1.3
+Plugin URI: https://noorsplugin.com/easy-media-download-plugin-for-wordpress/
 Author: naa986
-Author URI: http://noorsplugin.com/
+Author URI: https://noorsplugin.com/
 Description: Easily embed download buttons for your digital media files
 Text Domain: easy-media-download
 Domain Path: /languages
@@ -15,7 +15,7 @@ if(!class_exists('EASY_MEDIA_DOWNLOAD'))
 {
     class EASY_MEDIA_DOWNLOAD
     {
-        var $plugin_version = '1.1.2';
+        var $plugin_version = '1.1.3';
         var $plugin_url;
         var $plugin_path;
         function __construct()
@@ -28,7 +28,11 @@ if(!class_exists('EASY_MEDIA_DOWNLOAD'))
         }
         function plugin_includes()
         {
-            add_action('plugins_loaded', array(&$this,'plugins_loaded_handler'), 10, 2 );
+            if (is_admin()) {
+                add_filter('plugin_action_links', array($this, 'plugin_action_links'), 10, 2);
+            }
+            add_action('plugins_loaded', array($this, 'plugins_loaded_handler'), 10, 2 );
+            add_action('admin_menu', array($this, 'add_options_menu'));
             add_shortcode('easy_media_download','easy_media_download_handler');
             add_shortcode('emd_donation','easy_media_download_donation_handler');
         }
@@ -41,10 +45,29 @@ if(!class_exists('EASY_MEDIA_DOWNLOAD'))
             if ( $this->plugin_path ) return $this->plugin_path;		
             return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
         }
-        
+        function plugin_action_links($links, $file) {
+            if ($file == plugin_basename(dirname(__FILE__) . '/main.php')) {
+                $links[] = '<a href="options-general.php?page=easy-media-download-settings">'.__('Settings', 'easy-media-download').'</a>';
+            }
+            return $links;
+        }
         function plugins_loaded_handler()
         {
             load_plugin_textdomain( 'easy-media-download', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' ); 
+        }
+        function add_options_menu() {
+            if (is_admin()) {
+                add_options_page(__('Easy Media Download Settings', 'easy-media-download'), __('Easy Media Download', 'easy-media-download'), 'manage_options', 'easy-media-download-settings', array($this, 'options_page'));
+            }
+        }
+        function options_page() {
+            $url = "https://noorsplugin.com/easy-media-download-plugin-for-wordpress/";
+            $link_text = sprintf(wp_kses(__('For detailed documentation please visit the plugin homepage <a target="_blank" href="%s">here</a>.', 'easy-media-download'), array('a' => array('href' => array(), 'target' => array()))), esc_url($url));
+            ?>
+            <div class="wrap"><h2>Easy Media Download - v<?php echo $this->plugin_version; ?></h2>
+            <div class="update-nag"><?php echo $link_text;?></div>
+            </div>
+            <?php
         }
     }
     $GLOBALS['easy_media_download'] = new EASY_MEDIA_DOWNLOAD();
@@ -60,6 +83,7 @@ function easy_media_download_handler($atts)
         'color' => 'red_darker',
         'target' => '_self',
         'force_dl' => '',
+        'rel' => '',
         'class' => '',
     ), $atts));
     $core_class = "emd_dl_".$color;
@@ -211,12 +235,15 @@ EOT;
         }
         $css_class = ' class="'.$core_class.$class.'"';
     }
+    if(isset($rel) && !empty($rel)){
+        $rel = ' rel="'.$rel.'"';
+    }
     if($force_dl=="1"){
         $force_dl = " download";
     }
     $custom_attr = apply_filters('emd_custom_link_attributes', '', $url);
     $output = <<<EOT
-    <a href="$url" target="$target"{$css_class}{$force_dl}{$custom_attr}>$text</a>
+    <a href="$url" target="$target"{$rel}{$css_class}{$force_dl}{$custom_attr}>$text</a>
     $styles
 EOT;
     return $output;

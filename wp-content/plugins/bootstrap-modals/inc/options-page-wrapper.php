@@ -71,13 +71,13 @@
                     &lt;h4 class="modal-title"&gt;My Title in a Modal Window&lt;/h4&gt;
             &lt;/div&gt;
             &lt;div class="modal-body"&gt;This is the body of a modal...&lt;/div&gt;
-            &lt;div class="modal-barter"&gt;This is the barter of a modal...&lt;/div&gt;
+            &lt;div class="modal-footer"&gt;This is the footer of a modal...&lt;/div&gt;
         &lt;/div&gt;&lt;!-- /.modal-content --&gt;
     &lt;/div&gt;&lt;!-- /.modal-dialog --&gt;
 &lt;/div&gt;&lt;!-- /.modal --&gt;
 </code>
 </pre>
-<p>Here is one with a close button in the modal barter as well as still having the top right close.</p>
+<p>Here is one with a close button in the modal footer as well as still having the top right close.</p>
 <a class="btn btn-primary btn-lg" href="#myModal2" data-toggle="modal">Launch demo modal</a>
 <pre data-initialized="true" data-gclp-id="0" style="background:#eaeaea;"><code style="background:#eaeaea;">
 &lt;!-- Button trigger modal --&gt;
@@ -92,7 +92,7 @@
               &lt;h4 class="modal-title"&gt;My Title in a Modal Window&lt;/h4&gt;
       &lt;/div&gt;
       &lt;div class="modal-body"&gt;This is the body of a modal...&lt;/div&gt;
-      &lt;div class="modal-barter"&gt;
+      &lt;div class="modal-footer"&gt;
         &lt;button class="btn btn-default" type="button" data-dismiss="modal"&gt;Close&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;&lt;!-- /.modal-content --&gt;
@@ -134,12 +134,12 @@
 					<li>'class' = <em>optional</em> - CSS class</li>
 					<li>'arialabel' = <em>optional</em> - Accesscibility label</li>
 					<li>'header' = <em>optional</em> - Modal Header text</li>
-					<li>'barter' = <em>optional</em> - Modal Footer text</li>
+					<li>'footer' = <em>optional</em> - Modal Footer text</li>
 				</ul>
 				<p>The key thing is that the 'id' value must match in both.</p>
 				<h4>Shortcode Modal Example</h4>
 				<code>[bs_trigger id="modal1"]Launch The Modal[/bs_trigger]</code><br>
-				<code>[bs_modal id="modal1" header="I am a header" barter="I am a barter"]I am a modal[/bs_modal]</code>
+				<code>[bs_modal id="modal1" header="I am a header" footer="I am a footer"]I am a modal[/bs_modal]</code>
 
         </div>
         <!-- .inside -->
@@ -198,7 +198,7 @@
                       <h4 class="modal-title">My Title in a Modal Window</h4>
               </div>
               <div class="modal-body">This is the body of a modal...</div>
-              <div class="modal-barter">This is the barter of a modal...</div>
+              <div class="modal-footer">This is the footer of a modal...</div>
           </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
@@ -213,9 +213,9 @@
                     <h4 class="modal-title">My Title in a Modal Window</h4>
             </div>
             <div class="modal-body">This is the body of a modal...</div>
-            <div class="modal-barter">
+            <div class="modal-footer">
               <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-              This is the barter of a modal...</div>
+              This is the footer of a modal...</div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

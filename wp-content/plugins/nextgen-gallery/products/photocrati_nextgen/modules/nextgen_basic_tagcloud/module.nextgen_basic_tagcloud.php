@@ -47,7 +47,7 @@ class M_NextGen_Basic_Tagcloud extends C_Base_Module
 
     function _register_utilities()
     {
-        if (apply_filters('ngg_load_frontend_logic', TRUE, $this->module_id))
+        if (!is_admin() && apply_filters('ngg_load_frontend_logic', TRUE, $this->module_id))
             $this->get_registry()->add_utility('I_Taxonomy_Controller', 'C_Taxonomy_Controller');
     }
 
@@ -75,7 +75,7 @@ class M_NextGen_Basic_Tagcloud extends C_Base_Module
             );
         }
 
-        if (apply_filters('ngg_load_frontend_logic', TRUE, $this->module_id))
+        if (!is_admin() && apply_filters('ngg_load_frontend_logic', TRUE, $this->module_id))
         {
             // Provides settings fields and frontend rendering
             $this->get_registry()->add_adapter(
@@ -104,7 +104,8 @@ class M_NextGen_Basic_Tagcloud extends C_Base_Module
                 'the_posts',
                 array(
                     C_Taxonomy_Controller::get_instance(),
-                    'detect_ngg_tag'),
+                    'detect_ngg_tag'
+                ),
                 -10,
                 2
             );

@@ -197,7 +197,16 @@ class Jetpack_Carousel {
 
 	function enqueue_assets() {
 		if ( $this->first_run ) {
-			wp_enqueue_script( 'jetpack-carousel', plugins_url( 'jetpack-carousel.js', __FILE__ ), array( 'jquery.spin' ), $this->asset_version( '20170209' ), true );
+			wp_enqueue_script(
+				'jetpack-carousel',
+				Jetpack::get_file_url_for_environment(
+					'_inc/build/carousel/jetpack-carousel.min.js',
+					'modules/carousel/jetpack-carousel.js'
+				),
+				array( 'jquery.spin' ),
+				$this->asset_version( '20170209' ),
+				true
+			);
 
 			// Note: using  home_url() instead of admin_url() for ajaxurl to be sure  to get same domain on wpcom when using mapped domains (also works on self-hosted)
 			// Also: not hardcoding path since there is no guarantee site is running on site root in self-hosted context.
@@ -300,11 +309,8 @@ class Jetpack_Carousel {
 			 */
 			$localize_strings = apply_filters( 'jp_carousel_localize_strings', $localize_strings );
 			wp_localize_script( 'jetpack-carousel', 'jetpackCarouselStrings', $localize_strings );
-			if( is_rtl() ) {
-				wp_enqueue_style( 'jetpack-carousel', plugins_url( '/rtl/jetpack-carousel-rtl.css', __FILE__ ), array(), $this->asset_version( '20120629' ) );
-			} else {
-				wp_enqueue_style( 'jetpack-carousel', plugins_url( 'jetpack-carousel.css', __FILE__ ), array(), $this->asset_version( '20120629' ) );
-			}
+			wp_enqueue_style( 'jetpack-carousel', plugins_url( 'jetpack-carousel.css', __FILE__ ), array(), $this->asset_version( '20120629' ) );
+			wp_style_add_data( 'jetpack-carousel', 'rtl', 'replace' );
 
 			wp_register_style( 'jetpack-carousel-ie8fix', plugins_url( 'jetpack-carousel-ie8fix.css', __FILE__ ), array(), $this->asset_version( '20121024' ) );
 			$GLOBALS['wp_styles']->add_data( 'jetpack-carousel-ie8fix', 'conditional', 'lte IE 8' );
@@ -351,7 +357,6 @@ class Jetpack_Carousel {
 		foreach( $matches[0] as $image_html ) {
 			if ( preg_match( '/wp-image-([0-9]+)/i', $image_html, $class_id ) &&
 				( $attachment_id = absint( $class_id[1] ) ) ) {
-
 				/*
 				 * If exactly the same image tag is used more than once, overwrite it.
 				 * All identical tags will be replaced later with 'str_replace()'.
@@ -360,21 +365,32 @@ class Jetpack_Carousel {
 			}
 		}
 
-		foreach ( $selected_images as $attachment_id => $image_html ) {
-			$attachment = get_post( $attachment_id );
+		$find        = array();
+		$replace     = array();
+		if ( empty( $selected_images ) ) {
+			return $content;
+		}
 
-			if ( ! $attachment ) {
-				continue;
-			}
+		$attachments = get_posts( array(
+			'include' => array_keys( $selected_images ),
+			'post_type' => 'any',
+			'post_status' => 'any'
+		) );
+
+		foreach ( $attachments as $attachment ) {
+			$image_html = $selected_images[ $attachment->ID ];
 
 			$attributes = $this->add_data_to_images( array(), $attachment );
 			$attributes_html = '';
 			foreach( $attributes as $k => $v ) {
 				$attributes_html .= esc_attr( $k ) . '="' . esc_attr( $v ) . '" ';
 			}
-			$image_html_with_data = str_replace( '<img ', "<img $attributes_html", $image_html );
-			$content = str_replace( $image_html, $image_html_with_data, $content );
+
+			$find[]    = $image_html;
+			$replace[] = str_replace( '<img ', "<img $attributes_html", $image_html );
 		}
+
+		$content = str_replace( $find, $replace, $content );
 		$this->enqueue_assets();
 		return $content;
 	}
@@ -412,7 +428,6 @@ class Jetpack_Carousel {
 		$attachment       = get_post( $attachment_id );
 		$attachment_title = wptexturize( $attachment->post_title );
 		$attachment_desc  = wpautop( wptexturize( $attachment->post_content ) );
-
 		// Not yet providing geo-data, need to "fuzzify" for privacy
 		if ( ! empty( $img_meta ) ) {
 			foreach ( $img_meta as $k => $v ) {
@@ -426,7 +441,7 @@ class Jetpack_Carousel {
 			unset( $img_meta['keywords'] );
 		}
 
-		$img_meta = json_encode( array_map( 'strval', $img_meta ) );
+		$img_meta = json_encode( array_map( 'strval', array_filter( $img_meta, 'is_scalar' ) ) );
 
 		$attr['data-attachment-id']     = $attachment_id;
 		$attr['data-permalink']         = esc_attr( get_permalink( $attachment->ID ) );
@@ -434,8 +449,8 @@ class Jetpack_Carousel {
 		$attr['data-orig-size']         = $size;
 		$attr['data-comments-opened']   = $comments_opened;
 		$attr['data-image-meta']        = esc_attr( $img_meta );
-		$attr['data-image-title']       = esc_attr( $attachment_title );
-		$attr['data-image-description'] = esc_attr( $attachment_desc );
+		$attr['data-image-title']       = esc_attr( htmlspecialchars( $attachment_title ) );
+		$attr['data-image-description'] = esc_attr( htmlspecialchars( $attachment_desc ) );
 		$attr['data-medium-file']       = esc_attr( $medium_file );
 		$attr['data-large-file']        = esc_attr( $large_file );
 

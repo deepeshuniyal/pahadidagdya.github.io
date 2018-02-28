@@ -6709,7 +6709,7 @@ var PUMCookies;
 
             $('#pum_popup_cookie_fields').addClass('has-cookies');
 
-            if (PUMTriggers.new_cookie >= 0) {
+            if (PUMTriggers.new_cookie !== false && PUMTriggers.new_cookie >= 0) {
                 $trigger = $('#pum_popup_triggers_list tbody tr').eq(PUMTriggers.new_cookie).find('.popup_triggers_field_settings:first');
                 trigger_settings = JSON.parse($trigger.val());
 
@@ -7285,10 +7285,16 @@ var PUMRangeSLiders;
 
     $(document)
         .on('pum_init', PUMRangeSLiders.init)
+        /**
+         * Updates the input field when the slider is used.
+         */
         .on('input', 'input[type="range"]', function () {
             var $this = $(this);
             $this.siblings('.popmake-range-manual').val($this.val());
         })
+        /**
+         * Update sliders value, min, & max when manual entry is detected.
+         */
         .on('change', '.popmake-range-manual', function () {
             var $this = $(this),
                 max = parseInt($this.prop('max'), 0),
@@ -7531,7 +7537,7 @@ var PUMSelect2Fields;
                 // Simulate control with a complex name (i.e. `some[]`)
                 // as it handled in the same way as Checkboxes should
                 if (this.type === 'checkbox') {
-                    parsedName.push('');
+                   // parsedName.push('');
                 }
 
                 // jQuery.val() is used to simplify of getting values
@@ -7799,8 +7805,10 @@ var PUM_Templates;
                 break;
             case 'checkbox':
                 if (parseInt(data.value, 10) === 1) {
-                    data.meta.checked = true;
+                    //data.meta.checked = true;
                 }
+
+                data.meta.checked = !!data.value;
                 break;
             case 'rangeslider':
                 data.meta.step = data.step;

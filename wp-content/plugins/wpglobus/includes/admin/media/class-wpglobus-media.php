@@ -93,7 +93,10 @@ if ( ! class_exists( 'WPGlobus_Media' ) ) :
 		 *
 		 * @scope  admin
 		 * @since  1.7.3
-		 * @access public
+		 *
+		 * @param string $html       HTML.
+		 * @param int    $id         Unused.
+		 * @param array  $attachment Attachment.
 		 *
 		 * @return boolean
 		 */
@@ -102,24 +105,24 @@ if ( ! class_exists( 'WPGlobus_Media' ) ) :
 			$fields = array(
 				'post_content',
 				'post_excerpt',
-				'image_alt'
+				'image_alt',
 			);
 
 			$current_language = WPGlobus::Config()->default_language;
-			if ( ! empty( $_POST['wpglobusLanguageTab'] ) ) {
+			if ( ! empty( $_POST['wpglobusLanguageTab'] ) ) { // WPCS: input var ok, sanitization ok.
 				/**
-				 * @see wpglobus-media.js
+				 * See wpglobus-media.js
 				 */
-				$current_language = $_POST['wpglobusLanguageTab'];
+				$current_language = sanitize_text_field( wp_unslash( $_POST['wpglobusLanguageTab'] ) ); // WPCS: input var ok, sanitization ok.
 
-				if ( ! in_array( $current_language, WPGlobus::Config()->enabled_languages ) ) {
+				if ( ! in_array( $current_language, WPGlobus::Config()->enabled_languages, true ) ) {
 					return $html;
 				}
 			}
 
-			foreach( $fields as $field ) {
-				if ( ! empty( $attachment[$field] ) && WPGlobus_Core::has_translations( $attachment[$field] ) ) {
-					$html = str_replace( $attachment[$field], WPGlobus_Core::text_filter( $attachment[$field], $current_language ), $html );
+			foreach ( $fields as $field ) {
+				if ( ! empty( $attachment[ $field ] ) && WPGlobus_Core::has_translations( $attachment[ $field ] ) ) {
+					$html = str_replace( $attachment[ $field ], WPGlobus_Core::text_filter( $attachment[ $field ], $current_language ), $html );
 				}
 			}
 
@@ -315,17 +318,17 @@ if ( ! class_exists( 'WPGlobus_Media' ) ) :
 					$order = 0;
 					foreach ( WPGlobus::Config()->open_languages as $language ) {
 						$tab_suffix = $language == WPGlobus::Config()->default_language ? 'default' : $language; ?>
-						<li id="link-tab-<?php echo $tab_suffix; ?>" data-language="<?php echo $language; ?>"
-							data-order="<?php echo $order; ?>"
+						<li id="link-tab-<?php echo esc_attr( $tab_suffix ); ?>" data-language="<?php echo esc_attr( $language ); ?>"
+							data-order="<?php echo esc_attr( $order ); ?>"
 							class="wpglobus-post-tab">
-							<a href="#tab-<?php echo $tab_suffix; ?>"><?php echo WPGlobus::Config()->en_language_name[ $language ]; ?></a>
+							<a href="#tab-<?php echo esc_attr( $tab_suffix ); ?>"><?php echo esc_html( WPGlobus::Config()->en_language_name[ $language ] ); ?></a>
 						</li> <?php
 						$order ++;
 					} ?>
 				</ul> <?php
 				foreach ( WPGlobus::Config()->open_languages as $language ) {
 					$tab_suffix = $language == WPGlobus::Config()->default_language ? 'default' : $language; ?>
-					<div id="tab-<?php echo $tab_suffix; ?>" style="display:none;"></div>	<?php
+					<div id="tab-<?php echo esc_attr( $tab_suffix ); ?>" style="display:none;"></div>	<?php
 				} ?>
 			</div>
 			<?php

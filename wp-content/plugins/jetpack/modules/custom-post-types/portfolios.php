@@ -252,6 +252,7 @@ class Jetpack_Portfolio {
 				'comments',
 				'publicize',
 				'wpcom-markdown',
+				'revisions',
 			),
 			'rewrite' => array(
 				'slug'       => 'portfolio',
@@ -677,6 +678,7 @@ class Jetpack_Portfolio {
 				<?php
 				// The content
 				if ( false !== $atts['display_content'] ) {
+					add_filter( 'wordads_inpost_disable', '__return_true', 20 );
 					if ( 'full' === $atts['display_content'] ) {
 					?>
 						<div class="portfolio-entry-content"><?php the_content(); ?></div>
@@ -686,6 +688,7 @@ class Jetpack_Portfolio {
 						<div class="portfolio-entry-content"><?php the_excerpt(); ?></div>
 					<?php
 					}
+					remove_filter( 'wordads_inpost_disable', '__return_true', 20 );
 				}
 				?>
 				</div><!-- close .portfolio-entry -->

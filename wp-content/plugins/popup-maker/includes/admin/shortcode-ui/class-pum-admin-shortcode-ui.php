@@ -33,6 +33,7 @@ class PUM_Admin_Shortcode_UI {
 
 	public function init() {
 		add_action( 'admin_init', array( $this, 'init_editor' ), 20 );
+		add_action( 'wp_ajax_pum_do_shortcode', array( $this, 'do_shortcode' ) );
 	}
 
 	public function init_editor() {
@@ -47,6 +48,30 @@ class PUM_Admin_Shortcode_UI {
 			add_filter( 'mce_buttons', array( $this, 'mce_buttons' ) );
 			add_filter( 'pum_admin_var', array( $this, 'pum_admin_var' ) );
 		}
+    }
+
+    public function do_shortcode() {
+
+	    check_ajax_referer( 'pum-shortcode-ui-nonce', 'nonce' );
+
+	    $tag = ! empty( $_REQUEST['tag'] ) ? $_REQUEST['tag'] : false;
+
+	    /** @var PUM_Shortcode $shortcode */
+	    $shortcode = PUM_Shortcodes::instance()->get_shortcode( $tag );
+
+
+
+	    $code = stripslashes( $_REQUEST['shortcode'] );
+
+	    $content = do_shortcode( $code );
+
+	    if ( ! $shortcode || $content == $code ) {
+	    	wp_send_json_error();
+	    }
+
+	    $styles = "<style>" . $shortcode->_template_styles() . "</style>";
+
+	    wp_send_json_success( $styles . $content );
     }
 
 	/**
@@ -130,12 +155,16 @@ class PUM_Admin_Shortcode_UI {
 		$shortcodes = array();
 
 		foreach ( PUM_Shortcodes::instance()->get_shortcodes() as $tag => $shortcode ) {
+			/**
+			 * @var $shortcode PUM_Shortcode
+			 */
 			$shortcodes[ $tag ] = array(
 				'label' => $shortcode->label(),
 				'description' => $shortcode->description(),
 				'sections' => $shortcode->sections(),
 				'fields' => array(),
 				'has_content' => $shortcode->has_content,
+				'ajax_rendering' => $shortcode->ajax_rendering === true,
 			);
 
 			foreach( $shortcode->get_all_fields() as $section => $fields ) {
@@ -215,6 +244,11 @@ class PUM_Admin_Shortcode_UI {
 
 	/**
 	 * Render a shortcode body for preview.
+	 *
+	 * @param $shortcode
+	 * @param null $post_id
+	 *
+	 * @return string
 	 */
 	private function render_shortcode_for_preview( $shortcode, $post_id = null ) {
 

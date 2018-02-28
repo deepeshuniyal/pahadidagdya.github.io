@@ -54,7 +54,8 @@ class Jetpack_Debugger {
 		if ( $can_disconnect ) {
 			if ( Jetpack::is_active() ) {
 				Jetpack::disconnect();
-				wp_redirect( Jetpack::admin_url() );
+				wp_safe_redirect( Jetpack::admin_url() );
+				exit;
 			}
 		}
 	}
@@ -122,6 +123,17 @@ class Jetpack_Debugger {
 
 		$debug_info .= "\r\n". sprintf( esc_html__( 'Full Sync Queue size: %1$s', 'jetpack' ), $full_sync_queue->size() );
 		$debug_info .= "\r\n". sprintf( esc_html__( 'Full Sync Queue lag: %1$s', 'jetpack' ), self::seconds_to_time( $full_sync_queue->lag() ) );
+
+		require_once JETPACK__PLUGIN_DIR . 'sync/class.jetpack-sync-functions.php';
+		$idc_urls = array(
+			'home'       => Jetpack_Sync_Functions::home_url(),
+			'siteurl'    => Jetpack_Sync_Functions::site_url(),
+			'WP_HOME'    => Jetpack_Constants::is_defined( 'WP_HOME' ) ? Jetpack_Constants::get_constant( 'WP_HOME' ) : '',
+			'WP_SITEURL' => Jetpack_Constants::is_defined( 'WP_SITEURL' ) ? Jetpack_Constants::get_constant( 'WP_SITEURL' ) : '',
+		);
+		$debug_info .= "\r\n". esc_html( sprintf(  'Sync IDC URLs: %s', json_encode( $idc_urls ) ) );
+		$debug_info .= "\r\n". esc_html( sprintf(  'Sync error IDC option: %s', json_encode( Jetpack_Options::get_option( 'sync_error_idc' ) ) ) );
+		$debug_info .= "\r\n". esc_html( sprintf(  'Sync IDC Optin: %s', (string) Jetpack::sync_idc_optin() ) );
 
 		$debug_info .= "\r\n";
 
@@ -298,13 +310,6 @@ class Jetpack_Debugger {
 							__( 'The primary connection is owned by <strong>%s</strong>\'s WordPress.com account.', 'jetpack' ),
 							esc_html( Jetpack::get_master_user_email() )
 						); ?></p>
-						<?php if ( current_user_can( 'jetpack_manage_modules' ) ) {
-							printf(
-								'<p><a href="%1$s">%2$s</a></p>',
-								Jetpack::admin_url( 'page=jetpack_modules' ),
-								esc_html__( 'Access the full list of Jetpack modules available on your site.', 'jetpack' )
-							);
-						} ?>
 					</div>
 				<?php else : ?>
 					<div id="dev-mode-details">
@@ -314,6 +319,16 @@ class Jetpack_Debugger {
 						); ?></p>
 					</div>
 				<?php endif; ?>
+				<?php if (
+					current_user_can( 'jetpack_manage_modules' )
+					&& ( Jetpack::is_development_mode() || Jetpack::is_active() )
+				) {
+					printf(
+						'<p><a href="%1$s">%2$s</a></p>',
+						Jetpack::admin_url( 'page=jetpack_modules' ),
+						esc_html__( 'Access the full list of Jetpack modules available on your site.', 'jetpack' )
+					);
+				} ?>
 			</div>
 			<div id="contact-message" <?php if( ! isset( $_GET['contact'] ) ) {?>  style="display:none" <?php } ?>>
 			<?php if ( self::is_jetpack_support_open() ): ?>
@@ -350,7 +365,8 @@ class Jetpack_Debugger {
 						$categories = array(
 							'Connection' => esc_html__( "I'm having trouble connecting Jetpack to WordPress.com", 'jetpack' ),
 							'Billing'    => esc_html__( 'I have a billing or plans question', 'jetpack' ),
-							'Backups'    => esc_html__( 'I need help with backing up or restoring my site', 'jetpack' ),
+							'Backups'    => esc_html__( 'I need help with backing up my site.', 'jetpack' ),
+							'Restores'   => esc_html__( 'I have a problem restoring my site.', 'jetpack' ),
 							'Security'   => esc_html__( 'I have security concerns / my site is hacked', 'jetpack' ),
 							'Priority'   => esc_html__( "My site is down / I can't access my site", 'jetpack' ),
 							/* translators: Last item in a list of reasons to contact Jetpack support. */

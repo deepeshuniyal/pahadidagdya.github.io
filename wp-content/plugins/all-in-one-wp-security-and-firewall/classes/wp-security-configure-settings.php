@@ -1,4 +1,7 @@
 <?php
+if(!defined('ABSPATH')){
+    exit;//Exit if accessed directly
+}
 
 class AIOWPSecurity_Configure_Settings
 {    
@@ -43,6 +46,8 @@ class AIOWPSecurity_Configure_Settings
         //Captcha feature
         $aio_wp_security->configs->set_value('aiowps_enable_login_captcha','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_custom_login_captcha','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_enable_woo_login_captcha','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_enable_woo_register_captcha','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_lost_password_captcha','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_captcha_secret_key',AIOWPSecurity_Utility::generate_alpha_numeric_random_string(20));//Hidden secret value which will be used to do some captcha processing. This will be assigned a random string generated when captcha settings saved
 
@@ -87,6 +92,7 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->set_value('aiowps_enable_5g_firewall','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_6g_firewall','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_custom_rules','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_place_custom_rules_at_top','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_custom_rules','');
         
         //404 detection
@@ -115,6 +121,8 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->set_value('aiowps_enable_comment_captcha','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_autoblock_spam_ip','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_spam_ip_min_comments_block','');
+        $aio_wp_security->configs->set_value('aiowps_enable_bp_register_captcha','');
+        $aio_wp_security->configs->set_value('aiowps_enable_bbp_new_topic_captcha','');//Checkbox
         
         //Filescan features
         //File change detection feature
@@ -135,6 +143,8 @@ class AIOWPSecurity_Configure_Settings
        //Prevent users enumeration
         $aio_wp_security->configs->set_value('aiowps_prevent_users_enumeration','');//Checkbox
         
+        //IP retrieval setting
+        $aio_wp_security->configs->set_value('aiowps_ip_retrieve_method','0');//default is $_SERVER['REMOTE_ADDR']
                 
         //TODO - keep adding default options for any fields that require it
         
@@ -183,6 +193,8 @@ class AIOWPSecurity_Configure_Settings
         //Captcha feature
         $aio_wp_security->configs->add_value('aiowps_enable_login_captcha','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_enable_custom_login_captcha','');//Checkbox
+        $aio_wp_security->configs->add_value('aiowps_enable_woo_login_captcha','');//Checkbox
+        $aio_wp_security->configs->add_value('aiowps_enable_woo_register_captcha','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_captcha_secret_key',AIOWPSecurity_Utility::generate_alpha_numeric_random_string(20));//Hidden secret value which will be used to do some captcha processing. This will be assigned a random string generated when captcha settings saved
 
         //User registration
@@ -223,6 +235,7 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->add_value('aiowps_enable_5g_firewall','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_enable_6g_firewall','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_enable_custom_rules','');//Checkbox
+        $aio_wp_security->configs->add_value('aiowps_place_custom_rules_at_top','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_custom_rules','');
 
         //404 detection
@@ -251,6 +264,8 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->add_value('aiowps_enable_comment_captcha','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_enable_autoblock_spam_ip','');//Checkbox
         $aio_wp_security->configs->add_value('aiowps_spam_ip_min_comments_block','');
+        $aio_wp_security->configs->add_value('aiowps_enable_bp_register_captcha','');
+        $aio_wp_security->configs->add_value('aiowps_enable_bbp_new_topic_captcha','');//Checkbox
 
 
         //Filescan features
@@ -272,6 +287,8 @@ class AIOWPSecurity_Configure_Settings
         //Prevent users enumeration
         $aio_wp_security->configs->add_value('aiowps_prevent_users_enumeration','');//Checkbox
 
+        //IP retrieval setting
+        $aio_wp_security->configs->add_value('aiowps_ip_retrieve_method','0');//default is $_SERVER['REMOTE_ADDR']
         
         //TODO - keep adding default options for any fields that require it
         
@@ -311,6 +328,7 @@ class AIOWPSecurity_Configure_Settings
         $aio_wp_security->configs->set_value('aiowps_enable_6g_firewall','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_brute_force_attack_prevention','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_enable_custom_rules','');//Checkbox
+        $aio_wp_security->configs->set_value('aiowps_place_custom_rules_at_top','');//Checkbox
         $aio_wp_security->configs->set_value('aiowps_custom_rules','');
 
         $aio_wp_security->configs->set_value('aiowps_prevent_default_wp_file_access','');//Checkbox

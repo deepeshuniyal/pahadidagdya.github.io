@@ -1,8 +1,9 @@
 /*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2017 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
 
 /*NG ADDON*/
 .modal-header .close {
@@ -31,7 +32,6 @@
   opacity: .5;
 }
 /*end of NG ADDON*/
-
 .modal-open {
   overflow: hidden;
 }
@@ -103,7 +103,6 @@
 .modal-header {
   padding: 15px;
   border-bottom: 1px solid #e5e5e5;
-  min-height: 16.42857143px;
 }
 .modal-header .close {
   margin-top: -2px;
@@ -116,19 +115,19 @@
   position: relative;
   padding: 15px;
 }
-.modal-barter {
+.modal-footer {
   padding: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
 }
-.modal-barter .btn + .btn {
+.modal-footer .btn + .btn {
   margin-left: 5px;
   margin-bottom: 0;
 }
-.modal-barter .btn-group .btn + .btn {
+.modal-footer .btn-group .btn + .btn {
   margin-left: -1px;
 }
-.modal-barter .btn-block + .btn-block {
+.modal-footer .btn-block + .btn-block {
   margin-left: 0;
 }
 .modal-scrollbar-measure {
@@ -141,7 +140,7 @@
 @media (min-width: 768px) {
   .modal-dialog {
     width: 600px;
-    margin: 50px auto;
+    margin: 30px auto;
   }
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);

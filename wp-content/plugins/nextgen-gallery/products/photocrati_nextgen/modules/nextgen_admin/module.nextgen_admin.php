@@ -84,14 +84,6 @@ class M_NextGen_Admin extends C_Base_Module
 			'I_MVC_Controller',
 			'A_MVC_Validation'
 		);
-
-        if (is_admin()) {
-            $this->get_registry('I_NextGen_Admin_Page', 'A_Fs_Access_Page', NGG_FS_ACCESS_SLUG);
-            $this->get_registry()->add_adapter(
-                'I_Page_Manager',
-                'A_NextGen_Admin_Default_Pages'
-            );
-        }
 	}
 
 	/**
@@ -101,6 +93,7 @@ class M_NextGen_Admin extends C_Base_Module
 	{
         // Register scripts
         add_action('init', array($this, 'register_scripts'), 9);
+        add_action('init', array($this, 'init_wizards'), 5);
 
 		// Provides menu options for managing NextGEN Settings
 		add_action('admin_menu', array($this, 'add_menu_pages'), 999);
@@ -496,7 +489,6 @@ class M_NextGen_Admin extends C_Base_Module
 
 	function initialize()
 	{
-		$this->init_wizards();
 	}
 
 	/**

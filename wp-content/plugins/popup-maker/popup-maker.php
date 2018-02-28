@@ -4,7 +4,7 @@
  * Plugin URI: https://wppopupmaker.com/?utm_capmaign=PluginInfo&utm_source=plugin-header&utm_medium=plugin-uri
  * Description: Easily create & style popups with any content. Theme editor to quickly style your popups. Add forms, social media boxes, videos & more.
  * Author: WP Popup Maker
- * Version: 1.5.8
+ * Version: 1.6.6
  * Author URI: https://wppopupmaker.com/?utm_capmaign=PluginInfo&utm_source=plugin-header&utm_medium=author-uri
  * Text Domain: popup-maker
  *
@@ -147,7 +147,7 @@ if ( ! class_exists( 'Popup_Maker' ) ) :
 			}
 
 			if ( ! defined( 'POPMAKE_VERSION' ) ) {
-				define( 'POPMAKE_VERSION', '1.5.8' );
+				define( 'POPMAKE_VERSION', '1.6.6' );
 			}
 
 			if ( ! defined( 'POPMAKE_DB_VERSION' ) ) {
@@ -194,7 +194,6 @@ if ( ! class_exists( 'Popup_Maker' ) ) :
 			require_once POPMAKE_DIR . 'includes/ajax-calls.php';
 
 			require_once POPMAKE_DIR . 'includes/importer/easy-modal-v2.php';
-			require_once POPMAKE_DIR . 'includes/integrations/gravityforms.php';
 			require_once POPMAKE_DIR . 'includes/integrations/google-fonts.php';
 
 			require_once POPMAKE_DIR . 'includes/templates.php';
@@ -336,6 +335,10 @@ if ( ! class_exists( 'Popup_Maker' ) ) :
 
 			// Ninja Forms Integration
 			require_once POPMAKE_DIR . 'includes/integrations/class-pum-ninja-forms.php';
+			// CF7 Forms Integration
+			require_once POPMAKE_DIR . 'includes/integrations/class-pum-cf7.php';
+			// Gravity Forms Integration
+			require_once POPMAKE_DIR . 'includes/integrations/class-pum-gravity-forms.php';
 			// WPML Integration
 			require_once POPMAKE_DIR . 'includes/integrations/class-pum-wpml.php';
 

@@ -5,6 +5,7 @@ define( 'WORDADS_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WORDADS_FILE_PATH', WORDADS_ROOT . '/' . basename( __FILE__ ) );
 define( 'WORDADS_URL', plugins_url( '/', __FILE__ ) );
 define( 'WORDADS_API_TEST_ID', '26942' );
+define( 'WORDADS_API_TEST_ID2', '114160' );
 
 require_once( WORDADS_ROOT . '/php/widgets.php' );
 require_once( WORDADS_ROOT . '/php/api.php' );
@@ -91,7 +92,6 @@ class WordAds {
 		}
 
 		$this->insert_adcode();
-		$this->insert_extras();
 	}
 
 	/**
@@ -113,10 +113,38 @@ class WordAds {
 		add_action( 'wp_head', array( $this, 'insert_head_meta' ), 20 );
 		add_action( 'wp_head', array( $this, 'insert_head_iponweb' ), 30 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_filter( 'the_content', array( $this, 'insert_ad' ) );
-		add_filter( 'the_excerpt', array( $this, 'insert_ad' ) );
 
-		if ( $this->option( 'enable_header_ad' ) ) {
+		/**
+		 * Filters enabling ads in `the_content` filter
+		 *
+		 * @see https://jetpack.com/support/ads/
+		 *
+		 * @module wordads
+		 *
+		 * @since 5.8.0
+		 *
+		 * @param bool True to disable ads in `the_content`
+		 */
+		if ( ! apply_filters( 'wordads_content_disable', false ) ) {
+			add_filter( 'the_content', array( $this, 'insert_ad' ) );
+		}
+
+		/**
+		 * Filters enabling ads in `the_excerpt` filter
+		 *
+		 * @see https://jetpack.com/support/ads/
+		 *
+		 * @module wordads
+		 *
+		 * @since 5.8.0
+		 *
+		 * @param bool True to disable ads in `the_excerpt`
+		 */
+		if ( ! apply_filters( 'wordads_excerpt_disable', false ) ) {
+			add_filter( 'the_excerpt', array( $this, 'insert_ad' ) );
+		}
+
+		if ( $this->option( 'enable_header_ad', true ) ) {
 			switch ( get_stylesheet() ) {
 				case 'twentyseventeen':
 				case 'twentyfifteen':
@@ -128,15 +156,6 @@ class WordAds {
 					break;
 			}
 		}
-	}
-
-	/**
-	 * Add the actions/filters to insert extra-network features.
-	 *
-	 * @since 4.5.0
-	 */
-	private function insert_extras() {
-		require_once( WORDADS_ROOT . '/php/networks/amazon.php' );
 	}
 
 	/**
@@ -158,18 +177,16 @@ class WordAds {
 	 * @return [type] [description]
 	 */
 	function insert_head_meta() {
-		$domain = $this->params->targeting_tags['Domain'];
-		$pageURL = $this->params->targeting_tags['PageURL'];
-		$adsafe = $this->params->targeting_tags['AdSafe'];
+		$themename = esc_js( get_stylesheet() );
+		$pagetype = intval( $this->params->get_page_type_ipw() );
 		$data_tags = ( $this->params->cloudflare ) ? ' data-cfasync="false"' : '';
 		echo <<<HTML
 		<script$data_tags type="text/javascript">
-			var _ipw_custom = {
-				wordAds: '1',
-				domain: '$domain',
-				pageURL: '$pageURL',
-				adSafe: '$adsafe'
-			};
+			var __ATA_PP = { pt: $pagetype, ht: 2, tn: '$themename', amp: false };
+			var __ATA = __ATA || {};
+			__ATA.cmd = __ATA.cmd || [];
+			__ATA.criteo = __ATA.criteo || {};
+			__ATA.criteo.cmd = __ATA.criteo.cmd || [];
 		</script>
 HTML;
 	}
@@ -181,7 +198,26 @@ HTML;
 	 */
 	function insert_head_iponweb() {
 		$data_tags = ( $this->params->cloudflare ) ? ' data-cfasync="false"' : '';
-		echo "<script$data_tags type='text/javascript' src='//s.pubmine.com/head.js'></script>";
+		echo <<<HTML
+		<link rel='dns-prefetch' href='//s.pubmine.com' />
+		<link rel='dns-prefetch' href='//x.bidswitch.net' />
+		<link rel='dns-prefetch' href='//static.criteo.net' />
+		<link rel='dns-prefetch' href='//ib.adnxs.com' />
+		<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+		<link rel='dns-prefetch' href='//bidder.criteo.com' />
+		<link rel='dns-prefetch' href='//cas.criteo.com' />
+		<link rel='dns-prefetch' href='//gum.criteo.com' />
+		<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+		<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+		<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+		<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+		<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+		<link rel='dns-prefetch' href='//www.googletagservices.com' />
+		<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+		<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+		<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+		<script$data_tags async type="text/javascript" src="//s.pubmine.com/head.js"></script>
+HTML;
 	}
 
 	/**
@@ -190,6 +226,10 @@ HTML;
 	 * @since 4.5.0
 	 */
 	function insert_ad( $content ) {
+		// Ad JS won't work in XML feeds.
+		if ( is_feed() ) {
+			return $content;
+		}
 		/**
 		 * Allow third-party tools to disable the display of in post ads.
 		 *
@@ -279,29 +319,37 @@ HTML;
 	 */
 	function get_ad( $spot, $type = 'iponweb' ) {
 		$snippet = '';
+		$blocker_unit = 'mrec';
 		if ( 'iponweb' == $type ) {
 			$section_id = WORDADS_API_TEST_ID;
 			$width = 300;
 			$height = 250;
+			$second_belowpost = '';
+			$snippet = '';
 			if ( 'top' == $spot ) {
 				// mrec for mobile, leaderboard for desktop
 				$section_id = 0 === $this->params->blog_id ? WORDADS_API_TEST_ID : $this->params->blog_id . '2';
 				$width = $this->params->mobile_device ? 300 : 728;
 				$height = $this->params->mobile_device ? 250 : 90;
-			} else if ( 'belowpost' ) {
+				$blocker_unit = $this->params->mobile_device ? 'top_mrec' : 'top';
+				$snippet = $this->get_ad_snippet( $section_id, $height, $width, $blocker_unit );
+			} else if ( 'belowpost' == $spot ) {
 				$section_id = 0 === $this->params->blog_id ? WORDADS_API_TEST_ID : $this->params->blog_id . '1';
 				$width = 300;
 				$height = 250;
+
+				$snippet = $this->get_ad_snippet( $section_id, $height, $width, 'mrec', 'float:left;margin-right:5px;margin-top:0px;' );
+				if ( $this->option( 'wordads_second_belowpost', true ) ) {
+					$section_id2 = 0 === $this->params->blog_id ? WORDADS_API_TEST_ID2 : $this->params->blog_id . '4';
+					$snippet .= $this->get_ad_snippet( $section_id2, $height, $width, 'mrec2', 'float:left;margin-top:0px;' );
+				}
 			}
-			$data_tags = ( $this->params->cloudflare ) ? ' data-cfasync="false"' : '';
-			$snippet = <<<HTML
-			<script$data_tags type='text/javascript'>
-				(function(g){g.__ATA.initAd({sectionId:$section_id, width:$width, height:$height});})(window);
-			</script>
-HTML;
 		} else if ( 'house' == $type ) {
 			$leaderboard = 'top' == $spot && ! $this->params->mobile_device;
 			$snippet = $this->get_house_ad( $leaderboard ? 'leaderboard' : 'mrec' );
+			if ( 'belowpost' == $spot && $this->option( 'wordads_second_belowpost', true ) ) {
+				$snippet .= $this->get_house_ad( $leaderboard ? 'leaderboard' : 'mrec' );
+			}
 		}
 
 		$header = 'top' == $spot ? 'wpcnt-header' : '';
@@ -315,6 +363,75 @@ HTML;
 				</div>
 			</div>
 		</div>
+HTML;
+	}
+
+
+	/**
+	 * Returns the snippet to be inserted into the ad unit
+	 * @param  int $section_id
+	 * @param  int $height
+	 * @param  int $width
+	 * @param  string $css
+	 * @return string
+	 *
+	 * @since 5.7
+	 */
+	function get_ad_snippet( $section_id, $height, $width, $adblock_unit = 'mrec', $css = '' ) {
+		$this->ads[] = array( 'id' => $section_id, 'width' => $width, 'height' => $height );
+		$data_tags = $this->params->cloudflare ? ' data-cfasync="false"' : '';
+		$adblock_ad = $this->get_adblocker_ad( $adblock_unit );
+
+		return <<<HTML
+		<div style="padding-bottom:15px;width:{$width}px;height:{$height}px;$css">
+			<div id="atatags-{$section_id}">
+				<script$data_tags type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-{$section_id}',  {
+						collapseEmpty: 'before',
+						sectionId: '{$section_id}',
+						width: {$width},
+						height: {$height}
+					});
+				});
+				</script>
+				$adblock_ad
+			</div>
+		</div>
+HTML;
+	}
+
+	/**
+	 * Get Criteo Acceptable Ad unit
+	 * @param  string $unit mrec, mrec2, widesky, top, top_mrec
+	 *
+	 * @since 5.3
+	 */
+	public function get_adblocker_ad( $unit = 'mrec' ) {
+		$data_tags = $this->params->cloudflare ? ' data-cfasync="false"' : '';
+		$criteo_id = mt_rand();
+		$height = 250;
+		$width = 300;
+		$zone_id = 388248;
+		if ( 'mrec2' == $unit ) { // 2nd belowpost
+			$zone_id = 837497;
+		} else if ( 'widesky' == $unit ) { // sidebar
+			$zone_id = 563902;
+			$width = 160;
+			$height= 600;
+		} else if ( 'top' == $unit ) { // top leaderboard
+			$zone_id = 563903;
+			$width = 728;
+			$height = 90;
+		} else if ( 'top_mrec' == $unit ) { // top mrec
+			$zone_id = 563903;
+		}
+
+		return <<<HTML
+		<div id="crt-$criteo_id" style="width:{$width}px;height:{$height}px;display:none !important;"></div>
+		<script$data_tags type="text/javascript">
+		(function(){var c=function(){var a=document.getElementById("crt-{$criteo_id}");window.Criteo?(a.parentNode.style.setProperty("display","inline-block","important"),a.style.setProperty("display","block","important"),window.Criteo.DisplayAcceptableAdIfAdblocked({zoneid:{$zone_id},containerid:"crt-{$criteo_id}",collapseContainerIfNotAdblocked:!0,callifnotadblocked:function(){a.style.setProperty("display","none","important");a.style.setProperty("visbility","hidden","important")}})):(a.style.setProperty("display","none","important"),a.style.setProperty("visibility","hidden","important"))};if(window.Criteo)c();else{if(!__ATA.criteo.script){var b=document.createElement("script");b.src="//static.criteo.net/js/ld/publishertag.js";b.onload=function(){for(var a=0;a<__ATA.criteo.cmd.length;a++){var b=__ATA.criteo.cmd[a];"function"===typeof b&&b()}};(document.head||document.getElementsByTagName("head")[0]).appendChild(b);__ATA.criteo.script=b}__ATA.criteo.cmd.push(c)}})();
+		</script>
 HTML;
 	}
 

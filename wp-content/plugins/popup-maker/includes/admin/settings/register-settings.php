@@ -130,13 +130,13 @@ function popmake_get_registered_settings() {
 				'type' => 'checkbox',
 			),
 			'disable_popup_maker_core_styles' => array(
-				'id'   => 'disable_popup_theme_styles',
+				'id'   => 'disable_popup_maker_core_styles',
 				'name' => __( 'Don\'t load Popup Maker core stylesheet.', 'popup-maker' ),
 				'desc' => __( 'Check this if you have copied the Popup Maker core styles to your own stylesheet or are using custom styles.', 'popup-maker' ),
 				'type' => 'checkbox',
 			),
 			'disable_popup_theme_styles'      => array(
-				'id'   => 'disable_popup_maker_core_styles',
+				'id'   => 'disable_popup_theme_styles',
 				'name' => __( 'Don\'t load popup theme styles to the head.', 'popup-maker' ),
 				'desc' => __( 'Check this if you have copied the popup theme styles to your own stylesheet or are using custom styles.', 'popup-maker' ),
 				'type' => 'checkbox',
@@ -246,7 +246,7 @@ function popmake_settings_sanitize( $input = array() ) {
 	parse_str( $_POST['_wp_http_referer'], $referrer );
 
 	$settings = popmake_get_registered_settings();
-	$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'general';
+	$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'assets';
 
 	$input = $input ? $input : array();
 

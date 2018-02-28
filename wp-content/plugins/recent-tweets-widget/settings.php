@@ -18,12 +18,12 @@ if (array_key_exists('tp_twitter_global_notification', $_GET) && $_GET['tp_twitt
         </div>
 	<?php screen_icon(); ?>
 	<h2>Recent Tweets</h2>
-        <h3>Adding the Widget</h3>
+        <h3><?php _e('Adding the Widget', TP_RECENT_TEXT_DOMAIN); ?></h3>
         <ol>
                 <li><a href="<?php echo admin_url('widgets.php'); ?>" target="_blank">Go to your Widgets menu</a>, add the <code>Recent Tweets</code> widget to a widget area.</li>
                 <li>Visit <a href="https://apps.twitter.com/">https://apps.twitter.com/</a>, sign in with your account, click on <code>Create New App</code> and create your own keys if you haven't already.</li>
-                <li>Fill all your widget settings.</li>
-                <li>Enjoy your new Twitter feed! :)</li>
+                <li><?php _e('Fill all your widget settings.', TP_RECENT_TEXT_DOMAIN); ?></li>
+                <li><?php _e('Enjoy your new Twitter feed! :)', TP_RECENT_TEXT_DOMAIN); ?></li>
         </ol>
 	<form method="post" action="options.php"> 
 		<?php settings_fields( 'tp_twitter_plugin_options' ); ?>
@@ -34,7 +34,7 @@ if (array_key_exists('tp_twitter_global_notification', $_GET) && $_GET['tp_twitt
                                                 <option value="1" <?php echo is_array($tp_twitter_plugin_options) && $tp_twitter_plugin_options['support-us'] == '1' ? 'selected="selected"' : ''; ?>>Yes</option>
                                                 <option value="0" <?php echo !is_array($tp_twitter_plugin_options) || $tp_twitter_plugin_options['support-us'] != '1' ? 'selected="selected"' : ''; ?>>No</option>
                                         </select>
-                                        <p>Show our link below the widget. Pretty please.</p>
+                                        <p><?php _e('Show our link below the widget. Pretty please.', TP_RECENT_TEXT_DOMAIN); ?></p>
                                 </td>
                 		
                 	</tr>
@@ -42,13 +42,13 @@ if (array_key_exists('tp_twitter_global_notification', $_GET) && $_GET['tp_twitt
 		<?php submit_button(); ?>
 	</form>
 
-        <h3>Signup for a free 30 day course to DOUBLE YOUR EMAIL LIST</h3>
+        <h3><?php _e('Signup for a free 30 day course to DOUBLE YOUR EMAIL LIST', TP_RECENT_TEXT_DOMAIN); ?></h3>
         <form method="post" class="af-form-wrapper" action="http://www.aweber.com/scripts/addlead.pl" target="_blank">
                 <p>
-                        <input placeholder="Type Your Email Address" class="email" name="email" autofocus style="width:200px;" />
+                        <input placeholder="<?php _e('Type Your Email Address', TP_RECENT_TEXT_DOMAIN); ?>" class="email" name="email" autofocus style="width:200px;" />
                 </p>
                 <p>
-                        <button class="button button-primary">Let me in!</button>
+                        <button class="button button-primary"><?php _e('Let me in!', TP_RECENT_TEXT_DOMAIN); ?></button>
                 </p>
 
                 <input type="hidden" name="meta_web_form_id" value="1747290999" />

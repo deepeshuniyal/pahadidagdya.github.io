@@ -4,7 +4,7 @@
   Plugin Name: Head, Footer and Post Injections
   Plugin URI: http://www.satollo.net/plugins/header-footer
   Description: Header and Footer lets to add html/javascript code to the head and footer and posts of your blog. Some examples are provided on the <a href="http://www.satollo.net/plugins/header-footer">official page</a>.
-  Version: 3.0.7
+  Version: 3.1.0
   Author: Stefano Lissa
   Author URI: http://www.satollo.net
   Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -70,7 +70,7 @@ function hefo_template_redirect() {
     } else {
         $hefo_body_block = hefo_execute($hefo_options['body']);
     }
-    for ($i = 1; $i < 4; $i++) {
+    for ($i = 1; $i <= 5; $i++) {
         if ($hefo_is_mobile && isset($hefo_options['mobile_generic_enabled_' . $i])) {
             if (isset($hefo_options['mobile_generic_' . $i]))
                 $hefo_generic_block[$i] = hefo_execute($hefo_options['mobile_generic_' . $i]);
@@ -85,7 +85,7 @@ function hefo_template_redirect() {
 function hefo_callback($buffer) {
     global $hefo_body_block, $hefo_generic_block, $hefo_options, $hefo_is_mobile;
 
-    for ($i = 1; $i < 4; $i++) {
+    for ($i = 1; $i <= 5; $i++) {
         if (isset($hefo_options['generic_tag_' . $i]))
             hefo_insert_before($buffer, $hefo_generic_block[$i], $hefo_options['generic_tag_' . $i]);
     }
@@ -347,7 +347,7 @@ function hefo_the_content($content) {
 
 
 
-        for ($i = 1; $i < 4; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             if (empty($hefo_options['inner_tag_' . $i])) {
                 continue;
             }
@@ -356,9 +356,9 @@ function hefo_the_content($content) {
                 $prefix = 'mobile_';
             }
             $skip = trim($hefo_options['inner_skip_' . $i]);
-            if (empty($skip))
+            if (empty($skip)) {
                 $skip = 0;
-            else if (substr($skip, -1) == '%') {
+            } else if (substr($skip, -1) == '%') {
                 $skip = (intval($skip) * strlen($content) / 100);
             }
 
@@ -444,8 +444,9 @@ function hefo_replace($buffer) {
     }
 
     for ($i = 1; $i <= 5; $i++) {
-        if (!isset($hefo_options['snippet_' . $i]))
+        if (!isset($hefo_options['snippet_' . $i])) {
             $hefo_options['snippet_' . $i] = '';
+        }
         $buffer = str_replace('[snippet_' . $i . ']', $hefo_options['snippet_' . $i], $buffer);
     }
 

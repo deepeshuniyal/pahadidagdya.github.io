@@ -406,8 +406,29 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 		$settings = Jetpack_Core_Json_Api_Endpoints::get_updateable_data_list( 'settings' );
 		$holiday_snow_option_name = Jetpack_Core_Json_Api_Endpoints::holiday_snow_option_name();
 
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		foreach ( $settings as $setting => $properties ) {
 			switch ( $setting ) {
+				case 'lang_id':
+					if ( defined( 'WPLANG' ) ) {
+						// We can't affect this setting, so warn the client
+						$response[ $setting ] = 'error_const';
+						break;
+					}
+
+					if ( ! current_user_can( 'install_languages' ) ) {
+						// The user doesn't have caps to install language packs, so warn the client
+						$response[ $setting ] = 'error_cap';
+						break;
+					}
+
+					$value = get_option( 'WPLANG' );
+					$response[ $setting ] = empty( $value ) ? 'en_US' : $value;
+					break;
+
 				case $holiday_snow_option_name:
 					$response[ $setting ] = get_option( $holiday_snow_option_name ) === 'letitsnow';
 					break;
@@ -418,12 +439,27 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 						$response[ $setting ] = '';
 					} else {
 						if ( ! class_exists( 'Akismet' ) ) {
-							if ( file_exists( WP_PLUGIN_DIR . '/akismet/class.akismet.php' ) ) {
+							if ( is_readable( WP_PLUGIN_DIR . '/akismet/class.akismet.php' ) ) {
 								require_once WP_PLUGIN_DIR . '/akismet/class.akismet.php';
 							}
 						}
 						$response[ $setting ] = class_exists( 'Akismet' ) ? Akismet::get_api_key() : '';
 					}
+					break;
+
+				case 'onboarding':
+					$business_address = get_option( 'jpo_business_address' );
+					$business_address = is_array( $business_address ) ? array_map( array( $this, 'decode_special_characters' ), $business_address ) : $business_address;
+
+					$response[ $setting ] = array(
+						'siteTitle' => $this->decode_special_characters( get_option( 'blogname' ) ),
+						'siteDescription' => $this->decode_special_characters( get_option( 'blogdescription' ) ),
+						'siteType' => get_option( 'jpo_site_type' ),
+						'homepageFormat' => get_option( 'jpo_homepage_format' ),
+						'addContactForm' => intval( get_option( 'jpo_contact_page' ) ),
+						'businessAddress' => $business_address,
+						'installWooCommerce' => is_plugin_active( 'woocommerce/woocommerce.php' ),
+					);
 					break;
 
 				default:
@@ -432,12 +468,22 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 			}
 		}
 
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
 		$response['akismet'] = is_plugin_active( 'akismet/akismet.php' );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Decode the special HTML characters in a certain value.
+	 *
+	 * @since 5.8
+	 *
+	 * @param string $value Value to decode.
+	 *
+	 * @return string Value with decoded HTML characters.
+	 */
+	private function decode_special_characters( $value ) {
+		return (string) htmlspecialchars_decode( $value, ENT_QUOTES );
 	}
 
 	/**
@@ -594,6 +640,27 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 			$value = Jetpack_Core_Json_Api_Endpoints::cast_value( $value, $option_attrs );
 
 			switch ( $option ) {
+				case 'lang_id':
+					if ( defined( 'WPLANG' ) || ! current_user_can( 'install_languages' ) ) {
+						// We can't affect this setting
+						$updated = false;
+						break;
+					}
+
+					if ( $value === 'en_US' || empty( $value ) ) {
+						return delete_option( 'WPLANG' );
+					}
+
+					// `wp_download_language_pack` only tries to download packs if they're not already available
+					$language = wp_download_language_pack( $value );
+					if ( $language === false ) {
+						// The language pack download failed.
+						$updated = false;
+						break;
+					}
+					$updated = get_option( 'WPLANG' ) === $language ? true : update_option( 'WPLANG', $language );
+					break;
+
 				case 'monitor_receive_notifications':
 					$monitor = new Jetpack_Monitor();
 
@@ -622,7 +689,7 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 					}
 
 					// If we got an email address (create or regenerate) or 1 (delete), consider it done.
-					if ( preg_match( '/[a-z0-9]+@post.wordpress.com/', $result ) ) {
+					if ( is_string( $result ) && preg_match( '/[a-z0-9]+@post.wordpress.com/', $result ) ) {
 						$response[$option] = $result;
 						$updated           = true;
 					} elseif ( 1 == $result ) {
@@ -675,7 +742,7 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 					break;
 
 				case 'sharing_services':
-					if ( ! class_exists( 'Sharing_Service' ) && ! @include( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
+					if ( ! class_exists( 'Sharing_Service' ) && ! include_once( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
 						break;
 					}
 
@@ -688,7 +755,7 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 				case 'button_style':
 				case 'sharing_label':
 				case 'show':
-					if ( ! class_exists( 'Sharing_Service' ) && ! @include( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
+					if ( ! class_exists( 'Sharing_Service' ) && ! include_once( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
 						break;
 					}
 
@@ -699,7 +766,7 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 					break;
 
 				case 'custom':
-					if ( ! class_exists( 'Sharing_Service' ) && ! @include( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
+					if ( ! class_exists( 'Sharing_Service' ) && ! include_once( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
 						break;
 					}
 
@@ -711,7 +778,7 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 					break;
 
 				case 'sharing_delete_service':
-					if ( ! class_exists( 'Sharing_Service' ) && ! @include( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
+					if ( ! class_exists( 'Sharing_Service' ) && ! include_once( JETPACK__PLUGIN_DIR . 'modules/sharedaddy/sharing-service.php' ) ) {
 						break;
 					}
 
@@ -746,6 +813,9 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 						$atd_option = 'AtD_options';
 					}
 					$user_id                 = get_current_user_id();
+					if ( ! function_exists( 'AtD_get_options' ) ) {
+						include_once( JETPACK__PLUGIN_DIR . 'modules/after-the-deadline.php' );
+					}
 					$grouped_options_current = AtD_get_options( $user_id, $atd_option );
 					unset( $grouped_options_current['name'] );
 					$grouped_options = $grouped_options_current;
@@ -854,6 +924,29 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 					$updated = $grouped_options_current != $grouped_options ? update_option( 'jetpack_wga', $grouped_options ) : true;
 					break;
 
+				case 'dismiss_dash_app_card':
+				case 'dismiss_empty_stats_card':
+					// If option value was the same, consider it done.
+					$updated = get_option( $option ) != $value ? update_option( $option, (bool) $value ) : true;
+					break;
+
+				case 'onboarding':
+					jetpack_require_lib( 'widgets' );
+					// Break apart and set Jetpack onboarding options.
+					$result = $this->_process_onboarding( (array) $value );
+					if ( empty( $result ) ) {
+						$updated = true;
+					} else {
+						$error = sprintf( esc_html__( 'Onboarding failed to process: %s', 'jetpack' ), $result );
+						$updated = false;
+					}
+					break;
+
+				case 'show_welcome_for_new_plan':
+					// If option value was the same, consider it done.
+					$updated = get_option( $option ) !== $value ? update_option( $option, (bool) $value ) : true;
+					break;
+
 				default:
 					// If option value was the same, consider it done.
 					$updated = get_option( $option ) != $value ? update_option( $option, $value ) : true;
@@ -905,6 +998,245 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 	}
 
 	/**
+	 * Perform tasks in the site based on onboarding choices.
+	 *
+	 * @since 5.4.0
+	 *
+	 * @param array $data Onboarding choices made by user.
+	 *
+	 * @return string Result of onboarding processing and, if there is one, an error message.
+	 */
+	private function _process_onboarding( $data ) {
+		if ( isset( $data['end'] ) && $data['end'] ) {
+			return Jetpack::invalidate_onboarding_token()
+				? ''
+				: esc_html__( "The onboarding token couldn't be deleted.", 'jetpack' );
+		}
+
+		$error = array();
+
+		if ( ! empty( $data['siteTitle'] ) ) {
+			// If option value was the same, consider it done.
+			if ( ! ( update_option( 'blogname', $data['siteTitle'] ) || get_option( 'blogname' ) == $data['siteTitle'] ) ) {
+				$error[] = 'siteTitle';
+			}
+		}
+
+		if ( isset( $data['siteDescription'] ) ) {
+			// If option value was the same, consider it done.
+			if ( ! ( update_option( 'blogdescription', $data['siteDescription'] ) || get_option( 'blogdescription' ) == $data['siteDescription'] ) ) {
+				$error[] = 'siteDescription';
+			}
+		}
+
+		$site_title = get_option( 'blogname' );
+		$author = get_current_user_id() || 1;
+
+		if ( ! empty( $data['siteType'] ) ) {
+			if ( ! ( update_option( 'jpo_site_type', $data['siteType'] ) || get_option( 'jpo_site_type' ) == $data['siteType'] ) ) {
+				$error[] = 'siteType';
+			}
+		}
+
+		if ( isset( $data['homepageFormat'] ) ) {
+			// If $data['homepageFormat'] is 'posts', we have nothing to do since it's WordPress' default
+			// if it exists, just update
+			$homepage_format = get_option( 'jpo_homepage_format' );
+			if ( ! $homepage_format || $homepage_format !== $data['homepageFormat'] ) {
+				if ( 'page' === $data['homepageFormat'] ) {
+					if ( ! ( update_option( 'show_on_front', 'page' ) || get_option( 'show_on_front' ) == 'page' ) ) {
+						$error[] = 'homepageFormat';
+					}
+
+					$home = wp_insert_post( array(
+						'post_type'     => 'page',
+						/* translators: this references the home page of a site, also called front page. */
+						'post_title'    => esc_html_x( 'Home Page', 'The home page of a website.', 'jetpack' ),
+						'post_content'  => sprintf( esc_html__( 'Welcome to %s.', 'jetpack' ), $site_title ),
+						'post_status'   => 'publish',
+						'post_author'   => $author,
+					) );
+					if ( 0 == $home ) {
+						$error[] = 'home insert: 0';
+					} elseif ( is_wp_error( $home ) ) {
+						$error[] = 'home creation: '. $home->get_error_message();
+					}
+					if ( ! ( update_option( 'page_on_front', $home ) || get_option( 'page_on_front' ) == $home ) ) {
+
+						$error[] = 'home set';
+					}
+
+					$blog = wp_insert_post( array(
+						'post_type'     => 'page',
+						/* translators: this references the page where blog posts are listed. */
+						'post_title'    => esc_html_x( 'Blog', 'The blog of a website.', 'jetpack' ),
+						'post_content'  => sprintf( esc_html__( 'These are the latest posts in %s.', 'jetpack' ), $site_title ),
+						'post_status'   => 'publish',
+						'post_author'   => $author,
+					) );
+					if ( 0 == $blog ) {
+						$error[] = 'blog insert: 0';
+					} elseif ( is_wp_error( $blog ) ) {
+						$error[] = 'blog creation: '. $blog->get_error_message();
+					}
+					if ( ! ( update_option( 'page_for_posts', $blog ) || get_option( 'page_for_posts' ) == $blog ) ) {
+						$error[] = 'blog set';
+					}
+				} else {
+					$front_page = get_option( 'page_on_front' );
+					$posts_page = get_option( 'page_for_posts' );
+					if ( $posts_page && get_post( $posts_page ) ) {
+						wp_delete_post( $posts_page );
+					}
+					if ( $front_page && get_post( $front_page ) ) {
+						wp_delete_post( $front_page );
+					}
+					update_option( 'show_on_front', 'posts' );
+				}
+			}
+			update_option( 'jpo_homepage_format', $data['homepageFormat'] );
+		}
+
+		// Setup contact page and add a form and/or business info
+		$contact_page = '';
+		if ( ! empty( $data['addContactForm'] ) && ! get_option( 'jpo_contact_page' ) ) {
+			$contact_form_module_active = Jetpack::is_module_active( 'contact-form' );
+			if ( ! $contact_form_module_active ) {
+				$contact_form_module_active = Jetpack::activate_module( 'contact-form', false, false );
+			}
+
+			if ( $contact_form_module_active ) {
+				$contact_page = '[contact-form][contact-field label="' . esc_html__( 'Name', 'jetpack' ) . '" type="name" required="true" /][contact-field label="' . esc_html__( 'Email', 'jetpack' ) . '" type="email" required="true" /][contact-field label="' . esc_html__( 'Website', 'jetpack' ) . '" type="url" /][contact-field label="' . esc_html__( 'Message', 'jetpack' ) . '" type="textarea" /][/contact-form]';
+			} else {
+				$error[] = 'contact-form activate';
+			}
+		}
+
+		if ( isset( $data['businessPersonal'] ) && 'business' === $data['businessPersonal'] ) {
+			$contact_page .= "\n" . join( "\n", $data['businessInfo'] );
+		}
+
+		if ( ! empty( $contact_page ) ) {
+			$form = wp_insert_post( array(
+				'post_type'     => 'page',
+				/* translators: this references a page with contact details and possibly a form. */
+				'post_title'    => esc_html_x( 'Contact us', 'Contact page for your website.', 'jetpack' ),
+				'post_content'  => esc_html__( 'Send us a message!', 'jetpack' ) . "\n" . $contact_page,
+				'post_status'   => 'publish',
+				'post_author'   => $author,
+			) );
+			if ( 0 == $form ) {
+				$error[] = 'form insert: 0';
+			} elseif ( is_wp_error( $form ) ) {
+				$error[] = 'form creation: '. $form->get_error_message();
+			} else {
+				update_option( 'jpo_contact_page', $form );
+			}
+		}
+
+		if ( isset( $data['businessAddress'] ) ) {
+			$handled_business_address = self::handle_business_address( $data['businessAddress'] );
+			if ( is_wp_error( $handled_business_address ) ) {
+				$error[] = 'BusinessAddress';
+			}
+		}
+
+		if ( ! empty( $data['installWooCommerce'] ) ) {
+			jetpack_require_lib( 'plugins' );
+			$wc_install_result = Jetpack_Plugins::install_and_activate_plugin( 'woocommerce' );
+			delete_transient( '_wc_activation_redirect' ); // Redirecting to WC setup would kill our users' flow
+			if ( is_wp_error( $wc_install_result ) ) {
+				$error[] = 'woocommerce installation';
+			}
+		}
+
+		return empty( $error )
+			? ''
+			: join( ', ', $error );
+	}
+
+	/**
+	 * Add or update Business Address widget.
+	 *
+	 * @param array $address Array of business address fields.
+	 *
+	 * @return WP_Error|true True if the data was saved correctly.
+	*/
+	static function handle_business_address( $address ) {
+		$first_sidebar = Jetpack_Widgets::get_first_sidebar();
+
+		$widgets_module_active = Jetpack::is_module_active( 'widgets' );
+		if ( ! $widgets_module_active ) {
+			$widgets_module_active = Jetpack::activate_module( 'widgets', false, false );
+		}
+		if ( ! $widgets_module_active ) {
+			return new WP_Error( 'module_activation_failed', 'Failed to activate the widgets module.', 400 );
+		}
+
+		if ( $first_sidebar ) {
+			$title = isset( $address['name'] ) ? sanitize_text_field( $address['name'] ) : '';
+			$street = isset( $address['street'] ) ? sanitize_text_field( $address['street'] ) : '';
+			$city = isset( $address['city'] ) ? sanitize_text_field( $address['city'] ) : '';
+			$state = isset( $address['state'] ) ? sanitize_text_field( $address['state'] ) : '';
+			$zip = isset( $address['zip'] ) ? sanitize_text_field( $address['zip'] ) : '';
+
+			$full_address = implode( ' ', array_filter( array( $street, $city, $state, $zip ) ) );
+
+			$widget_options = array(
+				'title'   => $title,
+				'address' => $full_address,
+				'phone'   => '',
+				'hours'   => '',
+				'showmap' => false,
+				'email' => ''
+			);
+
+			$widget_updated = '';
+			if ( ! self::has_business_address_widget( $first_sidebar ) ) {
+				$widget_updated  = Jetpack_Widgets::insert_widget_in_sidebar( 'widget_contact_info', $widget_options, $first_sidebar );
+			} else {
+				$widget_updated = Jetpack_Widgets::update_widget_in_sidebar( 'widget_contact_info', $widget_options, $first_sidebar );
+			}
+			if ( is_wp_error( $widget_updated ) ) {
+				return new WP_Error( 'widget_update_failed', 'Widget could not be updated.', 400 );
+			}
+
+			$address_save = array(
+				'name' => $title,
+				'street' => $street,
+				'city' => $city,
+				'state' => $state,
+				'zip' => $zip
+			);
+			update_option( 'jpo_business_address', $address_save );
+			return true;
+		}
+
+		// No sidebar to place the widget
+		return new WP_Error( 'sidebar_not_found', 'No sidebar.', 400 );
+	}
+
+	/**
+	 * Check whether "Contact Info & Map" widget is present in a given sidebar.
+	 *
+	 * @param string  $sidebar ID of the sidebar to which the widget will be added.
+	 *
+	 * @return bool Whether the widget is present in a given sidebar.
+	*/
+	static function has_business_address_widget( $sidebar ) {
+		$sidebars_widgets = get_option( 'sidebars_widgets', array() );
+		if ( ! isset( $sidebars_widgets[ $sidebar ] ) ) {
+			return false;
+		}
+		foreach ( $sidebars_widgets[ $sidebar ] as $widget ) {
+			if ( strpos( $widget, 'widget_contact_info' ) !== false ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Calls WPCOM through authenticated request to create, regenerate or delete the Post by Email address.
 	 * @todo: When all settings are updated to use endpoints, move this to the Post by Email module and replace __process_ajax_proxy_request.
 	 *
@@ -947,6 +1279,11 @@ class Jetpack_Core_API_Data extends Jetpack_Core_API_XMLRPC_Consumer_Endpoint {
 	 * @return bool
 	 */
 	public function can_request( $request ) {
+		$req_params = $request->get_params();
+		if ( ! empty( $req_params['onboarding']['token'] ) && isset( $req_params['rest_route'] ) ) {
+			return Jetpack::validate_onboarding_token_action( $req_params['onboarding']['token'], $req_params['rest_route'] );
+		}
+
 		if ( 'GET' === $request->get_method() ) {
 			return current_user_can( 'jetpack_admin_page' );
 		} else {
@@ -1321,7 +1658,12 @@ class Jetpack_Core_API_Module_Data_Endpoint {
 		}
 
 		$data = json_decode( base64_decode( $vaultpress->contact_service( 'plugin_data' ) ) );
-		if ( is_wp_error( $data ) || ! isset( $data->backups->last_backup ) ) {
+		if ( false == $data ) {
+			return rest_ensure_response( array(
+				'code'    => 'not_registered',
+				'message' => esc_html__( 'Could not connect to VaultPress.', 'jetpack' )
+			) );
+		} else if ( is_wp_error( $data ) || ! isset( $data->backups->last_backup ) ) {
 			return $data;
 		} else if ( empty( $data->backups->last_backup ) ) {
 			return rest_ensure_response( array(

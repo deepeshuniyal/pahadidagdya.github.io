@@ -312,24 +312,6 @@ else {
         </div>
     <?php } ?>
 
-    <?php if (!isset($dismissed['og'])) { ?>
-        <div class="notice notice-error"><p>
-                The Facebook open graph metatag are no more supported. Please install a specialized plugin, you can find many on wordpress.org/plugins.
-                The configuration panel is kept so you can get the original configurations.
-                <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=og&noheader=1') ?>">&times;</a>
-            </p>   
-        </div>
-    <?php } ?>
-
-    <?php if (!isset($dismissed['bbpress'])) { ?>
-        <div class="notice notice-warning"><p>
-                bbPress injections will be removed on future versions. Please use <a href="https://wordpresss.org/plugins/ads-bbpress" target="_blank">Ads for bbPress</a>
-                instead, thank you. It's mine, it's free.
-                <a class="hefo-dismiss" href="<?php echo wp_nonce_url($_SERVER['REQUEST_URI'] . '&dismiss=bbpress&noheader=1') ?>">&times;</a>
-            </p>   
-        </div>
-    <?php } ?>  
-
     <?php if (!isset($dismissed['newsletter'])) { ?>
         <div class="notice notice-success"><p>
                 If you want to be informed of important updated of this plugin, you may want to subscribe to my (rare) newsletter<br>
@@ -363,16 +345,11 @@ else {
     </p>
 
     <p>
-
-    </p>
-
-
-    <p>
         <?php
         if (apply_filters('hefo_php_exec', true)) {
             _e('PHP is allowed in your code.');
         } else {
-            _e('PHP is NOT allowed in your code (disable by your theme or a plugin)');
+            _e('PHP is NOT allowed in your code (disabled by your theme or a plugin)');
         }
         ?>
     </p>
@@ -383,20 +360,12 @@ else {
         <div id="tab-container" class="tab-container">
             <ul class="etabs">
                 <li class='tab'><a href="#tabs-first"><?php _e('Head and footer', 'header-footer'); ?></a></li>
-                <li class='tab'><a href="#tabs-generics"><?php _e('Generics', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-post"><?php _e('Posts', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-post-inner"><?php _e('Inside posts', 'header-footer'); ?></a></li>
-                <!--<li class='tab'><a href="#tabs-post-mobile"><?php _e('Post content (mobile)', 'header-footer'); ?></a></li>-->
                 <li class='tab'><a href="#tabs-page"><?php _e('Pages', 'header-footer'); ?></a></li>
-                <!--<li class='tab'><a href="#tabs-page-mobile"><?php _e('Page content (mobile)', 'header-footer'); ?></a></li>-->
-                <li class='tab'><a href="#tabs-4"><?php _e('Facebook', 'header-footer'); ?></a></li>
-                <li class='tab'><a href="#tabs-9"><?php _e('SEO', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-5"><?php _e('Snippets', 'header-footer'); ?></a></li>
-                <li class='tab'><a href="#tabs-6"><?php _e('BBPress', 'header-footer'); ?></a></li>
-                <!--
-                <li><a href="#tabs-6a"><?php _e('Other post types', 'header-footer'); ?></a></li>
-                -->
                 <li class='tab'><a href="#tabs-amp"><?php _e('AMP', 'header-footer'); ?></a></li>
+                <li class='tab'><a href="#tabs-generics"><?php _e('Generics', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-8"><?php _e('Advanced', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-7"><?php _e('Notes and...', 'header-footer'); ?></a></li>
                 <li class='tab'><a href="#tabs-thankyou"><?php _e('Thank you', 'header-footer'); ?></a></li>
@@ -406,40 +375,40 @@ else {
 
                 <div id="tabs-first">
 
-                    <h3>&lt;HEAD&gt; section injection</h3>
+                    <h3><?php esc_html_e('<HEAD> page section injection', 'header-footer')?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            Every page<br>
+                            <label><?php esc_html_e('On every page', 'header-footer')?></label>
                             <?php hefo_base_textarea_cm('head'); ?>
                         </div>
                         <div class="col-2">
-                            Only home page<br>
+                            <label><?php esc_html_e('Only on the home page', 'header-footer')?></label>
                             <?php hefo_base_textarea_cm('head_home'); ?>
                         </div>
                     </div>
 
-                    <h3>After the &lt;BODY&gt; tag</h3>
+                    <h3><?php esc_html_e('After the <BODY> tag', 'header-footer')?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            <?php _e('Desktop', 'header-footer') ?>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('body'); ?>
                         </div>
                         <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_body_enabled', __('Mobile', 'header-footer')); ?><br>
+                            <?php hefo_base_checkbox('mobile_body_enabled', __('Mobile', 'header-footer')); ?>
                             <?php hefo_base_textarea_cm('mobile_body'); ?>
                         </div>
 
                     </div>
-                    <h3>Before the &lt;/BODY&gt; closing tag (footer)</h3>
+                    <h3><?php esc_html_e('Before the &lt;/BODY&gt; closing tag (footer)', 'header-footer')?></h3>
                     <div class="row">
                         <div class="col-2">
-                            <?php _e('Desktop', 'header-footer') ?>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('footer'); ?>
                         </div>
                         <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_footer_enabled', __('Mobile', 'header-footer')); ?><br>
+                            <?php hefo_base_checkbox('mobile_footer_enabled', __('Mobile', 'header-footer')); ?>
                             <?php hefo_base_textarea_cm('mobile_footer'); ?>
                         </div>
                     </div>
@@ -450,16 +419,16 @@ else {
 
                 <div id="tabs-generics">
 
-                    <?php for ($i = 1; $i < 5; $i++) { ?>
+                    <?php for ($i = 1; $i <= 5; $i++) { ?>
                         <h3>Generic injection <?php echo $i; ?></h3>
                         <p>Inject before the <?php hefo_base_text('generic_tag_' . $i); ?> marker</p>
                         <div class="row">
                             <div class="col-2">
-                                Desktop (and mobile if no alternative specified)<br>
+                                <label><?php _e('Desktop', 'header-footer') ?>*</label>
                                 <?php hefo_base_textarea_cm('generic_' . $i); ?>
                             </div>
                             <div class="col-2">
-                                <?php hefo_base_checkbox('mobile_generic_enabled_' . $i, __('Mobile', 'header-footer')); ?><br>
+                                <?php hefo_base_checkbox('mobile_generic_enabled_' . $i, __('Mobile', 'header-footer')); ?>
                                 <?php hefo_base_textarea_cm('mobile_generic_' . $i); ?>
                             </div>
                         </div>
@@ -476,30 +445,30 @@ else {
                         See the "advanced tab" to configure the mobile device detection.
                     </p>
 
-                    <h3>Before the post content</h3>
+                    <h3><?php esc_html_e('Before the post content', 'header-footer'); ?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            Desktop<br>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('before'); ?>
                         </div>
                         <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_before_enabled', __('Mobile', 'header-footer')); ?><br>
+                            <?php hefo_base_checkbox('mobile_before_enabled', __('Mobile', 'header-footer')); ?>
                             <?php hefo_base_textarea_cm('mobile_before'); ?>
                         </div>
                     </div>
 
                     <div class="clearfix"></div>
 
-                    <h3>After the post content</h3>
+                    <h3><?php esc_html_e('After the post content', 'header-footer'); ?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            Desktop<br>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('after'); ?>
                         </div>
                         <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_after_enabled', __('Mobile', 'header-footer')); ?><br>
+                            <?php hefo_base_checkbox('mobile_after_enabled', __('Mobile', 'header-footer')); ?>
                             <?php hefo_base_textarea_cm('mobile_after'); ?>
                         </div>
                     </div>
@@ -523,16 +492,16 @@ else {
 
                 <div id="tabs-post-inner">
 
-                    <?php for ($i = 1; $i < 4; $i++) { ?>
+                    <?php for ($i = 1; $i <= 5; $i++) { ?>
                         <h3>Inner post injection <?php echo $i; ?></h3>
                         <?php hefo_rule($i); ?>
                         <div class="row">
                             <div class="col-2">
-                                Desktop (and mobile if no alternative specified)<br>
+                                <label><?php _e('Desktop', 'header-footer') ?>*</label>
                                 <?php hefo_base_textarea_cm('inner_' . $i); ?>
                             </div>
                             <div class="col-2">
-                                <?php hefo_base_checkbox('mobile_inner_enabled_' . $i, __('Mobile', 'header-footer')); ?><br>
+                                <?php hefo_base_checkbox('mobile_inner_enabled_' . $i, __('Mobile', 'header-footer')); ?>
                                 <?php hefo_base_textarea_cm('mobile_inner_' . $i); ?>
                             </div>
                         </div>
@@ -547,11 +516,11 @@ else {
                     <?php hefo_base_checkbox('page_add_tags', __('Let pages to have tags', 'header-footer')); ?><br>
                     <?php hefo_base_checkbox('page_add_categories', __('Let pages to have categories', 'header-footer')); ?>
 
-                    <h3>Before the page content</h3>
+                    <h3><?php _e('Before the page content', 'header-footer') ?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            Desktop (and mobile if no alternative specified)<br>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('page_before'); ?>
                         </div>
                         <div class="col-2">
@@ -562,11 +531,11 @@ else {
 
                     <div class="clearfix"></div>
 
-                    <h3>After the page content</h3>
+                    <h3><?php _e('After the page content', 'header-footer') ?></h3>
                     <div class="row">
 
                         <div class="col-2">
-                            Desktop<br>
+                            <label><?php _e('Desktop', 'header-footer') ?>*</label>
                             <?php hefo_base_textarea_cm('page_after'); ?>
                         </div>
                         <div class="col-2">
@@ -580,72 +549,6 @@ else {
                 </div>
 
 
-                <div id="tabs-4">
-                    <p>
-                        <strong>This panel is no more active. Please use a specialized plugin for Facebook Open Graph.</strong>
-                    </p>
-
-                    <p>
-                        <?php _e('If you use WordPress SEO or other plugin which already add the OpenGraph meta tag, leave these options disabled.') ?>
-                    </p>
-                    <table class="form-table">
-                        <tr valign="top"><?php hefo_field_checkbox('og_enabled', __('Enable the OG metatag', 'header-footer'), __('Enable the Facebook Open Graph metatag', 'header-footer')); ?></tr>
-
-                        <tr valign="top"><?php hefo_field_text('fb_app_id', __('Facebook application id', 'header-footer'), __('', 'header-footer')); ?></tr>
-                        <tr valign="top"><?php hefo_field_text('og_type', __('Facebook page type for the generic web page', 'header-footer'), __('Usually "article" is the right choice, if empty will be skipped', 'header-footer')); ?></tr>
-                        <tr valign="top"><?php hefo_field_text('og_type_home', __('Facebook page type for the home', 'header-footer'), __('Usually "blog" is a good choice, if empty will be used the generic type', 'header-footer')); ?></tr>
-                        <tr valign="top"><?php hefo_field_checkbox('og_image', __('Facebook Open Graph Image', 'header-footer'), __('Adds the Facebook Open Graph metatag with a reference to the first post image', 'header-footer')); ?></tr>
-                        <tr valign="top">
-                            <th scope="row">
-                                <label for="options[' . $name . ']"><?php _e('Facebook Open Graph default image'); ?></label>
-                            </th>
-                            <td>
-                                <input type="text" id="og_image_default" name="options[og_image_default]" value="<?php echo htmlspecialchars($options['og_image_default']); ?>" size="50"/>
-                                <input type="button" id="upload-image" value="Select/Upload an image"/>
-                                <br />
-                                <?php _e('If no image can be extracted from a post, that image URL will be used (if present).'); ?><br />
-                                <?php _e('<strong>Warning.</strong> On some versions of WordPress after the image selection button is pressed the tabs above does not change anymore. Just save so
-                        this page is reloaded (<a href="http://wordpress.org/support/topic/wp-32-thickbox-jquery-ui-tabs-conflict" target="_blank">reference</a>).'); ?>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="clearfix"></div>
-                </div>
-
-
-                <div id="tabs-9">
-                    <p>
-                        <?php _e('Please, see the <a href="http://www.satollo.net/plugins/header-footer" target="_blank">Header and Footer</strong></a> page before to use those options.'); ?>
-                    </p>
-                    <p>
-                        <?php _e('Note: most of these options are now available on SEO plugins.'); ?>
-                    </p>
-
-                    <!--<h3>SEO</h3>-->
-                    <table class="form-table">
-                        <tr valign="top">
-                            <th scope="row">
-                                Home
-                            </th>
-                            <?php hefo_field_checkbox_only('seo_home_paged_noindex', __('Add noindex for page 2 and up', 'header-footer')); ?>
-                        </tr>
-                        <tr valign="top">
-                            <th scope="row">
-                                Search results
-                            </th>
-                            <?php hefo_field_checkbox_only('seo_search_noindex', __('Add noindex for search result pages', 'header-footer')); ?>
-                        </tr>
-                        <tr valign="top">
-                            <th scope="row">
-                                Canonical on home
-                            </th>
-                            <?php hefo_field_checkbox_only('seo_home_canonical', __('Add canonical to home page', 'header-footer')); ?>
-                        </tr>
-                    </table>
-                    <div class="clearfix"></div>
-                </div>
-
-
                 <!-- AMP -->
 
                 <div id="tabs-amp">
@@ -654,7 +557,7 @@ else {
                         in the near future.
                     </p>
 
-                    <h3>&lt;head&gt; section</h3>
+                    <h3><?php esc_html_e('<HEAD> page section', 'header-footer')?></h3>
                     <div class="row">
                         <div class="col-1">
                             <?php hefo_base_textarea_cm('amp_head'); ?>
@@ -663,7 +566,7 @@ else {
 
                     <div class="clearfix"></div>
 
-                    <h3>Extra CSS</h3>
+                    <h3><?php esc_html_e('Extra CSS', 'header-footer')?></h3>
                     <div class="row">
                         <div class="col-1">
                             <?php hefo_base_textarea_cm('amp_css', 'css'); ?>
@@ -672,7 +575,7 @@ else {
 
                     <div class="clearfix"></div>
 
-                    <h3>Before the post content</h3>
+                    <h3><?php esc_html_e('Before the post content', 'header-footer')?></h3>
                     <div class="row">
                         <div class="col-1">
 
@@ -682,7 +585,7 @@ else {
 
                     <div class="clearfix"></div>
 
-                    <h3>After the post content</h3>
+                    <h3><?php esc_html_e('After the post content', 'header-footer')?></h3>
                     <div class="row">
 
                         <div class="col-1">
@@ -693,7 +596,7 @@ else {
                     </div>
                     <div class="clearfix"></div>
 
-                    <h3>Footer</h3>
+                    <h3><?php esc_html_e('Footer', 'header-footer')?></h3>
                     <div class="row">
 
                         <div class="col-1">
@@ -721,89 +624,6 @@ else {
                     <div class="clearfix"></div>
                 </div>
 
-                <div id="tabs-6">
-                    <p>
-                        <strong>Please, use the new <a href="https://wordpress.org/plugins/ads-bbpress/" target="_blank">Ads for bbPress</a> plugin to inject code on bbPress pages.</strong>
-                    </p>
-                    <p>
-                        Injection points on bbPress default theme structure are not always clear to me, so consider this feature experimental.
-                    </p>
-                    <h3>Before a single forum</h3>
-                    <div class="row">
-                        <div class="col-2">
-                            Desktop<br>
-                            <?php hefo_base_textarea_cm('bbp_template_before_single_forum'); ?>
-                        </div>
-                        <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_bbp_template_before_single_forum_enabled', __('Mobile', 'header-footer')); ?><br>
-                            <?php hefo_base_textarea_cm('mobile_bbp_template_before_single_forum'); ?>
-                        </div>
-                    </div>
-
-                    <h3>Before a single topic</h3>
-                    <div class="row">
-                        <div class="col-2">
-                            Desktop<br>
-                            <?php hefo_base_textarea_cm('bbp_template_before_single_topic'); ?>
-                        </div>
-                        <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_bbp_template_before_single_topic_enabled', __('Mobile', 'header-footer')); ?><br>
-                            <?php hefo_base_textarea_cm('mobile_bbp_template_before_single_topic'); ?>
-                        </div>
-                    </div>
-
-                    <h3>After a single topic</h3>
-                    <div class="row">
-                        <div class="col-2">
-                            Desktop<br>
-                            <?php hefo_base_textarea_cm('bbp_template_after_single_topic'); ?>
-                        </div>
-                        <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_bbp_template_after_single_topic_enabled', __('Mobile', 'header-footer')); ?><br>
-                            <?php hefo_base_textarea_cm('mobile_bbp_template_after_single_topic'); ?>
-                        </div>
-                    </div>
-
-                    <h3>Before a single reply</h3>
-                    <div class="row">
-                        <div class="col-2">
-                            Desktop<br>
-                            <?php hefo_base_textarea_cm('bbp_theme_before_reply_content'); ?>
-                        </div>
-                        <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_bbp_theme_before_reply_content_enabled', __('Mobile', 'header-footer')); ?><br>
-                            <?php hefo_base_textarea_cm('mobile_bbp_theme_before_reply_content'); ?>
-                        </div>
-                    </div>
-
-                    <h3>After a single reply</h3>
-                    <div class="row">
-                        <div class="col-2">
-                            Desktop<br>
-                            <?php hefo_base_textarea_cm('bbp_theme_after_reply_content'); ?>
-                        </div>
-                        <div class="col-2">
-                            <?php hefo_base_checkbox('mobile_bbp_theme_after_reply_content_enabled', __('Mobile', 'header-footer')); ?><br>
-                            <?php hefo_base_textarea_cm('mobile_bbp_theme_after_reply_content'); ?>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <!--
-                <div id="tabs-6s">
-                    <p>
-                    </p>
-                <?php $post_types = get_post_types(array('public' => true, '_builtin' => false), 'objects'); ?>
-                <?php foreach ($post_types as $post_type) { ?>
-                                                                <h3><?php echo esc_html($post_type->label) ?> (<?php echo esc_html($post_type->name) ?>)</h3>
-                                                                <table class="form-table">
-                                                                <tr><?php hefo_field_textarea($post_type->name . '_before', __('Before the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                                <tr><?php hefo_field_textarea($post_type->name . '_after', __('After the content', 'header-footer'), '', 'rows="10"'); ?></tr>
-                                                                </table>
-                <?php } ?>
-                </div>            
-                -->
-
                 <div id="tabs-8">
                     <table class="form-table">
                         <tr valign="top">
@@ -815,34 +635,6 @@ else {
 
                         </tr>
                     </table>
-
-                    <?php /*
-                      <h3>Web performance</h3>
-                      <p>
-                      Some JavaScript can be marked to be loaded asynchronously, for example the comment-reply.js of WordPress.
-                      Not always asynchronous load work, for example jQuery cannot usually loaded in this way. Since WordPress does
-                      not support this feature natively, here you can force thise feature on specific scripts.<br>
-                      Usually you can add comment-reply, akismet-form, admin-bar.<br>
-                      You can read more on <a href="http://www.satollo.net/javascript-asyn-load-for-wordpress-enqueued-scripts" target="_blank">this article</a>
-                      and/or ask on my <a href="http://www.satollo.net/forums" target="_blank">forum area</a>.
-                      </p>
-
-                      <table class="form-table">
-
-                      <tr valign="top">
-                      <th scope="row">
-                      Script handle debug
-                      </th>
-                      <?php hefo_field_checkbox_only('script_handle_debug', __('Activate in page debug info: see the source page to find the handles', 'header-footer')); ?>
-
-                      </tr>
-                      <tr valign="top">
-                      <?php
-                      hefo_field_textarea('script_async_handles', __('Script handles to load asynchronously', 'header-footer'), 'One per line', 'rows="10"');
-                      ?>
-                      </tr>
-                      </table>
-                     */ ?>
 
                     <h3>Head meta links</h3>
                     <p>
@@ -900,6 +692,7 @@ else {
             </div>
 
         </div>
+        <p>* if no mobile alternative is activated</p>
         <p class="submit"><input type="submit" class="button" name="save" value="<?php _e('save', 'header-footer'); ?>"></p>
 
     </form>

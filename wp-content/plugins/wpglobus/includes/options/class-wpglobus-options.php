@@ -6,6 +6,9 @@
  * @author      WPGlobus
  */
 
+// Load the Request class.
+require_once dirname( dirname( __FILE__ ) ) . '/admin/class-wpglobus-language-edit-request.php';
+
 /**
  * Class WPGlobus_Options
  * Based on ReduxFramework Sample Config File
@@ -99,15 +102,15 @@ class WPGlobus_Options {
 	 *
 	 * @since 1.2.2
 	 *
-	 * @param string $file  Path of the field class where Redux is looking for it
-	 * @param array  $field Field parameters
+	 * @param string $file Path of the field class where Redux is looking for it
+	 * @param array $field Field parameters
 	 *
 	 * @return string Path of the field class where we want Redux to find it
 	 */
 	public function add_custom_redux_fields( $file, $field ) {
 		if ( ! file_exists( $file ) ) {
 			$file = WPGlobus::$PLUGIN_DIR_PATH .
-			        "includes/options/fields/{$field['type']}/field_{$field['type']}.php";
+					"includes/options/fields/{$field['type']}/field_{$field['type']}.php";
 		}
 
 		return $file;
@@ -137,23 +140,25 @@ class WPGlobus_Options {
 					'type'   => 'wpglobus_info',
 					'title'  => esc_html__( 'WARNING: old version of the ReduxFramework is active!', 'wpglobus' ),
 					'desc'   => '</br>' .
-					            sprintf(
-						            esc_html__( 'WPGlobus settings panel requires ReduxFramework %1$s or later.' ),
-						            WPGlobus::$minimalReduxFramework_version
-					            ) .
-					            '</br>' .
-					            '</br>' .
-					            // translators: ReduxFramework - %1$s version, %2$s folder where installed
-					            sprintf( esc_html__( 'The currently active ReduxFramework (version %1$s) was loaded from the %2$s folder.', 'wpglobus' ),
-						            ReduxFramework::$_version,
-						            '<code>' . ReduxFramework::$_dir . '</code>'
-					            ) .
-					            '</br>' .
-					            '</br>' .
-					            '<strong>' .
-					            // translators: %1$s placeholder for the link to ReduxFramework plugin
-					            sprintf( esc_html__( 'We recommend you to install the most recent version of the ReduxFramework plugin: %1$s.', 'wpglobus' ), '<a href="https://wordpress.org/plugins/redux-framework/">https://wordpress.org/plugins/redux-framework/</a>' ) .
-					            '</strong>'
+								sprintf(
+									esc_html__( 'WPGlobus settings panel requires ReduxFramework %1$s or later.', 'wpglobus' ),
+									WPGlobus::$minimalReduxFramework_version
+								) .
+								'</br>' .
+								'</br>' .
+								sprintf(
+								/// translators: ReduxFramework - %1$s version, %2$s folder where installed
+									esc_html__( 'The currently active ReduxFramework (version %1$s) was loaded from the %2$s folder.', 'wpglobus' ),
+									ReduxFramework::$_version,
+									'<code>' . ReduxFramework::$_dir . '</code>'
+								) .
+								'</br>' .
+								'</br>' .
+								'<strong>' .
+								sprintf(
+								/// translators: %1$s placeholder for the link to ReduxFramework plugin
+									esc_html__( 'We recommend you to install the most recent version of the ReduxFramework plugin: %1$s.', 'wpglobus' ), '<a href="https://wordpress.org/plugins/redux-framework/">https://wordpress.org/plugins/redux-framework/</a>' ) .
+								'</strong>'
 				,
 					'style'  => 'critical',
 					'notice' => false,
@@ -169,26 +174,26 @@ class WPGlobus_Options {
 				'type'   => 'wpglobus_info',
 				'title'  => __( 'Thank you for installing WPGlobus!', 'wpglobus' ),
 				'desc'   => '' .
-				            '<br/>' .
-				            '&bull; ' .
-				            '<a href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_ABOUT . '">' .
-				            __( 'Read About WPGlobus', 'wpglobus' ) .
-				            '</a>' .
-				            '<br/>' .
-				            '&bull; ' . __( 'Click the <strong>[Languages]</strong> tab at the left to setup the options.', 'wpglobus' ) .
-				            '<br/>' .
-				            '&bull; ' . __( 'Use the <strong>[Languages Table]</strong> section to add a new language or to edit the language attributes: name, code, flag icon, etc.', 'wpglobus' ) .
-				            '<br/>' .
-				            '<br/>' .
-				            __( 'Should you have any questions or comments, please do not hesitate to contact us.', 'wpglobus' ) .
-				            '<br/>' .
-				            '<br/>' .
-				            '<em>' .
-				            __( 'Sincerely Yours,', 'wpglobus' ) .
-				            '<br/>' .
-				            __( 'The WPGlobus Team', 'wpglobus' ) .
-				            '</em>' .
-				            '',
+							'<br/>' .
+							'&bull; ' .
+							'<a href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_ABOUT . '">' .
+							__( 'Read About WPGlobus', 'wpglobus' ) .
+							'</a>' .
+							'<br/>' .
+							'&bull; ' . __( 'Click the <strong>[Languages]</strong> tab at the left to setup the options.', 'wpglobus' ) .
+							'<br/>' .
+							'&bull; ' . __( 'Use the <strong>[Languages Table]</strong> section to add a new language or to edit the language attributes: name, code, flag icon, etc.', 'wpglobus' ) .
+							'<br/>' .
+							'<br/>' .
+							__( 'Should you have any questions or comments, please do not hesitate to contact us.', 'wpglobus' ) .
+							'<br/>' .
+							'<br/>' .
+							'<em>' .
+							__( 'Sincerely Yours,', 'wpglobus' ) .
+							'<br/>' .
+							__( 'The WPGlobus Team', 'wpglobus' ) .
+							'</em>' .
+							'',
 				'style'  => 'info',
 				'notice' => false,
 			);
@@ -207,29 +212,31 @@ class WPGlobus_Options {
 				'type'   => 'wpglobus_info',
 				'title'  => __( 'Deactivating / Uninstalling', 'wpglobus' ),
 				'desc'   => '' .
-				            '<p><em>' .
-				            sprintf(
-					            esc_html(
-					            /* translators: %?$s: HTML codes for hyperlink. Do not remove. */
-						            __( 'We would hate to see you go. If something goes wrong, do not uninstall WPGlobus yet. Please %1$stalk to us%2$s and let us help!', 'wpglobus' ) ),
-					            '<a href="' . $url_wpglobus_site_submit_ticket . '" target="_blank">',
-					            '</a>'
-				            ) .
-				            '</em></p>' .
-				            '<hr/>' .
-				            '<p><i class="el el-exclamation-sign" style="color:red"></i> <strong>' .
-				            esc_html( __( 'Please note that if you deactivate WPGlobus, your site will show all the languages together, mixed up. You will need to remove all translations, keeping only one language.', 'wpglobus' ) ) .
-				            '</strong></p>' .
-				            '<p>' .
-				            /* translators: %s: link to the Clean-up Tool */
-				            sprintf( __( 'If there are just a few places, you should edit them manually. To automatically remove all translations at once, you can use the %s. WARNING: The clean-up operation is irreversible, so use it only if you need to completely uninstall WPGlobus.', 'wpglobus' ),
-					            /* translators: %?$s: HTML codes for hyperlink. Do not remove. */
-					            sprintf( __( '%1$sClean-up Tool%2$s', 'wpglobus' ),
-						            '<a href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_CLEAN . '">',
-						            '</a>'
-					            ) ) .
-				            '</p>' .
-				            '',
+							'<p><em>' .
+							sprintf(
+								esc_html(
+								/// translators: %?$s: HTML codes for hyperlink. Do not remove.
+									__( 'We would hate to see you go. If something goes wrong, do not uninstall WPGlobus yet. Please %1$stalk to us%2$s and let us help!', 'wpglobus' ) ),
+								'<a href="' . $url_wpglobus_site_submit_ticket . '" target="_blank">',
+								'</a>'
+							) .
+							'</em></p>' .
+							'<hr/>' .
+							'<p><i class="el el-exclamation-sign" style="color:red"></i> <strong>' .
+							esc_html( __( 'Please note that if you deactivate WPGlobus, your site will show all the languages together, mixed up. You will need to remove all translations, keeping only one language.', 'wpglobus' ) ) .
+							'</strong></p>' .
+							'<p>' .
+							sprintf(
+							/// translators: %s: link to the Clean-up Tool
+								__( 'If there are just a few places, you should edit them manually. To automatically remove all translations at once, you can use the %s. WARNING: The clean-up operation is irreversible, so use it only if you need to completely uninstall WPGlobus.', 'wpglobus' ),
+								sprintf(
+								/// translators: %?$s: HTML codes for hyperlink. Do not remove.
+									__( '%1$sClean-up Tool%2$s', 'wpglobus' ),
+									'<a href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_CLEAN . '">',
+									'</a>'
+								) ) .
+							'</p>' .
+							'',
 				'style'  => 'normal',
 				'notice' => false,
 			);
@@ -274,10 +281,18 @@ class WPGlobus_Options {
 				$lang_in_en = ' (' . $config->en_language_name[ $lang ] . ')';
 			}
 
-			$enabled_languages[ $lang ] = $config->language_name[ $lang ] . $lang_in_en;
+			if ( ! empty( $config->language_name[ $lang ] ) ) {
+				$enabled_languages[ $lang ] = $config->language_name[ $lang ] . $lang_in_en;
+			}
 
-			$wpglobus_option['enabled_languages'][ $wpglobus_option['more_languages'] ] =
-				$config->language_name[ $wpglobus_option['more_languages'] ];
+			if (
+				! empty( $wpglobus_option['more_languages'] )
+				&& isset( $config->language_name[ $wpglobus_option['more_languages'] ] )
+			) {
+				$wpglobus_option['enabled_languages'][ $wpglobus_option['more_languages'] ] =
+					$config->language_name[ $wpglobus_option['more_languages'] ];
+			}
+
 			update_option( $config->option, $wpglobus_option );
 
 		}
@@ -305,8 +320,9 @@ class WPGlobus_Options {
 
 		$desc_languages_intro = implode( '', array(
 			'<ul style="list-style: disc; list-style-position: inside;">',
-			// translators: %s placeholder for the icon (actual picture)
-			'<li>' . sprintf( __( 'Place the <strong>main language</strong> of your site at the top of the list by dragging the %s icons.', 'wpglobus' ), '<i class="dashicons dashicons-move"></i>' ) . '</li>',
+			'<li>' . sprintf(
+			/// translators: %s placeholder for the icon (actual picture)
+				__( 'Place the <strong>main language</strong> of your site at the top of the list by dragging the %s icons.', 'wpglobus' ), '<i class="dashicons dashicons-move"></i>' ) . '</li>',
 			'<li>' . __( '<strong>Uncheck</strong> the languages you do not plan to use.', 'wpglobus' ) . '</li>',
 			'<li>' . __( '<strong>Add</strong> more languages using the section below.', 'wpglobus' ) . '</li>',
 			'<li>' . __( 'When done, click the [Save Changes] button.', 'wpglobus' ) . '</li>',
@@ -316,9 +332,12 @@ class WPGlobus_Options {
 		$desc_more_languages =
 			__( 'Choose a language you would like to enable. <br>Press the [Save Changes] button to confirm.',
 				'wpglobus' ) . '<br /><br />';
-		// translators: %1$s and %2$s - placeholders to insert HTML link around 'here'
-		$desc_more_languages .= sprintf( __( 'or Add new Language %1$s here %2$s', 'wpglobus' ),
-			'<a href="?page=wpglobus_language_edit&action=add">', '</a>' );
+
+		$desc_more_languages .= sprintf(
+			/// translators: %1$s and %2$s - placeholders to insert HTML link around 'here'
+			__( 'or Add new Language %1$s here %2$s', 'wpglobus' ),
+			'<a href="' . esc_url( WPGlobus_Language_Edit_Request::url_language_add() ) . '">', '</a>'
+		);
 
 		$this->sections[] = array(
 			'wpglobus_id' => 'languages',
@@ -420,7 +439,7 @@ class WPGlobus_Options {
 					'mode'     => 'javascript',
 					'theme'    => 'chrome',
 					'compiler' => 'false',
-					'desc'     => __( '', 'wpglobus' ),
+					//'desc'     => __( '', 'wpglobus' ),
 					'subtitle' => __( '(Paste your JS code here.)', 'wpglobus' ),
 					'default'  => '',
 					'rows'     => 15
@@ -452,7 +471,7 @@ class WPGlobus_Options {
 		);
 
 		/**
-		 *    SECTION: Post types
+		 * SECTION: Post types.
 		 */
 		$post_types = get_post_types( array( '_builtin' => true ) );
 
@@ -469,7 +488,17 @@ class WPGlobus_Options {
 		$default         = array();
 		$open_post_types = array();
 		foreach ( $post_types as $post_type ) {
-			if ( ! in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset' ), true ) ) {
+			/**
+			 * @see "SECTION: Post types" in includes\admin\class-wpglobus-customize-options.php to adjust post type list.
+			 */
+			if ( ! in_array( $post_type, array(
+				'attachment',
+				'revision',
+				'nav_menu_item',
+				'custom_css',
+				'customize_changeset',
+				'oembed_cache'
+			), true ) ) {
 				$open_post_types[ $post_type ] = $post_type;
 				$default[ $post_type ]         = true;
 			}
@@ -511,7 +540,7 @@ class WPGlobus_Options {
 
 		$default = array();
 		$options = array(
-			'redirect_by_language' =>  __( 'Preferred language set in the browser', 'wpglobus' ),
+			'redirect_by_language' => __( 'Preferred language set in the browser', 'wpglobus' ),
 //			'redirect_by_ip' =>  __( 'IP address', 'wpglobus' ),
 		);
 
@@ -617,7 +646,7 @@ class WPGlobus_Options {
 			'output_tag'         => true,
 			// Allows dynamic CSS to be generated for customizer and google fonts, but stops the dynamic CSS from going to the head
 			'footer_credit'      => '&copy; Copyright 2014-' . date( 'Y' ) .
-			                        ', <a href="' . WPGlobus::URL_WPGLOBUS_SITE . '">TIV.NET INC. / WPGlobus</a>.',
+									', <a href="' . WPGlobus_Utils::url_wpglobus_site() . '">TIV.NET INC. / WPGlobus</a>.',
 			'database'           => 'options',
 			// possible: options, theme_mods, theme_mods_expanded, transient. Not fully functional, warning!
 			'system_info'        => false,
@@ -674,17 +703,17 @@ class WPGlobus_Options {
 		$ga_campaign = '?utm_source=wpglobus-options-socials&utm_medium=link&utm_campaign=options-panel';
 
 		$this->args['share_icons'][] = array(
-			'url'   => WPGlobus::URL_WPGLOBUS_SITE . 'quick-start/' . $ga_campaign,
+			'url'   => WPGlobus_Utils::url_wpglobus_site() . 'quick-start/' . $ga_campaign,
 			'title' => esc_html__( 'Read the Quick Start Guide', 'wpglobus' ),
 			'icon'  => 'el el-question-sign'
 		);
 		$this->args['share_icons'][] = array(
-			'url'   => WPGlobus::URL_WPGLOBUS_SITE . $ga_campaign,
+			'url'   => WPGlobus_Utils::url_wpglobus_site() . $ga_campaign,
 			'title' => esc_html__( 'Visit our website', 'wpglobus' ),
 			'icon'  => 'el el-globe'
 		);
 		$this->args['share_icons'][] = array(
-			'url'   => WPGlobus::URL_WPGLOBUS_SITE . 'product/woocommerce-wpglobus/' . $ga_campaign,
+			'url'   => WPGlobus_Utils::url_wpglobus_site() . 'product/woocommerce-wpglobus/' . $ga_campaign,
 			'title' => esc_html__( 'Buy WooCommerce WPGlobus extension', 'wpglobus' ),
 			'icon'  => 'el el-icon-shopping-cart'
 		);

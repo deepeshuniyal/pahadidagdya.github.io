@@ -50,8 +50,8 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 	}
 
 	/**
-	 * Class WPGlobusTextBox
-	 * Adds textbox support to the theme customizer
+	 * Class WPGlobusTextBox.
+	 * Adds textbox support to the theme customizer.
 	 *
 	 * @see wp-includes\class-wp-customize-control.php
 	 */
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		 */
 		public function __construct( $manager, $id, $args = array() ) {
 			$this->content  = empty( $args['content'] ) ? '' : $args['content'];
-			$this->statuses = array( '' => __( 'Default', 'wpglobus' ) );
+			$this->statuses = array( '' => esc_html__( 'Default', 'wpglobus' ) );
 			parent::__construct( $manager, $id, $args );
 		}
 
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 	}
 
 	/**
-	 * Adds checkbox with title support to the theme customizer
+	 * Adds checkbox with title support to the theme customizer.
 	 *
 	 * @see wp-includes\class-wp-customize-control.php
 	 */
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 			$this->title = empty( $args['title'] ) ? '' : $args['title'];
 
-			$this->statuses = array( '' => __( 'Default', 'wpglobus' ) );
+			$this->statuses = array( '' => esc_html__( 'Default', 'wpglobus' ) );
 
 			parent::__construct( $manager, $id, $args );
 
@@ -120,7 +120,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					</div>
 				</div>
 				<?php if ( ! empty( $this->description ) ) : ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
+					<span class="description customize-control-description"><?php echo esc_html($this->description); ?></span>
 				<?php endif; ?>
 			</label>    <?php
 
@@ -128,7 +128,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 	}
 
 	/**
-	 * Adds link support to the theme customizer
+	 * Adds link support to the theme customizer.
 	 *
 	 * @see wp-includes\class-wp-customize-control.php
 	 */
@@ -142,7 +142,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 			$this->args = $args;
 
-			$this->statuses = array( '' => __( 'Default', 'wpglobus' ) );
+			$this->statuses = array( '' => esc_html__( 'Default', 'wpglobus' ) );
 
 			parent::__construct( $manager, $id, $args );
 
@@ -156,9 +156,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				<?php if ( ! empty( $this->args['title'] ) ) : ?>
 					<span class="customize-control-title"><?php echo esc_html( $this->args['title'] ); ?></span>
 				<?php endif; ?>
-				<a href="<?php echo $this->args['href']; ?>" target="_blank"><?php echo $this->args['text']; ?></a>
+				<a href="<?php echo $this->args['href']; // WPCS: XSS ok. ?>" target="_blank"><?php echo $this->args['text']; // WPCS: XSS ok. ?></a>
 				<?php if ( ! empty( $this->description ) ) : ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
+					<span class="description customize-control-description"><?php echo esc_html($this->description); ?></span>
 				<?php endif; ?>
 			</label>    <?php
 
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 	}
 
 	/**
-	 * Adds CheckBoxSet support to the theme customizer
+	 * Adds CheckBoxSet support to the theme customizer.
 	 *
 	 * @see wp-includes\class-wp-customize-control.php
 	 */
@@ -180,7 +180,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 		public function __construct( $manager, $id, $args = array() ) {
 			$this->args     = $args;
-			$this->statuses = array( '' => __( 'Default', 'wpglobus' ) );
+			$this->statuses = array( '' => esc_html__( 'Default', 'wpglobus' ) );
 
 			$this->skeleton =
 				'<a href="{{edit-link}}" target="_blank"><span style="cursor:pointer;">Edit</span></a>&nbsp;' .
@@ -201,11 +201,11 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 				<?php endif;
 				if ( ! empty( $this->description ) ) : ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
+					<span class="description customize-control-description"><?php echo esc_html($this->description); ?></span>
 				<?php endif;
 
 				$new_item = str_replace( '{{class}}', 'wpglobus-checkbox ' . $this->args['checkbox_class'], $this->skeleton );
-				echo '<div style="display:none;" id="wpglobus-item-skeleton">' . $new_item . '</div>';
+				echo '<div style="display:none;" id="wpglobus-item-skeleton">' . $new_item . '</div>'; // WPCS: XSS ok.
 
 				echo '<ul id="wpglobus-sortable" style="margin-top:10px;margin-left:20px;">';
 
@@ -231,20 +231,20 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 						admin_url() . 'admin.php?page=' . WPGlobus::LANGUAGE_EDIT_PAGE . '&action=edit&lang=' . $item . '"', $li_item
 					);
 
-					echo '<li>' . $li_item . '</li>';
+					echo '<li>' . $li_item . '</li>'; // WPCS: XSS ok.
 
 				}
 
 				echo '</ul>'; ?>
 
-			</label>    <?php
+			</label> <hr />   <?php
 
 		}
 
 	}
 
 	/**
-	 * Adds Fields Settings Control support to the theme customizer
+	 * Adds Fields Settings Control support to the theme customizer.
 	 *
 	 * @see wp-includes\class-wp-customize-control.php
 	 */
@@ -271,16 +271,16 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 		public function render_content() {
 			?>
-			<div class="wpglobus-fields_settings_control_box" data-section-template="<?php echo $this->section_template; ?>">
+			<div class="wpglobus-fields_settings_control_box" data-section-template="<?php echo $this->section_template; // WPCS: XSS ok. ?>">
 				<?php if ( $this->args['start_section'] ) : ?>
 					<div style="border-bottom:1px solid black;margin: 0 0 5px;padding-left:5px;">
-						<a href="#" onclick="jQuery('.wpglobus-fields_settings_control_box .items-box' ).css('display','block');"><b><?php _e( 'Show all sections', 'wpglobus' ); ?></b></a>
+						<a href="#" onclick="jQuery('.wpglobus-fields_settings_control_box .items-box' ).css('display','block');"><b><?php esc_html_e( 'Show all sections', 'wpglobus' ); ?></b></a>
 					</div>
-					<input type="submit" style="float:right;" name="<?php echo WPGlobus_Customize_Options::$controls_save_button; ?>" id="<?php echo WPGlobus_Customize_Options::$controls_save_button; ?>" class="button button-primary save" value="<?php _e( 'Save &amp; Reload', 'wpglobus' ); ?>">
+					<input type="submit" style="float:right;" name="<?php echo WPGlobus_Customize_Options::$controls_save_button; // WPCS: XSS ok. ?>" id="<?php echo WPGlobus_Customize_Options::$controls_save_button; // WPCS: XSS ok. ?>" class="button button-primary save" value="<?php esc_html_e( 'Save &amp; Reload', 'wpglobus' ); ?>">
 				<?php else: ?>
 					<div>
 						<?php if ( ! empty( $this->args['message'] ) ) {
-							echo $this->args['message'];
+							echo $this->args['message']; // WPCS: XSS ok.
 						} ?>
 					</div>
 				<?php endif; ?>
@@ -345,6 +345,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 			self::$disabled_themes = array(
 				'customizr',
+				'customizr pro'
 			);
 
 			/**
@@ -354,7 +355,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			 * @see https://wordpress.org/themes/experon/
 			 */
 			self::$disabled_themes[] = 'experon';
-			
+
 			add_action( 'wp_loaded', array( __CLASS__, 'init' ) );
 
 			/**
@@ -394,8 +395,16 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				'action__process_ajax'
 			) );
 
-		}
+			/**
+			 * @since 1.9.8
+			 */
+			add_filter( 'wpglobus_customize_disabled_setting_mask', array(
+				__CLASS__,
+				'filter__disabled_setting_mask'
+			) );
 
+		}
+		
 		/**
 		 * Delayed processes.
 		 * @since 1.6.0
@@ -419,32 +428,68 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Ajax handler
+		 * Ajax handler.
 		 */
 		public static function action__process_ajax() {
 
 			$result      = true;
 			$ajax_return = array();
 
-			$order = $_POST['order'];
+			$post_order = isset( $_POST['order'] ) ? $_POST['order'] : null; // WPCS: input var ok, sanitization ok.
 
-			switch ( $order['action'] ) :
+			$order = array();
+			if ( $post_order ) {
+				$order['action']  = sanitize_text_field( $post_order['action'] );
+				$order['options'] = $post_order['options'];
+			}
+
+			switch ( $order['action'] ) {
 				case 'wpglobus_customize_save':
-					/** @var array $options */
+					/**
+					 * Options array.
+					 *
+					 * @var array
+					 */
 					$options = get_option( WPGlobus::Config()->option );
+
 					foreach ( $order['options'] as $key => $value ) {
 
-						if ( 'show_selector' === $key ) {
-							$options['selector_wp_list_pages'][ $key ] = $value;
-						} else {
-							$options[ $key ] = $value;
-						}
+						switch ( $key ) :
+							case 'show_selector':
+								$options['selector_wp_list_pages'][ $key ] = $value;
+								break;
+							case 'redirect_by_language':
+								// @todo check this option which do we really need?
+								$options['browser_redirect'][ $key ] = $value;
+								$options[ $key ]                     = $value;
+								break;
+							case 'use_nav_menu':
+								if ( '0' == $value ) {
+									$value = '';
+								} else {
+									$value = sanitize_text_field( $value );
+								}
+								$options[ $key ] = $value;
+								break;
+							case 'js_editor':
+								$value = trim($value);
+								if ( ! empty( $value ) ) {
+									$value = str_replace( '\"', '"', $value );
+									$value = str_replace( "\'", "'", $value );
+									$value = esc_html( $value );
+								}
+								$options[ $key ] = $value;
+								break;
+							default:
+								$options[ $key ] = $value;
+						endswitch;
 
 					}
+
 					update_option( WPGlobus::Config()->option, $options );
 					break;
-				case 'cb-controls-save':
 
+				case 'cb-controls-save':
 					$options = get_option( self::$options_key );
 
 					if ( empty( $order['controls'] ) ) {
@@ -476,18 +521,17 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					}
 
 					break;
-			endswitch;
+			}
 
 			if ( false === $result ) {
 				wp_send_json_error( $ajax_return );
 			}
 
 			wp_send_json_success( $ajax_return );
-
 		}
 
 		/**
-		 * Section for message about unsupported theme
+		 * Section for message about unsupported theme.
 		 *
 		 * @param WP_Customize_Manager $wp_customize
 		 * @param WP_Theme             $theme
@@ -498,7 +542,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			 * Sorry section
 			 */
 			$wp_customize->add_section( 'wpglobus_sorry_section', array(
-				'title'    => __( 'WPGlobus', 'wpglobus' ),
+				'title'    => esc_html__( 'WPGlobus', 'wpglobus' ),
 				'priority' => 0,
 				'panel'    => 'wpglobus_settings_panel'
 			) );
@@ -521,7 +565,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Callback for register fields settings section
+		 * Callback for register fields settings section.
 		 *
 		 * @since 1.6.0
 		 *
@@ -549,13 +593,13 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				$message       = '';
 				if ( version_compare( $wp_version, '4.5-RC1', '<' ) ) :
 					$start_section = false;
-					$message       = __( 'You need to update WordPress to 4.5 or later to get Fields Settings section', 'wpglobus' );
+					$message       = esc_html__( 'You need to update WordPress to 4.5 or later to get Fields Settings section', 'wpglobus' );
 				endif;
 
 				self::$sections['wpglobus_fields_settings_section'] = 'wpglobus_fields_settings_section';
 
 				$wp_customize->add_section( self::$sections['wpglobus_fields_settings_section'], array(
-					'title'       => __( 'Fields Settings', 'wpglobus' ),
+					'title'       => esc_html__( 'Fields Settings', 'wpglobus' ),
 					'priority'    => 500,
 					'panel'       => 'wpglobus_settings_panel',
 					'description' => '<div class="inner" style="background-color:#fff;padding:0 5px;">' .
@@ -587,7 +631,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Callback for customize_register
+		 * Callback for customize_register.
 		 *
 		 * @param WP_Customize_Manager $wp_customize
 		 */
@@ -600,7 +644,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				'priority'       => 1010,
 				'capability'     => 'edit_theme_options',
 				'theme_supports' => '',
-				'title'          => __( 'WPGlobus Settings', 'wpglobus' ),
+				'title'          => esc_html__( 'WPGlobus Settings', 'wpglobus' ),
 				'description'    => '<div style="background-color:#eee;padding:10px 5px;">' .
 				                    self::get_content( 'welcome_message' ) .
 				                    '</div>' . self::get_content( 'deactivate_message' ),
@@ -614,12 +658,19 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 			}
 
+			/**
+			 * Updating options for customizer accordingly with WPGlobus::Config().
+			 */
 			/** wpglobus_customize_language_selector_mode <=> wpglobus_option[show_flag_name] */
 			update_option( 'wpglobus_customize_language_selector_mode', WPGlobus::Config()->show_flag_name );
 
 			/**  */
 			if ( empty( WPGlobus::Config()->nav_menu ) ) {
-				delete_option( 'wpglobus_customize_language_selector_menu' );
+				/**
+				 * Menu item '--- select navigation menu ---' has value 0.
+				 * It is used when 'Language Selector Menu' setting is not selected.
+				 */
+				update_option( 'wpglobus_customize_language_selector_menu', '0' );
 			} else {
 				update_option( 'wpglobus_customize_language_selector_menu', WPGlobus::Config()->nav_menu );
 			}
@@ -630,19 +681,68 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			/** wpglobus_customize_css_editor <=> wpglobus_option[css_editor]  */
 			update_option( 'wpglobus_customize_css_editor', WPGlobus::Config()->css_editor );
 
+			/** wpglobus_customize_redirect_by_language <=> wpglobus_option[browser_redirect][redirect_by_language]  */
+			if ( empty( WPGlobus::Config()->browser_redirect['redirect_by_language'] ) || (int) WPGlobus::Config()->browser_redirect['redirect_by_language'] == 0 ) {
+				update_option( 'wpglobus_customize_redirect_by_language', '' );
+			} else {
+				update_option( 'wpglobus_customize_redirect_by_language', WPGlobus::Config()->browser_redirect['redirect_by_language'] );
+			}
+			
+			/** wpglobus_customize_js_editor <=> wpglobus_option[js_editor]  */
+			if ( empty( WPGlobus::Config()->js_editor ) ) {
+				update_option( 'wpglobus_customize_js_editor', '' );
+			} else {
+				update_option( 'wpglobus_customize_js_editor', WPGlobus::Config()->js_editor );
+			}
+
+			
+			/** end updating options */
+			
 			/**
-			 * SECTION: Language
+			 * Init section priority.
+			 */
+			$section_priority = 0;
+			
+			/**
+			 * SECTION: Help.
+			 */
+			if ( 0 ) {
+				
+				$section_priority = $section_priority + 0;
+				
+				self::$sections['wpglobus_help_section'] = 'wpglobus_help_section';
+				$wp_customize->add_section( self::$sections['wpglobus_help_section'], array(
+					'title'    => esc_html__( 'Help', 'wpglobus' ),
+					'priority' => $section_priority,
+					'panel'    => 'wpglobus_settings_panel',
+				) );
+
+				$wp_customize->add_control( 'wpglobus_customize_add_onsZZZ', array(
+						'section'  => self::$sections['wpglobus_help_section'],
+						'settings' => array(),
+						'type'     => 'button',
+					)
+				);
+			}			
+			/** end SECTION: Help */
+			
+			/**
+			 * SECTION: Language.
 			 */
 			if ( 1 ) {
-
+				
+				$section_priority = $section_priority + 10;
+				
 				$wp_customize->add_section( 'wpglobus_languages_section', array(
-					'title'    => __( 'Languages', 'wpglobus' ),
-					'priority' => 10,
+					'title'    => esc_html__( 'Languages', 'wpglobus' ),
+					'priority' => $section_priority,
 					'panel'    => 'wpglobus_settings_panel'
 				) );
 				self::$sections['wpglobus_languages_section'] = 'wpglobus_languages_section';
 
-				/** Enabled languages */
+				/** 
+				 * Setting: Enabled languages.
+				 */
 				$wp_customize->add_setting( 'wpglobus_customize_enabled_languages', array(
 					'type'       => 'option',
 					'capability' => 'manage_options',
@@ -654,9 +754,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 						'settings'       => 'wpglobus_customize_enabled_languages',
 						'priority'       => 0,
 						'items'          => WPGlobus::Config()->enabled_languages,
-						'label'          => __( 'Enabled Languages', 'wpglobus' ),
+						'label'          => esc_html__( 'Enabled Languages', 'wpglobus' ),
 						'checkbox_class' => 'wpglobus-listen-change wpglobus-language-item',
-						'description'    => __( 'These languages are currently enabled on your site.', 'wpglobus' )
+						'description'    => esc_html__( 'These languages are currently enabled on your site.', 'wpglobus' )
 
 					)
 				) );
@@ -664,8 +764,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				/** @see option wpglobus_option['enabled_languages'] */
 				self::$settings['wpglobus_languages_section']['wpglobus_customize_enabled_languages']['option'] = 'enabled_languages';
 
-				/** Add languages */
-
+				/** 
+				 * Setting: Add languages.
+				 */
 				/** Generate array $more_languages */
 				/** @var array $more_languages */
 				$more_languages           = array();
@@ -683,11 +784,13 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				}
 
 				$desc_add_languages =
-					__( 'Choose a language you would like to enable. <br>Press the [Save & Publish] button to confirm.',
-						'wpglobus' ) . '<br />';
-				// translators: %1$s and %2$s - placeholders to insert HTML link around 'here'
+					esc_html__( 'Choose a language you would like to enable.', 'wpglobus' ).
+					'<br />'.
+					esc_html__( 'Press the [Save & Publish] button to confirm.', 'wpglobus' ).
+					'<br />';
 				$desc_add_languages .= sprintf(
-					__( 'or Add new Language %1$s here %2$s', 'wpglobus' ),
+					/// translators: %1$s and %2$s - placeholders to insert HTML link around 'here'
+					esc_html__( 'or Add new Language %1$s here %2$s', 'wpglobus' ),
 					'<a style="text-decoration:underline;" href="' . admin_url() . 'admin.php?page=' . WPGlobus::LANGUAGE_EDIT_PAGE . '&action=add" target="_blank">',
 					'</a>'
 				);
@@ -699,7 +802,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				) );
 				$wp_customize->add_control( 'wpglobus_add_languages_select_box', array(
 					'settings'    => 'wpglobus_customize_add_language',
-					'label'       => __( 'Add Languages', 'wpglobus' ),
+					'label'       => esc_html__( 'Add Languages', 'wpglobus' ),
 					'section'     => 'wpglobus_languages_section',
 					'type'        => 'select',
 					'priority'    => 10,
@@ -708,7 +811,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				) );
 				//self::$settings[ 'wpglobus_languages_section' ][ 'wpglobus_customize_add_language' ] = 'select';
 
-				/** Language Selector Mode */
+				/** 
+				 * Setting: Language Selector Mode.
+				 */
 				$wp_customize->add_setting( 'wpglobus_customize_language_selector_mode', array(
 					'type'       => 'option',
 					'capability' => 'manage_options',
@@ -717,18 +822,18 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				) );
 				$wp_customize->add_control( 'wpglobus_customize_language_selector_mode', array(
 					'settings'    => 'wpglobus_customize_language_selector_mode',
-					'label'       => __( 'Language Selector Mode', 'wpglobus' ),
+					'label'       => esc_html__( 'Language Selector Mode', 'wpglobus' ),
 					'section'     => 'wpglobus_languages_section',
 					'type'        => 'select',
 					'priority'    => 20,
 					'choices'     => array(
-						'code'      => __( 'Two-letter Code with flag (en, ru, it, etc.)', 'wpglobus' ),
-						'full_name' => __( 'Full Name (English, Russian, Italian, etc.)', 'wpglobus' ),
+						'code'      => esc_html__( 'Two-letter Code with flag (en, ru, it, etc.)', 'wpglobus' ),
+						'full_name' => esc_html__( 'Full Name (English, Russian, Italian, etc.)', 'wpglobus' ),
 						/* @since 1.2.1 */
-						'name'      => __( 'Full Name with flag (English, Russian, Italian, etc.)', 'wpglobus' ),
-						'empty'     => __( 'Flags only', 'wpglobus' )
+						'name'      => esc_html__( 'Full Name with flag (English, Russian, Italian, etc.)', 'wpglobus' ),
+						'empty'     => esc_html__( 'Flags only', 'wpglobus' )
 					),
-					'description' => __( 'Choose the way language name and country flag are shown in the drop-down menu', 'wpglobus' )
+					'description' => esc_html__( 'Choose the way language name and country flag are shown in the drop-down menu', 'wpglobus' )
 				) );
 				self::$settings['wpglobus_languages_section']['wpglobus_customize_language_selector_mode']['type'] = 'select';
 				/** @see option wpglobus_option['show_flag_name'] */
@@ -746,8 +851,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				 * ) );
 				 * // */
 
-				/** Language Selector Menu */
-
+				/** 
+				 * Setting: Language Selector Menu.
+				 */
 				/** @var array $nav_menus */
 				$nav_menus = WPGlobus::_get_nav_menus();
 
@@ -758,6 +864,12 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				}
 				if ( ! empty( $nav_menus ) && count( $nav_menus ) > 1 ) {
 					$menus['all'] = 'All';
+				}
+				if ( ! empty( $nav_menus ) ) {
+					array_unshift(
+						$menus, 
+						'--- ' . esc_html__('select navigation menu', 'wpglobus'). ' ---'
+					);
 				}
 
 				if ( empty( $menus ) ) {
@@ -806,7 +918,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 				}
 
-				/** "All Pages" menus Language selector */
+				/** 
+				 * Setting: "All Pages" menus Language selector.
+				 */
 				$wp_customize->add_setting( 'wpglobus_customize_selector_wp_list_pages', array(
 					'type'       => 'option',
 					'capability' => 'manage_options',
@@ -815,17 +929,19 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				$wp_customize->add_control( new WPGlobusCheckBox( $wp_customize,
 					'wpglobus_customize_selector_wp_list_pages', array(
 						'settings' => 'wpglobus_customize_selector_wp_list_pages',
-						'title'    => __( '"All Pages" menus Language selector', 'wpglobus' ),
+						'title'    => esc_html__( '"All Pages" menus Language selector', 'wpglobus' ),
 						'section'  => 'wpglobus_languages_section',
 						'priority' => 40,
-						'label'    => __( 'Adds language selector to the menus that automatically list all existing pages (using `wp_list_pages`)', 'wpglobus' ),
+						'label'    => esc_html__( 'Adds language selector to the menus that automatically list all existing pages (using `wp_list_pages`)', 'wpglobus' ),
 					)
 				) );
 				self::$settings['wpglobus_languages_section']['wpglobus_customize_selector_wp_list_pages']['type'] = 'wpglobus_checkbox';
 				/** @see option wpglobus_option['selector_wp_list_pages']['show_selector'] */
 				self::$settings['wpglobus_languages_section']['wpglobus_customize_selector_wp_list_pages']['option'] = 'show_selector';
 
-				/** Custom CSS */
+				/**
+				 * Setting: Custom CSS.
+				 */
 				$wp_customize->add_setting( 'wpglobus_customize_css_editor', array(
 					'type'       => 'option',
 					'capability' => 'manage_options',
@@ -833,11 +949,11 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				) );
 				$wp_customize->add_control( 'wpglobus_customize_css_editor', array(
 					'settings'    => 'wpglobus_customize_css_editor',
-					'label'       => __( 'Custom CSS', 'wpglobus' ),
+					'label'       => esc_html__( 'Custom CSS', 'wpglobus' ),
 					'section'     => 'wpglobus_languages_section',
 					'type'        => 'textarea',
 					'priority'    => 50,
-					'description' => __( 'Here you can enter the CSS rules to adjust the language selector menu for your theme. Look at the examples in the `style-samples.css` file.', 'wpglobus' ),
+					'description' => esc_html__( 'Here you can enter the CSS rules to adjust the language selector menu for your theme. Look at the examples in the `style-samples.css` file.', 'wpglobus' ),
 				) );
 				self::$settings['wpglobus_languages_section']['wpglobus_customize_css_editor']['type'] = 'textarea';
 				/** @see option wpglobus_option['css_editor'] */
@@ -847,15 +963,17 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			/** end SECTION: Language */
 
 			/**
-			 * SECTION: Post types
+			 * SECTION: Post types.
 			 */
 			if ( 1 ) {
-
+				
+				$section_priority = $section_priority + 10;
+				
 				$section = 'wpglobus_post_types_section';
 
 				$wp_customize->add_section( $section, array(
-					'title'    => __( 'Post types', 'wpglobus' ),
-					'priority' => 40,
+					'title'    => esc_html__( 'Post types', 'wpglobus' ),
+					'priority' => $section_priority,
 					'panel'    => 'wpglobus_settings_panel'
 				) );
 				self::$sections[ $section ] = $section;
@@ -866,7 +984,10 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 					$enabled_post_types = array();
 					foreach ( $post_types as $post_type ) {
-						if ( ! in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset' ), true ) ) {
+						/**
+						 * @see "SECTION: Post types" in includes\options\class-wpglobus-options.php for complete post type array.
+						 */
+						if ( ! in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache' ), true ) ) {
 
 							if ( in_array( $post_type, array( 'post', 'page' ) ) ) {
 								$enabled_post_types[ $post_type ] = $post_type;
@@ -960,7 +1081,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 
 					$title = '';
 					if ( $i == 0 ) {
-						$title = __( 'Uncheck to disable WPGlobus', 'wpglobus' );
+						$title = esc_html__( 'Uncheck to disable WPGlobus', 'wpglobus' );
 					}
 
 					$wp_customize->add_control( new WPGlobusCheckBox( $wp_customize,
@@ -985,10 +1106,144 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			/** end SECTION: Post types */
 
 			/**
-			 * SECTION: Add ons
+			 * SECTION: Redirect.
+			 */
+			if ( 1 ) {
+				
+				$section_priority = $section_priority + 10;
+				
+				self::$sections['wpglobus_redirect_section'] = 'wpglobus_redirect_section';
+				
+				$wp_customize->add_section( self::$sections['wpglobus_redirect_section'], array(
+					'title'    => esc_html__( 'Redirect', 'wpglobus' ),
+					'priority' => $section_priority,
+					'panel'    => 'wpglobus_settings_panel',
+				) );
+				
+				/**
+				 * Option
+				 *  [browser_redirect] => Array
+				 *	(
+				 *		[redirect_by_language] => 0
+				 *	)
+				 */
+				
+				/** 
+				 * Setting wpglobus_customize_redirect_by_language.
+				 */
+				$wp_customize->add_setting( 'wpglobus_customize_redirect_by_language', array(
+					'type'       => 'option',
+					'capability' => 'manage_options',
+					'transport'  => 'postMessage'
+				) );
+				$wp_customize->add_control( new WPGlobusCheckBox( $wp_customize,
+					'wpglobus_customize_redirect_by_language', array(
+						'section'  		=> self::$sections['wpglobus_redirect_section'],
+						'settings' 		=> 'wpglobus_customize_redirect_by_language',
+						'title'    		=> esc_html__( 'Choose the language automatically, based on:', 'wpglobus' ),
+						'priority' 		=> 10,
+						'label'    		=> esc_html__( 'Preferred language set in the browser', 'wpglobus' ),
+						'description' 	=> esc_html__('When a user comes to the site for the first time, try to find the best matching language version of the page.', 'wpglobus')
+					)
+				) );
+			
+				self::$settings[ self::$sections['wpglobus_redirect_section'] ]['wpglobus_customize_redirect_by_language']['type'] 		= 'wpglobus_checkbox';
+				/** @see option wpglobus_option[browser_redirect][redirect_by_language] */
+				self::$settings[ self::$sections['wpglobus_redirect_section'] ]['wpglobus_customize_redirect_by_language']['option'] 	= 'redirect_by_language';
+
+			}
+			/** end SECTION: Redirect */
+			
+			/**
+			 * SECTION: Custom JS Code.
+			 */
+			if ( 1 ) {
+				
+				$section_priority = $section_priority + 10;
+				
+				self::$sections['wpglobus_js_editor_section'] = 'wpglobus_js_editor_section';
+				
+				/** 
+				 * Setting 'wpglobus_customize_js_editor'.
+				 */
+				 
+				/**
+				 * class WP_Customize_Code_Editor_Control
+				 * @since WordPress 4.9.0
+				 * @see https://developer.wordpress.org/reference/classes/wp_customize_code_editor_control/
+				 */
+				if ( ! class_exists('WP_Customize_Code_Editor_Control') ) {
+
+					$content = esc_html__( 'To add a Custom JS Code in Customizer, you need to upgrade WordPress to version 4.9 or later.', 'wpglobus' );
+					$content .= '<br /><br />' .
+								esc_html__( 'With your version of WordPress, please use the', 'wpglobus' ) .
+								' <a style="text-decoration:underline;" target="_blank" href="' . esc_url( admin_url() . 'admin.php?page=' . WPGlobus::OPTIONS_PAGE_SLUG . '&tab=0' ) . '">' .
+								esc_html__( 'WPGlobus Settings page', 'wpglobus' ) .
+								'.</a>';
+					
+					$wp_customize->add_section( self::$sections['wpglobus_js_editor_section'], array(
+						'title'    => esc_html__( 'Custom JS Code', 'wpglobus' ),
+						'priority' => $section_priority,
+						'panel'    => 'wpglobus_settings_panel',
+					) );
+					
+					$wp_customize->add_setting( 'wpglobus_customize_js_editor', array(
+						'type'       => 'option',
+						'capability' => 'manage_options',
+						'transport'  => 'postMessage'
+					) );
+					
+					$wp_customize->add_control( new WPGlobusTextBox( $wp_customize,
+						'wpglobus_customize_js_editor', array(
+							'section'  => self::$sections['wpglobus_js_editor_section'],
+							'settings' => 'wpglobus_customize_js_editor',
+							'content'  => $content
+						)
+					) );
+					
+				} else {
+					
+					$wp_customize->add_section( self::$sections['wpglobus_js_editor_section'], array(
+						'title'    => esc_html__( 'Custom JS Code', 'wpglobus' ),
+						'priority' => $section_priority,
+						'panel'    => 'wpglobus_settings_panel',
+					) );
+		
+
+					$wp_customize->add_setting( 'wpglobus_customize_js_editor', array(
+						'type'       => 'option',
+						'capability' => 'manage_options',
+						'transport'  => 'postMessage'
+					) );
+					$wp_customize->add_control( new WP_Customize_Code_Editor_Control( $wp_customize,
+						'wpglobus_customize_js_editor', array(
+							'code_type' 	=> 'javascript',
+							#'mode'			=> 'javascript',
+							'input_attrs'	=> array('rows'=>80),
+							'section'  		=> self::$sections['wpglobus_js_editor_section'],
+							'settings' 		=> 'wpglobus_customize_js_editor',
+							'title'    		=> esc_html__( 'Title', 'wpglobus' ),
+							'priority' 		=> 10,
+							'label'    		=> esc_html__( 'Custom JS Code', 'wpglobus' ),
+							'description' 	=> esc_html__( '(Paste your JS code here.)', 'wpglobus' )
+						)
+					) );
+		
+					self::$settings[ self::$sections['wpglobus_js_editor_section'] ]['wpglobus_customize_js_editor']['type'] = 'code_editor';
+					/** @see option wpglobus_option['css_editor'] */
+					self::$settings[ self::$sections['wpglobus_js_editor_section'] ]['wpglobus_customize_js_editor']['option'] = 'js_editor';	
+				
+				}
+			}				
+			/** end SECTION: Custom JS Code */
+			
+			/**
+			 * SECTION: Add ons.
 			 */
 			if ( 1 ) {
 
+				$section_priority = $section_priority + 10;
+			
 				global $wp_version;
 
 				self::$sections['wpglobus_addons_section'] = 'wpglobus_addons_section';
@@ -996,8 +1251,8 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				if ( version_compare( $wp_version, '4.5-RC1', '<' ) ) {
 
 					$wp_customize->add_section( self::$sections['wpglobus_addons_section'], array(
-						'title'    => __( 'Add-ons', 'wpglobus' ),
-						'priority' => 40,
+						'title'    => esc_html__( 'Add-ons', 'wpglobus' ),
+						'priority' => $section_priority,
 						'panel'    => 'wpglobus_settings_panel',
 					) );
 
@@ -1011,12 +1266,12 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					$wp_customize->add_control( new WPGlobusCheckBox( $wp_customize,
 						'wpglobus_customize_add_ons', array(
 							'settings'    => 'wpglobus_customize_add_ons',
-							'title'       => __( 'Title', 'wpglobus' ),
-							'label'       => __( 'Label', 'wpglobus' ),
+							'title'       => esc_html__( 'Title', 'wpglobus' ),
+							'label'       => esc_html__( 'Label', 'wpglobus' ),
 							'section'     => self::$sections['wpglobus_addons_section'],
 							'type'        => 'checkbox',
 							'priority'    => 10,
-							'description' => __( 'Description', 'wpglobus' ),
+							'description' => esc_html__( 'Description', 'wpglobus' ),
 						)
 					) );
 
@@ -1028,8 +1283,8 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					 */
 
 					$wp_customize->add_section( self::$sections['wpglobus_addons_section'], array(
-						'title'    => __( 'Add-ons', 'wpglobus' ),
-						'priority' => 40,
+						'title'    => esc_html__( 'Add-ons', 'wpglobus' ),
+						'priority' => $section_priority,
 						'panel'    => 'wpglobus_settings_panel',
 					) );
 
@@ -1064,7 +1319,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Get content for WPGlobusTextBox element
+		 * Get content for WPGlobusTextBox element.
 		 *
 		 * @param string $control
 		 * @param mixed  $attrs
@@ -1080,31 +1335,31 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			$content = '';
 			switch ( $control ) :
 				case 'settings_section_help' :
-					$content = __( 'Here you can specify which fields should be considered multilingual by WPGlobus. To exclude a field, uncheck it and then press the button below.', 'wpglobus' );
+					$content = esc_html__( 'Here you can specify which fields should be considered multilingual by WPGlobus. To exclude a field, uncheck it and then press the button below.', 'wpglobus' );
 
 					break;
 				case 'welcome_message' :
 
 					$content = '<div style="width:100%;">' .
-					           __( 'Thank you for installing WPGlobus!', 'wpglobus' ) .
+					           esc_html__( 'Thank you for installing WPGlobus!', 'wpglobus' ) .
 					           '<br/>' .
 					           '&bull; ' .
 					           '<a style="text-decoration:underline;" target="_blank" href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_ABOUT . '">' .
-					           __( 'Read About WPGlobus', 'wpglobus' ) .
+					           esc_html__( 'Read About WPGlobus', 'wpglobus' ) .
 					           '</a>' .
 					           '<br/>' .
-					           '&bull; ' . __( 'Click the <strong>[Languages]</strong> tab at the left to setup the options.', 'wpglobus' ) .
+					           '&bull; ' . esc_html__( 'Click the <strong>[Languages]</strong> tab at the left to setup the options.', 'wpglobus' ) .
 					           #'<br/>' .
-					           #'&bull; ' . __( 'Use the <strong>[Languages Table]</strong> section to add a new language or to edit the language attributes: name, code, flag icon, etc.', 'wpglobus' ) .
+					           #'&bull; ' . esc_html__( 'Use the <strong>[Languages Table]</strong> section to add a new language or to edit the language attributes: name, code, flag icon, etc.', 'wpglobus' ) .
 					           '<br/>' .
 					           '<br/>' .
-					           __( 'Should you have any questions or comments, please do not hesitate to contact us.', 'wpglobus' ) .
+					           esc_html__( 'Should you have any questions or comments, please do not hesitate to contact us.', 'wpglobus' ) .
 					           '<br/>' .
 					           '<br/>' .
 					           '<em>' .
-					           __( 'Sincerely Yours,', 'wpglobus' ) .
+					           esc_html__( 'Sincerely Yours,', 'wpglobus' ) .
 					           '<br/>' .
-					           __( 'The WPGlobus Team', 'wpglobus' ) .
+					           esc_html__( 'The WPGlobus Team', 'wpglobus' ) .
 					           '</em>' .
 					           '</div>';
 
@@ -1122,7 +1377,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					$content = '<p><em>' .
 					           sprintf(
 						           esc_html(
-						           /* translators: %?$s: HTML codes for hyperlink. Do not remove. */
+						           		/// translators: %?$s: HTML codes for hyperlink. Do not remove.
 							           __( 'We would hate to see you go. If something goes wrong, do not uninstall WPGlobus yet. Please %1$stalk to us%2$s and let us help!', 'wpglobus' ) ),
 						           '<a href="' . $url_wpglobus_site_submit_ticket . '" target="_blank" style="text-decoration:underline;">',
 						           '</a>'
@@ -1133,10 +1388,12 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 					           esc_html( __( 'Please note that if you deactivate WPGlobus, your site will show all the languages together, mixed up. You will need to remove all translations, keeping only one language.', 'wpglobus' ) ) .
 					           '</strong></p>' .
 					           '<p>' .
-					           /* translators: %s: link to the Clean-up Tool */
-					           sprintf( __( 'If there are just a few places, you should edit them manually. To automatically remove all translations at once, you can use the %s. WARNING: The clean-up operation is irreversible, so use it only if you need to completely uninstall WPGlobus.', 'wpglobus' ),
-						           /* translators: %?$s: HTML codes for hyperlink. Do not remove. */
-						           sprintf( __( '%1$sClean-up Tool%2$s', 'wpglobus' ),
+					           sprintf(
+						           /// translators: %s: link to the Clean-up Tool
+					           		esc_html__( 'If there are just a few places, you should edit them manually. To automatically remove all translations at once, you can use the %s. WARNING: The clean-up operation is irreversible, so use it only if you need to completely uninstall WPGlobus.', 'wpglobus' ),
+						           sprintf(
+						           /// translators: %?$s: HTML codes for hyperlink. Do not remove.
+						           	esc_html__( '%1$sClean-up Tool%2$s', 'wpglobus' ),
 							           '<a style="text-decoration:underline;" target="_blank" href="' . admin_url() . 'admin.php?page=' . WPGlobus::PAGE_WPGLOBUS_CLEAN . '">',
 							           '</a>'
 						           ) ) .
@@ -1146,13 +1403,15 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				case 'sorry_message' :
 
 					$content = '<p><strong>' .
-					           /* translators: %s: name of current theme */
-					           sprintf( __( 'Sorry, WPGlobus customizer doesn\'t support current theme %s.', 'wpglobus' ),
+					           sprintf(
+					           	/// translators: %s: name of current theme
+					           	esc_html__( 'Sorry, WPGlobus customizer doesn\'t support current theme %s.', 'wpglobus' ),
 						           '<em>' . $attrs->__get( 'name' ) . '</em>'
 					           ) .
 					           '<br />' .
-					           /* translators: %?$s: HTML codes for hyperlink. Do not remove. */
-					           sprintf( __( 'Please use %1$sWPGlobus options page%2$s instead.', 'wpglobus' ),
+					           sprintf(
+						           /// translators: %?$s: HTML codes for hyperlink. Do not remove.
+					           	esc_html__( 'Please use %1$sWPGlobus options page%2$s instead.', 'wpglobus' ),
 						           '<a style="text-decoration:underline;" target="_blank" href="' . admin_url() . 'admin.php?page=' . WPGlobus::OPTIONS_PAGE_SLUG . '&tab=0">',
 						           '</a>'
 					           ) .
@@ -1166,7 +1425,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Load Customize Preview JS
+		 * Load Customize Preview JS.
 		 *
 		 * Used by hook: 'customize_preview_init'
 		 * @see 'customize_preview_init'
@@ -1197,7 +1456,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Load Customize Control JS
+		 * Load Customize Control JS.
 		 */
 		public static function action__customize_controls_enqueue_scripts() {
 
@@ -1215,6 +1474,9 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				}
 			}
 
+			$i18n = array();
+			$i18n['expandShrink'] = esc_html__('Expand/Shrink', 'wpglobus');
+			
 			wp_register_script(
 				'wpglobus-customize-options',
 				WPGlobus::$PLUGIN_DIR_URL . 'includes/js/wpglobus-customize-options' . WPGlobus::SCRIPT_SUFFIX() . '.js',
@@ -1228,6 +1490,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 				'WPGlobusCustomizeOptions',
 				array(
 					'version'                => WPGLOBUS_VERSION,
+					'i18n'					 => $i18n,
 					'config'                 => WPGlobus::Config(),
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
 					'process_ajax'           => __CLASS__ . '_process_ajax',
@@ -1269,7 +1532,7 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 		}
 
 		/**
-		 * Check for enabled theme
+		 * Check for enabled theme.
 		 *
 		 * @since 1.6.0
 		 * @return boolean
@@ -1281,6 +1544,18 @@ if ( ! class_exists( 'WPGlobus_Customize_Options' ) ) :
 			}
 
 			return true;
+		}
+		
+				
+		/**
+		 * Filter to disable the making multilingual our own settings.
+		 *
+		 * @since 1.9.8
+		 * @return array
+		 */
+		public static function filter__disabled_setting_mask($disabled_setting_mask) {
+			$disabled_setting_mask[] = 'wpglobus_customize_js_editor';
+			return $disabled_setting_mask;
 		}
 
 	} // class

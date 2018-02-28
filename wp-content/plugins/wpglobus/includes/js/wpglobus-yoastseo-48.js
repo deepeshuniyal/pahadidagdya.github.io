@@ -36,7 +36,7 @@ jQuery(document).ready( function ($) {
 		api = WPGlobusYoastSeo = {
 			editorIDs: [ 'description' ],
 			editor: {},
-			submitId: '#submit',
+			submitId: '',
 			preventChangeEditor: false,
 			observer: null,
 			init: function() {
@@ -44,6 +44,14 @@ jQuery(document).ready( function ($) {
 				api.attachListeners();
 				_.delay( api.start, 1500 );
 
+			},
+			setSubmitID: function() {
+				if ( $('.edit-tag-actions .button').length == 1 ) {
+					api.submitId = '.edit-tag-actions .button';
+				}
+				if ( $('#submit').length == 1 ) {
+					api.submitId = '#submit';
+				}
 			},
 			submit: function( event ) {
 
@@ -128,6 +136,7 @@ jQuery(document).ready( function ($) {
 				/**
 				 * Submit action.
 				 */
+				api.setSubmitID();
 				$(document).on( 'mouseenter', api.submitId, api.submit )
 					.on( 'mouseleave', api.submitId, api.submit )
 					.on( 'click', api.submitId, api.submit );
@@ -486,6 +495,45 @@ S				 */
 							$('#wpseo-tab-'+lang+' label[for="_yst_is_cornerstone"]').remove();
 						});
 					}
+
+					if ( $('.wpglobus-wpseometakeywords').length > 1 ) {
+						/**
+						 * Meta keywords.
+						 * Special case for #wpseometakeywords box.
+						 * @from 1.8.8
+						 */
+						/**
+						 * Trigger handler.
+						 */
+						var _handleKeywords = $(document).triggerHandler('wpglobus_meta_keywords');
+						if ( 'undefined' !== typeof _handleKeywords ) {
+							if ( true === _handleKeywords ) {
+								return;
+							}
+						}
+						$.each( WPGlobusCoreData.enabled_languages, function(i,lang){
+							if ( lang == WPGlobusCoreData.default_language ) {
+								/**
+								 * Rename original 'wpseometakeywords'.
+								 */
+								var special = $('#yoast_wpseo_metakeywords');
+								special.attr('id', 'yoast_wpseo_metakeywords_origin').attr('name', 'yoast_wpseo_metakeywords_origin');
+								special.addClass('metakeywords_origin');
+								$('#wpseometakeywords').attr('id','wpseometakeywords_origin');
+								
+								$('#yoast_wpseo_metakeywords_'+lang).attr('name', 'yoast_wpseo_metakeywords').attr('id','yoast_wpseo_metakeywords');
+								$('#wpseometakeywords_'+lang).attr('id','wpseometakeywords');
+								return true;
+							}
+							/**
+							 * Remove 'wpseometakeywords' box for extra language.
+							 */
+							$('#wpseo-tab-'+lang+' #wpseometakeywords_'+lang+' .yoast-metabox__description').remove();
+							$('#wpseo-tab-'+lang+' #yoast_wpseo_metakeywords_'+lang).remove();
+							$('#wpseometakeywords_'+lang+' .yoast-section').append('<div class="wpglobus-suggest" style="font-weight:bold;">'+WPGlobusVendor.i18n.yoastseo_plus_meta_keywords_access+'</div>');
+						});							
+					}
+					
 				}, 2000 );					
 			},
 			start: function() {
@@ -724,7 +772,20 @@ S				 */
 								$id.css({'height':'inherit'});
 							}
 						}	
-						
+
+						/**
+						 * Meta keywords.
+						 * @from 1.8.8
+						 */
+						if ( 'wpseometakeywords' == id ) {
+							$id.css({'margin-bottom':'2em'});
+							$id.addClass('wpglobus-wpseometakeywords');
+						}
+						if ( 'yoast_wpseo_metakeywords' == id ) {
+							$id.addClass('wpglobus-metakeywords');
+							$('input[name="yoast_wpseo_metakeywords_'+l+'"]').val( WPGlobusCore.TextFilter($('#yoast_wpseo_metakeywords').val(), l, 'RETURN_EMPTY') );
+						}
+	
 						/**
 						 * Generate unique id.
 						 */
@@ -750,13 +811,19 @@ S				 */
 						$('#wpseo-metabox-tabs_'+l+' .wpseo_keyword_tab .wpseo_tablink').data('keyword', focuskw);
 					}
 					
+					/**
+					 * Set min-width, min-height for keyword tab to prevent the shifting of the elements when keyword is empty.
+					 * @since 1.9.4
+					 */					
+					$('#wpseo-metabox-tabs_'+l+' .wpseo_keyword_tab').css({'min-width':'60px','min-height':'29px'});
+					
 					/** since yoastseo 3.2 */
 					api.updateWpseoKeyword( focuskw, l );
 
 					if ( l !== WPGlobusCoreData.default_language ) {
 						$('#'+sectionID+' #yoast_wpseo_focuskw_text_input_'+l)
 							.addClass('hidden')
-							.after('<div class="wpglobus-suggest" style="font-weight:bold;">'+WPGlobusVendor.i18n.yoastseo_plus_access+'</div>');
+							.after('<div class="wpglobus-suggest" style="font-weight:bold;">'+WPGlobusVendor.i18n.yoastseo_plus_page_analysis_access+'</div>');
 
 						$('#'+sectionID+' #wpseo-pageanalysis_'+l).addClass('hidden').css({'display':'none'});
 					}

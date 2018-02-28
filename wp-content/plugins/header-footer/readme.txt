@@ -1,7 +1,7 @@
 === Head, Footer and Post Injections ===
 Tags: header, footer, blog, page, single, post, head, tracking, facebook, og meta tag, open graph, ads, adsense, injections, analytics, amp, pixel
 Requires at least: 3.0
-Tested up to: 4.7.3
+Tested up to: 4.8.2
 Stable tag: 3.0.7
 Donate link: http://www.satollo.net/donations
 Contributors: satollo
@@ -92,6 +92,14 @@ FAQs are answered on [Header and Footer](http://www.satollo.net/plugins/header-f
 4. Configurable snippets of code to be recalled on other configurations (to save time)
 
 == Changelog ==
+
+= 3.1.0 =
+
+* Removed the Facebook setting (move to a specialized plugin to have the Facebook Open Graph Meta) 
+* Removed bbPress setting (please use bbpress ads)
+* Label fix
+* Removed notices
+* 5 post injections and 5 generic injections
 
 = 3.0.7 =
 

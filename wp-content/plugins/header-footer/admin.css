@@ -127,3 +127,9 @@ h3 {
 .hf-index-entry:hover {
     border-color: #ddd;
 }
+
+.col-2 label {
+    font-size: 12px;
+    text-transform: uppercase;
+    display: block;
+}

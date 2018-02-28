@@ -4,9 +4,10 @@
 Plugin Name: Recent Tweets Widget
 Plugin URI: http://wordpress.org/extend/plugins/recent-tweets-widget/
 Description: Recent Tweets Widget plugin for Twitter API v1.1 with Cache. It uses the new Twitter API v1.1 and stores tweets in the cache. It means that it will read status messages from your database and it doesn't query Twitter.com for every page load so you won't be rate limited. You can set how often you want to update the cache.
-Version: 1.6.7
+Version: 1.6.8
 Author: Noah Kagan
 Author URI: http://sumome.com
+Text Domain: recent-tweets-widget
 */
 
 //error_reporting(E_ALL);
@@ -19,6 +20,7 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 define('TP_RECENT_TWEETS_PATH', plugin_dir_url( __FILE__ ));
+define('TP_RECENT_TEXT_DOMAIN', 'recent-tweets-widget');
 
 //register stylesheet for widget
 function tp_twitter_plugin_styles() {
@@ -95,3 +97,9 @@ function tp_twitter_plugin_deactivate() {
 	delete_option('tp_twitter_global_notification');
 }
 register_deactivation_hook( __FILE__, 'tp_twitter_plugin_deactivate' );
+
+
+function tp_twitter_plugin_load_plugin_textdomain() {
+    load_plugin_textdomain( TP_RECENT_TEXT_DOMAIN, FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'tp_twitter_plugin_load_plugin_textdomain' );

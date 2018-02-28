@@ -41,6 +41,7 @@ if ( defined('WPSEO_VERSION') && defined('WPSEO_PREMIUM_PLUGIN_FILE') ) {
 				$version = version_compare( WPSEO_VERSION, '4.1', '>=' ) ? '41' : $version;
 				$version = version_compare( WPSEO_VERSION, '4.4', '>=' ) ? '44' : $version;
 				$version = version_compare( WPSEO_VERSION, '4.8', '>=' ) ? '48' : $version;
+				$version = version_compare( WPSEO_VERSION, '5.9', '>=' ) ? '59' : $version;
 				
 				require_once "vendor/class-wpglobus-yoastseo$version.php";
 				
@@ -64,22 +65,12 @@ if ( defined('WPSEO_VERSION') && defined('WPSEO_PREMIUM_PLUGIN_FILE') ) {
 
 		} else {
 
-			if ( version_compare( WPSEO_VERSION, '3.0.0', '<' ) ) {
-				require_once 'vendor/class-wpglobus-wpseo.php';
-				WPGlobus_WPSEO::controller();
-			} else {
-				if ( version_compare( WPSEO_VERSION, '3.2.0', '<' ) ) {
-					require_once 'vendor/class-wpglobus-yoastseo30.php';
-					WPGlobus_YoastSEO::controller();
-				} else {
-					if ( version_compare( WPSEO_VERSION, '3.3.0', '>=' ) ) {
-						require_once 'vendor/class-wpglobus-yoastseo33.php';
-						WPGlobus_YoastSEO::controller();
-					} else {
-						require_once 'vendor/class-wpglobus-yoastseo32.php';
-						WPGlobus_YoastSEO::controller();
-					}
-				}
+			if ( version_compare( WPSEO_VERSION, '3.3.0', '>=' ) ) {
+				require_once 'vendor/class-wpglobus-yoastseo33.php';
+				WPGlobus_YoastSEO::controller();
+			} else if ( version_compare( WPSEO_VERSION, '3.2.0', '>=' ) ) {
+				require_once 'vendor/class-wpglobus-yoastseo32.php';
+				WPGlobus_YoastSEO::controller();
 			}
 
 		}

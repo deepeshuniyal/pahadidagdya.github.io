@@ -16,6 +16,14 @@
 	.jp-banner__button-container {
 		padding: rem( 12px ) 0 0;
 	}
+
+	.jp-banner__tos-blurb {
+		display: block;
+		padding: rem( 6px ) 0;
+		line-height: 1.5;
+		font-size: rem( 11px );
+		color: $gray-dark;
+	}
 }
 
 .jp-banner .notice-dismiss {
@@ -41,7 +49,7 @@
 			right: 0;
 			bottom: 0;
 			left: 0;
-			z-index: 999; // to sit over other elements
+		z-index: 9999; // to sit over other elements
 		background: rgba($gray-light, .95);
 		text-align: center;
 		padding: rem( 32px );
@@ -49,6 +57,7 @@
 		@include minbreakpoint(tablet) {
 			left: -20px; // fill gap of wp-admin sidebar right margin on large screens
 		};
+
 	}
 }
 
@@ -75,7 +84,7 @@
 		};
 }
 
-// dismiss 
+// dismiss
 .jp-connect-full__svg-dismiss {
 	position: absolute;
 		right: 0;
@@ -156,6 +165,15 @@
 
 .jp-connect-full__button-container {
 	margin: 0;
+	.dops-button.is-primary {
+		background: $green-primary;
+		border-color: $green-secondary;		
+
+		&:hover, &:focus {
+			background: $green-secondary;
+			border-color: $green-dark;
+		}
+	}
 }
 
 .jp-connect-full__help-button {
@@ -196,6 +214,7 @@
 }
 
 .updated .notice-dismiss {
+	z-index: 1;
 	text-decoration: none;
 }
 // end overrides
@@ -241,7 +260,17 @@
 
 .jp-wpcom-connect__content-icon {
 	float: right;
-	margin: 0 0 rem( 36px ) rem( 36px );
+	margin: 0 rem( 24px ) 0 rem( 36px );
+
+	&.jp-connect-illo {
+
+		@include breakpoint(tablet) {
+			float: none;
+			width: 100%;
+			text-align: center;
+			margin: rem( 36px ) 0 rem( 24px );
+		}
+	}
 }
 
 .jp-wpcom-connect__slide {
@@ -255,12 +284,22 @@
 .jp-wpcom-connect__content-container .jp-banner__button-container {
 	@include minbreakpoint(tablet) {
 		position: absolute;
-		bottom: rem( 16px );
+		bottom: rem( 8px );
 	};
 }
 
 .jp-banner__button-container .dops-button {
 	margin: rem( 5px ) 0;
+
+	&.is-primary {
+		background: $green-primary;
+		border-color: $green-secondary;
+
+		&:hover, &:focus {
+			background: $green-secondary;
+			border-color: $green-dark;
+		}
+	}
 }
 
 // Connection Banner Vertical Menu
@@ -300,7 +339,7 @@
 		color: #87a6bc;
 		cursor: pointer;
 
-		// trick to hide the bottom border of the last menu item when the menu is the tallest element, 
+		// trick to hide the bottom border of the last menu item when the menu is the tallest element,
 		// but display the border when the overall container is taller than the menu
 		&:last-of-type {
 			position: relative;
@@ -315,7 +354,7 @@
 		color: #2e4453;
 
 		&.jp-feature-intro {
-			border-left: 3px solid #8CC258;
+			border-left: 3px solid #00BE28;
 		}
 	}
 
@@ -323,6 +362,7 @@
 		width: rem( 20px );
 		height: rem( 20px );
 		padding: rem( 4px );
+		text-align: center;
 	}
 
 	// svg fill swaps
@@ -340,7 +380,7 @@
 
 		&.jp-feature-intro {
 			svg {
-				fill: #8CC258;
+				fill: #00BE28;
 			}
 		}
 

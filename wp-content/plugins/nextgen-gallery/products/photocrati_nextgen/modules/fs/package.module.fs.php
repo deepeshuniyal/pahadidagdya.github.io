@@ -252,30 +252,18 @@ class Mixin_Fs_Instance_Methods extends Mixin
         foreach ($segments as $segment) {
             $segment = trim($segment, "/\\");
             $pieces = array_values(preg_split('#[/\\\\]#', $segment));
-            // determine if each piece should be appended to $retval
-            foreach ($pieces as $ndx => $val) {
-                if ($val === '') {
-                    continue;
-                }
-                $one = array_search($val, $retval);
-                $two = array_search($val, $pieces);
-                $one = FALSE === $one ? 0 : count($one) + 1;
-                $two = FALSE === $two ? 0 : count($two) + 1;
-                if (!empty($protocol)) {
-                    $existing_val = isset($retval[$ndx]) ? $retval[$ndx] : NULL;
-                    if ($existing_val !== $val || $two >= $one) {
-                        $retval[] = $val;
-                    }
+            $segment = join(DIRECTORY_SEPARATOR, $pieces);
+            if (!$retval) {
+                $retval = $segment;
+            } else {
+                if (strpos($segment, $retval) !== FALSE) {
+                    $retval = $segment;
                 } else {
-                    $existing_val = isset($retval[$ndx]) ? $retval[$ndx] : NULL;
-                    if ($existing_val !== $val && $two >= $one) {
-                        $retval[] = $val;
-                    }
+                    $retval = $retval . DIRECTORY_SEPARATOR . $segment;
                 }
             }
         }
-        // Join the paths together
-        $retval = implode(DIRECTORY_SEPARATOR, $retval);
+        //		$retval = join(DIRECTORY_SEPARATOR, $retval);
         if (strpos($retval, $this->get_document_root()) !== 0 && strtoupper(substr(PHP_OS, 0, 3)) != 'WIN') {
             $retval = DIRECTORY_SEPARATOR . trim($retval, "/\\");
         }
@@ -357,6 +345,23 @@ class Mixin_Fs_Instance_Methods extends Mixin
             $retval = str_replace('/', DIRECTORY_SEPARATOR, $retval);
         }
         return $retval;
+    }
+    function get_absolute_path($path)
+    {
+        $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+        $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
+        $absolutes = array();
+        foreach ($parts as $part) {
+            if ('.' == $part) {
+                continue;
+            }
+            if ('..' == $part) {
+                array_pop($absolutes);
+            } else {
+                $absolutes[] = $part;
+            }
+        }
+        return implode(DIRECTORY_SEPARATOR, $absolutes);
     }
     /**
      * Sets the document root for this application

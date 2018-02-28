@@ -1,10 +1,10 @@
 === Easy Media Download ===
 Contributors: naa986
-Donate link: http://noorsplugin.com/
+Donate link: https://noorsplugin.com/
 Tags: download, downloads, media, digital downloads, e-commerce, e-downloads, e-store, ecommerce, eshop, wp ecommerce, donation
 Requires at least: 3.0
-Tested up to: 4.7
-Stable tag: 1.1.2
+Tested up to: 4.9
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,27 +12,32 @@ Easy Media Download allows you to embed download buttons on your WordPress site.
 
 == Description ==
 
-[Easy Media Download](http://noorsplugin.com/easy-media-download-plugin-for-wordpress/) is a free download manager for WordPress. It gives your users the ability to download digital media files from your website. The plugin is lightweight and makes downloading easier. You can create beautiful download button which instantly starts the download once clicked.
+[Easy Media Download](https://noorsplugin.com/easy-media-download-plugin-for-wordpress/) is a free download manager for WordPress. It gives your users the ability to download digital media files from your website. The plugin is lightweight and makes downloading easier. You can create beautiful download button which instantly starts the download once clicked.
+
+= Requirements =
+
+* A self-hosted website running on [WordPress hosting](https://noorsplugin.com/best-cheap-wordpress-hosting/)
 
 = Features =
 
 * Create quick downloads
-* Insert download buttons into your landing page
-* Allow users to directly download in all file formats
-* Allow large file download (No limit on the file size)
-* Accept donations for your free digital downloads using PayPal
 * Free downloads for music or audio files e.g. mp3, aac, m4a, wav
+* Insert download buttons into your landing page
 * Free downloads for video files e.g. mp4, mov, qt (QuickTime), mpg, mpeg, flv, m4v, swf, flash, avi, wma, ogg, webm
+* Allow users to directly download in all file formats
 * Free downloads for document file e.g. doc, docx (OpenOffice, Microsoft Word), odt (OpenDocument), htm, html, ps, tex, xml, txt, csv
-* Free downloads for Office file e.g. xlsx (Microsoft Excel), pptx (Microsoft PowerPoint) 
+* Allow large file download (No limit on the file size)
+* Free downloads for Office file e.g. xlsx (Microsoft Excel), pptx (Microsoft PowerPoint)
+* Accept donations for your free digital downloads using PayPal
 * Free downloads for script e.g. js, css, php
-* Free downloads for archive or compressed file e.g. tar, rar, zip, 7z, gz, z
-* Free downloads for image file e.g. png, gif, jpg, jpeg, bmp
-* Free downloads for e-book e.g. pdf, epub
 * Track/Monitor your downloads
-* Ability to force a digital file download
+* Free downloads for archive or compressed file e.g. tar, rar, zip, 7z, gz, z
+* Force the browser to open the download prompt
+* Free downloads for image file e.g. png, gif, jpg, jpeg, bmp
+* Open the download in a new tab
+* Free downloads for e-book e.g. pdf, epub
 
-For more information please check the [Easy Media Download](http://noorsplugin.com/easy-media-download-plugin-for-wordpress/) documentation page
+For more information please check the [Easy Media Download](https://noorsplugin.com/easy-media-download-plugin-for-wordpress/) documentation page
 
 = Embedding Shortcodes for the Downloads =
 
@@ -103,6 +108,12 @@ Easy Media Download comes with 21 different download button templates. All you n
 
 If you want to fully customize the download button you can use your own button image instead.
 
+= Link Rel =
+
+You can use the HTML link `rel` attribute in the shortcode to define the relationship between your page and the linked download.
+
+`[easy_media_download url="http://example.com/wp-content/uploads/myfile.zip" rel="nofollow"]`
+
 = Custom CSS Class =
 
 In addition to various button templates, If you want to apply custom styling to a button you can do so by using the `class` parameter.
@@ -156,12 +167,12 @@ If you are a non-English speaker please help [translate Easy Media Download](htt
 
 **Like Easy Media Download Already?**
 
-Feel free to drop your review [here](http://wordpress.org/support/view/plugin-reviews/easy-media-download/)
+Feel free to drop your review [here](https://wordpress.org/support/plugin/easy-media-download/reviews/?rate=5#new-post)
 
 = Recommended Reading =
 
-* Easy Media Download [Documentation](http://noorsplugin.com/easy-media-download-plugin-for-wordpress/)
-* My Other [Free WordPress Plugins](http://noorsplugin.com/wordpress-plugins/)
+* Easy Media Download [Documentation](https://noorsplugin.com/easy-media-download-plugin-for-wordpress/)
+* My Other [Free WordPress Plugins](https://noorsplugin.com/wordpress-plugins/)
 
 == Installation ==
 
@@ -186,12 +197,15 @@ Yes.
 
 == Screenshots ==
 
-For screenshots please visit the [Easy Media Download](http://noorsplugin.com/easy-media-download-plugin-for-wordpress/) plugin page
+1. Download Now button demo
 
 == Upgrade Notice ==
 none
 
 == Changelog ==
+
+= 1.1.3 =
+* Added a new parameter to support the HTML link rel attribute in the download button.
 
 = 1.1.2 =
 * Added download tracking option with the [Google Analytics](https://wordpress.org/plugins/simple-universal-google-analytics/) plugin.

@@ -3,8 +3,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 /**
  * Plugin Name: NextGEN Gallery
- * Description: The most popular gallery plugin for WordPress and one of the most popular plugins of all time with over 17 million downloads.
- * Version: 2.2.3
+ * Description: The most popular gallery plugin for WordPress and one of the most popular plugins of all time with over 20 million downloads.
+ * Version: 2.2.54
  * Author: Imagely
  * Plugin URI: https://www.imagely.com/wordpress-gallery-plugin/nextgen-gallery/
  * Author URI: https://www.imagely.com
@@ -85,14 +85,25 @@ class C_NextGEN_Bootstrap
 
 	static function shutdown($exception=NULL)
 	{
-		if (is_null($exception)) {
-			throw new E_Clean_Exit;
-		}
+		if (is_null($exception))
+		{
+            $name = php_sapi_name();
+            if (FALSE === strpos($name, 'cgi')
+            &&  version_compare(PHP_VERSION, '5.3.3') >= 0)
+            {
+                $status = session_status();
+                if (in_array($status, array(PHP_SESSION_DISABLED, PHP_SESSION_NONE), TRUE))
+                    session_write_close();
+                fastcgi_finish_request();
+            }
+            else {
+                throw new E_Clean_Exit;
+            }
+        }
 		elseif (!($exception instanceof E_Clean_Exit)) {
 			ob_end_clean();
 			self::print_exception($exception);
 		}
-
 	}
 
 	static function print_exception($exception)
@@ -138,8 +149,25 @@ class C_NextGEN_Bootstrap
 		return $trace;
 	}
 
+	public function php_version_incompatible()
+	{ ?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php print __('We’ve detected you are running PHP versions 7.0.26 or 7.1.12. These versions of PHP have a bug that breaks NextGEN Gallery and causes server crashes in certain conditions. To protect your site, NextGEN Gallery will not load. We recommend asking your host to roll back to an earlier version of PHP. For details on the PHP bug, see: <a target="_blank" href="https://bugs.php.net/bug.php?id=75573">bugs.php.net/bug.php?id=75573</a>', 'nggallery'); ?></p>
+		</div>
+		<?php
+	}
+
 	function __construct()
 	{
+		// PHP versions 7.1.12, 7.0.26, and the 7.2-RC come with a bug that NextGen Gallery cannot workaround
+		// see: https://bugs.php.net/bug.php?id=75573
+		// Additionally 7.2.0 has an issue with NextGen's activation
+//		if (PHP_VERSION_ID === 70112 ||  PHP_VERSION_ID === 70026)
+//	   	{
+//			add_action('admin_notices', array($this, 'php_version_incompatible'));
+//			return;
+//		}
+
 		set_exception_handler(__CLASS__.'::shutdown');
 
 		// We only load the plugin if we're outside of the activation request, loaded in an iframe
@@ -178,10 +206,17 @@ class C_NextGEN_Bootstrap
 		// Load caching component
 		include_once('non_pope/class.photocrati_transient_manager.php');
 
-		if (isset($_REQUEST['ngg_flush']) OR isset($_REQUEST['ngg_flush_expired'])) {
+		if (isset($_REQUEST['ngg_flush']))
+		{
 			C_Photocrati_Transient_Manager::flush();
 			die("Flushed all caches");
 		}
+
+        if (isset($_REQUEST['ngg_flush_expired']))
+        {
+            C_Photocrati_Transient_Manager::get_instance()->flush_expired();
+            die("Flushed all expired caches");
+        }
 
 		// Load Settings Manager
 		include_once('non_pope/class.photocrati_settings_manager.php');
@@ -385,7 +420,7 @@ class C_NextGEN_Bootstrap
 		// Delete displayed gallery transients periodically
 		if (NGG_CRON_ENABLED) {
 			add_filter('cron_schedules', array(&$this, 'add_ngg_schedule'));
-			add_action('ngg_delete_expired_transients', array(&$this, 'delete_expired_transients'));
+			add_action('ngg_delete_expired_transients', array($this, 'delete_expired_transients'));
 			add_action('wp', array(&$this, 'schedule_cron_jobs'));
 		}
 
@@ -494,7 +529,7 @@ class C_NextGEN_Bootstrap
 	 */
 	function delete_expired_transients()
 	{
-		C_Photocrati_Transient_Manager::flush();
+        C_Photocrati_Transient_Manager::get_instance()->flush_expired();
 	}
 
 	/**
@@ -637,7 +672,7 @@ class C_NextGEN_Bootstrap
 		define('NGG_PRODUCT_URL', path_join(str_replace("\\", '/', NGG_PLUGIN_URL), 'products'));
 		define('NGG_MODULE_URL', path_join(str_replace("\\", '/', NGG_PRODUCT_URL), 'photocrati_nextgen/modules'));
 		define('NGG_PLUGIN_STARTED_AT', microtime());
-		define('NGG_PLUGIN_VERSION', '2.2.3');
+		define('NGG_PLUGIN_VERSION', '2.2.54');
 
 		if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)
 			define('NGG_SCRIPT_VERSION', (string)mt_rand(0, mt_getrandmax()));
@@ -1009,7 +1044,6 @@ function ngg_fs( $activate_for_all = false ) {
 	*/
 
 	// Hook to the custom message filter.
-	$ngg_fs->add_filter( 'connect_message', 'ngg_fs_custom_connect_message', 10, 6 );
 	$ngg_fs->add_action( 'after_uninstall', 'ngg_fs_uninstall' );
 
 	// Hook to new gallery creation event.

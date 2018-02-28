@@ -4,13 +4,13 @@ Contributors: neilgee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=neil%40wpbeaches%2ecom&lc=AU&item_name=WP%20Beaches&item_number=Plugins&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: modals, pop ups, windows, bootstrap
 Requires at least: 3.8
-Tested up to: 4.6
-Stable tag: 1.3.0
+Tested up to: 4.9
+Stable tag: 1.3.2
 Plugin Name: Bootstrap Modals
 Plugin URI: http://wpbeaches.com
 Description: Using Bootstrap Modals in WordPress
 Author: Neil Gee
-Version: 1.3.0
+Version: 1.3.2
 Author URI:http://wpbeaches.com
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -28,7 +28,9 @@ This does not bring in any other Bootstrap javascript or CSS functionality.
 
 There is sample HTML mark up code in the readme.txt for a selector and modal target element.
 
-Options to override the default CSS modal styling and also use a shortcode
+Options to override the default CSS modal styling and also use a shortcode.
+
+Option to disable Bootstrap JS/CSS files in case of conflict.
 
 == Installation ==
 
@@ -51,7 +53,7 @@ Here is a simple HTML Modal MarkUp
 					<h4 class="modal-title">My Title in a Modal Window</h4>
 			</div>
 			<div class="modal-body">This is the body of a modal...</div>
-			<div class="modal-barter">This is the barter of a modal...</div>
+			<div class="modal-footer">This is the footer of a modal...</div>
 			</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -81,7 +83,7 @@ Here is a simple HTML Modal MarkUp
 					<h4 class="modal-title">My Title in a Modal Window</h4>
 			</div>
 			<div class="modal-body">This is the body of a modal...</div>
-			<div class="modal-barter">This is the barter of a modal...</div>
+			<div class="modal-footer">This is the footer of a modal...</div>
 			</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -93,6 +95,22 @@ You can change the modal size by adding an extra CSS class to the <strong>.modal
 Since version 1.0.2 extra CSS is included to set the close button to a state similar to Bootstrap install, to override the default CSS for the close button use a CSS selector .modal-dialog .close { } in your CSS styles.
 
 == Changelog ==
+
+= 1.3.2
+* 17/11/17
+* Update wp-color-picker to 2.1.2 to be compatible with WP 4.9
+
+= 1.3.1.1 =
+* 15th September 2017
+- Fix undefined notice
+- Compatible with WP 4.9
+
+= 1.3.1 =
+* 8th September 2017
+- Added option to disable plugins Bootstrap Files - handy if theme is already bootstrap.
+- Updated with Bootstrap 3.3.7
+- Updated CSS styles for custom CSS options in plugin settings, more specific selectors.
+- Option for alignment of header area of modal.
 
 = 1.3.0 =
 * 21st July 2016

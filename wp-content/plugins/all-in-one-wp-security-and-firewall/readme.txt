@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, wpsolutions, Peter Petreski, Ruhul Amin, mbrso
 Donate link: https://www.tipsandtricks-hq.com
 Tags: security, secure, Anti Virus, antivirus, ban, ban hacker, virus, firewall, firewall security, login, lockdown, htaccess, hack, malware, vulnerability, protect, protection, phishing, database, backup, plugin, sql injection, ssl, restrict, login captcha, bot, hotlink, 404 detection, admin, rename, all in one, scan, scanner, iframe,
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 4.2.6
+Tested up to: 4.9
+Stable tag: 4.3.2
 License: GPLv3
 
 A comprehensive, user-friendly, all in one WordPress security and firewall plugin for your site.
@@ -183,6 +183,51 @@ https://www.tipsandtricks-hq.com/wordpress-security-and-firewall-plugin
 None
 
 == Changelog ==
+
+= 4.3.2 =
+- Added new IP address settings page which user the ability to configure which $_SERVER global the IP address will be retrieved from. (New setting found in WP Security >> Settings >> Advanced Settings)
+- Fixed bug in .htaccess rules caused when 6G and IP blacklist firewall rules were simultaneously enabled.
+- Fixed bug where captcha answer was being ignored on woocommerce login page.
+- Added support for unlock requests made from woocomerce account login page when rename login feature is active.
+- Added useful debug code for troubleshooting in the fake googlebot function.
+- Some general code cleanup and improvement.
+- Added code to prevent direct access data leaks.
+- Added captcha settings for BBPress new topic form.
+- Fixed minor bug in dashboard page when checking if htaccess rules applied.
+- Added a check for Windows server installation in File Permissions feature - this feature is not applicable for Windows servers.
+- Added check to display comment captcha only when user not logged in.
+
+= 4.3.1 =
+- Improved white list directives to cater for Apache 2.4 and earlier versions.
+- Added 3 filters for the manual account registration approval email: aiowps_register_approval_email_subject, aiowps_register_approval_email_msg, aiowps_register_approval_email_from_name
+- Added configuration option to allow custom firewall rules to be applied at beginning of all rules applied by aiowps.
+- Changed record insertions to DB table aiowps_failed_logins to store the full IP address instead of IP range.
+
+= 4.3.0 =
+- Updated wp-security-rename-login-feature.php to include latest WordPress core changes.
+- Added captcha for woocommerce login and registration forms.
+- Fixed "mixed line endings" warnings for whois library.
+- Moved DB cleanup task cron job from daily to hourly.
+- Updated the reapply htaccess function so it doesn't create the header already sent error.
+
+= 4.2.9 =
+- Changed the parameter in current_user_can function to use an administrator capability instead of the "administrator" role name.
+- Added some new hooks to the AIOWPSecurity_WP_Loaded_Tasks called aiowps_wp_loaded_tasks_start and aiowps_wp_loaded_tasks_end.
+- Improved get_locked_ips() function and added $wpdb->prepare statement.
+- Added more missing translation domain parameters for translatable strings in the rename login page.
+- Deleted local copy of the Persian and Italian language files. These translations are available on translate.wordpress.org.
+- Domain path and text domain added to plugin header.
+- Changed the get_user_ip_address functions so that $_SERVER['REMOTE_ADDR'] is the primary method used to obtain IP address.
+- Added enumeration block via REST API (wp >= 4.7)
+
+= 4.2.8 =
+- Improved "User Registration" feature to bypass the pending approval status for new users created in admin side.
+- Fixed bug in whois library.
+- Added translation domain parameter for translatable strings in the rename login page.
+- Updated the chinese language file.
+
+= 4.2.7 =
+- The PHPWhois library updated to their latest version to include a security patch.
 
 = 4.2.6 =
 - Added new Login Lockdown whitelist feature which allows immunity for IP address or ranges from being locked by the lockdown feature.

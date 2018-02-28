@@ -11,7 +11,9 @@ class ShortPixelMeta extends ShortPixelEntity{
     protected $webPath;
     protected $compressionType;
     protected $compressedSize;
+    protected $png2Jpg;
     protected $thumbsOpt;
+    protected $thumbsOptList;
     protected $thumbsMissing;
     protected $retinasOpt;
     protected $thumbsTodo;
@@ -120,6 +122,14 @@ class ShortPixelMeta extends ShortPixelEntity{
         return $this->compressedSize;
     }
 
+    function getPng2Jpg() {
+        return $this->png2Jpg;
+    }
+
+    function setPng2Jpg($png2jpg) {
+        $this->png2Jpg = $png2jpg;
+    }
+
     function setName($name) {
         $this->name = $name;
     }
@@ -138,6 +148,14 @@ class ShortPixelMeta extends ShortPixelEntity{
 
     function setThumbsOpt($thumbsOpt) {
         $this->thumbsOpt = $thumbsOpt;
+    }
+
+    function getThumbsOptList() {
+        return $this->thumbsOptList;
+    }
+
+    function setThumbsOptList($thumbsOptList) {
+        $this->thumbsOptList = $thumbsOptList;
     }
 
     function getThumbsMissing() {

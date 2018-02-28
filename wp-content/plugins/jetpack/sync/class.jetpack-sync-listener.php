@@ -144,6 +144,8 @@ class Jetpack_Sync_Listener {
 			 *
 			 * @since 4.2.0
 			 *
+			 * @module sync 
+			 *
 			 * @param array The action parameters
 			 */
 			$args = apply_filters( "jetpack_sync_before_enqueue_$action_name", $args );
@@ -214,7 +216,7 @@ class Jetpack_Sync_Listener {
 				get_current_user_id(),
 				microtime( true ),
 				Jetpack_Sync_Settings::is_importing(),
-				$this->get_actor(),
+				$this->get_actor( $current_filter, $args ),
 			) );
 		} else {
 			$queue->add( array(
@@ -234,26 +236,53 @@ class Jetpack_Sync_Listener {
 			}
 		}
 	}
-	function get_actor() {
-		$current_user = wp_get_current_user();
-		$actor = array();
-		if ( $current_user ) {
-			$actor[ 'display_name' ] = $current_user->display_name;
-			$actor[ 'user_email' ] = $current_user->user_email;
+
+	function get_actor( $current_filter, $args ) {
+		if ( 'wp_login' === $current_filter  ) {
+			$user = get_user_by( 'ID', $args[1]->data->ID );
+		} else {
+			$user = wp_get_current_user();
 		}
 
-		if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			$actor[ 'ip' ] = $_SERVER['REMOTE_ADDR'];
-		}
+		$translated_role = Jetpack::translate_user_to_role( $user );
 
-		$actor['is_cron'] = defined( 'DOING_CRON' ) ? DOING_CRON : false;
-		$actor['is_wp_admin'] = is_admin();
-		$actor['is_rest'] = defined( 'REST_API_REQUEST' ) ? REST_API_REQUEST : false;
-		$actor['is_xmlrpc'] = defined( 'XMLRPC_REQUEST' ) ? XMLRPC_REQUEST : false;
-		$actor['is_wp_rest'] = defined( 'REST_REQUEST' ) ? REST_REQUEST : false;
-		$actor['is_ajax'] = defined( 'DOING_AJAX' ) ? DOING_AJAX : false;
+		$actor = array(
+			'wpcom_user_id'    => null,
+			'external_user_id' => isset( $user->ID ) ? $user->ID : null,
+			'display_name'     => isset( $user->display_name ) ? $user->display_name : null,
+			'user_email'       => isset( $user->user_email ) ? $user->user_email : null,
+			'user_roles'       => isset( $user->roles ) ? $user->roles : null,
+			'translated_role'  => $translated_role ? $translated_role : null,
+			'is_cron'          => defined( 'DOING_CRON' ) ? DOING_CRON : false,
+			'is_rest'          => defined( 'REST_API_REQUEST' ) ? REST_API_REQUEST : false,
+			'is_xmlrpc'        => defined( 'XMLRPC_REQUEST' ) ? XMLRPC_REQUEST : false,
+			'is_wp_rest'       => defined( 'REST_REQUEST' ) ? REST_REQUEST : false,
+			'is_ajax'          => defined( 'DOING_AJAX' ) ? DOING_AJAX : false,
+			'is_wp_admin'      => is_admin(),
+		);
+
+		if ( $this->should_send_user_data_with_actor( $current_filter ) ) {
+			require_once( JETPACK__PLUGIN_DIR . 'modules/protect/shared-functions.php' );
+			$actor['ip'] = jetpack_protect_get_ip();
+			$actor['user_agent'] = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown';
+		}
 
 		return $actor;
+	}
+
+	function should_send_user_data_with_actor( $current_filter ) {
+		$should_send = in_array( $current_filter, array( 'wp_login', 'wp_logout', 'jetpack_valid_failed_login_attempt' ) );
+		/**
+		 * Allow or deny sending actor's user data ( IP and UA ) during a sync event
+		 *
+		 * @since 5.8.0
+		 *
+		 * @module sync
+		 *
+		 * @param bool True if we should send user data
+		 * @param string The current filter that is performing the sync action
+		 */
+		return apply_filters( 'jetpack_sync_actor_user_data', $should_send, $current_filter );
 	}
 
 	function set_defaults() {

@@ -1,120 +1,1198 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wl_facebook\n"
-"POT-Creation-Date: 2014-09-05 17:55+0530\n"
-"PO-Revision-Date: 2014-09-05 17:55+0530\n"
+"POT-Creation-Date: 2018-02-10 13:38+0530\n"
+"PO-Revision-Date: 2018-02-10 13:39+0530\n"
 "Last-Translator: Weblizar <lizarweb@gmail.com>\n"
 "Language-Team: \n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: facebook-by-weblizar-help.php:18
-msgid "Settings"
-msgstr "सेटिंग्स"
+#: facebook-by-weblizar-help.php:14
+#, fuzzy
+#| msgid "Facebook Page URL"
+msgid "Facebook Feed & LikeBox"
+msgstr "फेसबुक पेज यूआरएल"
 
-#: facebook-by-weblizar-help.php:23
+#: facebook-by-weblizar-help.php:15
+msgid ""
+"Display a completely responsive & customizable facebook feed on your website which match "
+"with the look and feel of your website"
+msgstr ""
+"अपनी वेबसाइट पर पूरी तरह से उत्तरदायी और अनुकूलन वाले फेसबुक फ़ीड प्रदर्शित करें जो आपकी वेबसाइट के नज़र और "
+"अनुभव से मेल खाता है"
+
+#: facebook-by-weblizar-help.php:18
+msgid "Support Forum"
+msgstr "सहयता मंच"
+
+#: facebook-by-weblizar-help.php:19
+#, fuzzy
+#| msgid "Plugins Page"
+msgid "Plugin Change Log"
+msgstr "प्लगइन पृष्ठ"
+
+#: facebook-by-weblizar-help.php:20
+#, fuzzy
+#| msgid "Start Date"
+msgid "Start Rating"
+msgstr "प्रारम्भ दिनांक"
+
+#: facebook-by-weblizar-help.php:33
+msgid "Like Box"
+msgstr "बॉक्स की तरह"
+
+#: facebook-by-weblizar-help.php:38
+#, fuzzy
+#| msgid "Facebook Page URL"
+msgid "Facebook Feed"
+msgstr "फेसबुक पेज यूआरएल"
+
+#: facebook-by-weblizar-help.php:43
+msgid "Plugin Recommendation"
+msgstr "प्लगइन की सिफारिश"
+
+#: facebook-by-weblizar-help.php:49
 msgid "Need Help"
 msgstr "कोई मदद चाहिए"
 
-#: facebook-by-weblizar-help.php:28
+#: facebook-by-weblizar-help.php:54
 msgid "Our Products"
 msgstr "हमारे उत्पाद"
 
-#: facebook-by-weblizar.php:52
+#: facebook-by-weblizar-help.php:59
+msgid "Rate Us"
+msgstr "हमें रेटिंग दें"
+
+#: facebook-by-weblizar-help.php:64
+msgid "Upgrade TO Pro"
+msgstr "प्रो में अपग्रेड"
+
+#: facebook-by-weblizar-short-code.php:63 facebook-by-weblizar-widgets.php:78
+msgid "Facebook By Weblizar Powered By Weblizar"
+msgstr "वेबलिज़र द्वारा वेबलिज़र द्वारा संचालित"
+
+#: facebook-by-weblizar-widgets.php:20
 msgid "Display Facebook Page Live Stream & Fans"
 msgstr "फेसबुक पेज लाइव स्ट्रीम और प्रशंसक प्रदर्शित"
 
-#: facebook-by-weblizar.php:170 help-body.php:132
+#: facebook-by-weblizar-widgets.php:148
+msgid "LikeBox"
+msgstr "बॉक्स की तरह"
+
+#: facebook-by-weblizar-widgets.php:152
+msgid "Title:"
+msgstr "शीर्षक:"
+
+#: facebook-by-weblizar-widgets.php:156 help-body.php:153
 msgid "Facebook Page URL"
 msgstr "फेसबुक पेज यूआरएल"
 
-#: facebook-by-weblizar.php:174 help-body.php:138
-msgid "Widget Color Scheme"
-msgstr "विजेट रंग योजना"
-
-#: facebook-by-weblizar.php:181 help-body.php:147
-msgid "Show Widget Header"
-msgstr "विजेट हैडर दिखाएँ "
-
-#: facebook-by-weblizar.php:188 help-body.php:156
+#: facebook-by-weblizar-widgets.php:160 help-body.php:159
 msgid "Show Faces"
 msgstr "चेहरे दिखाएँ"
 
-#: facebook-by-weblizar.php:195 help-body.php:165
+#: facebook-by-weblizar-widgets.php:167 help-body.php:168
 msgid "Show Live Stream"
 msgstr "लाइव स्ट्रीम दिखाएँ"
 
-#: facebook-by-weblizar.php:202 help-body.php:174
+#: facebook-by-weblizar-widgets.php:174 help-body.php:177
 msgid "Widget Width"
 msgstr "विजेट चौड़ाई"
 
-#: facebook-by-weblizar.php:206 help-body.php:180
+#: facebook-by-weblizar-widgets.php:178 help-body.php:183
 msgid "Widget Height"
 msgstr "विजेट लंबाई"
 
-#: facebook-by-weblizar.php:210 help-body.php:186
+#: facebook-by-weblizar-widgets.php:182 help-body.php:189
 msgid "Facebook App ID"
 msgstr "फेसबुक एप्लिकेशन आईडी"
 
-#: facebook-by-weblizar.php:210 help-body.php:186
+#: facebook-by-weblizar-widgets.php:182 help-body.php:189
 msgid "Required"
 msgstr "आवश्यक"
 
-#: facebook-by-weblizar.php:212
+#: facebook-by-weblizar-widgets.php:184
 msgid "Get Your Facebook App. Id"
 msgstr "आपका फेसबुक एप्लिकेशन प्राप्त करें"
 
-#: help-body.php:75
-msgid "Shortcode Settings"
-msgstr "लघु कोड सेटिंग्स"
+#: facebook-by-weblizar-widgets.php:184 help-body.php:191
+msgid "HERE"
+msgstr "यहाँ जायें"
 
-#: help-body.php:140
-msgid "Light Color Theme"
-msgstr "हल्के रंग थीम"
+#: facebook-by-weblizar-widgets.php:189
+msgid "Rate Us on "
+msgstr "हमें रेट करें"
 
-#: help-body.php:141
-msgid "Dark Color Theme"
-msgstr "काले रंग की थीम"
+#: facebook-feed.php:8
+msgid "Success!"
+msgstr "सफलता!"
 
-#: help-body.php:149 help-body.php:158 help-body.php:167
+#: facebook-feed.php:8
+msgid "Data Save Successfully."
+msgstr "सेवा सफलतापूर्वक नवीनतम कर दी गई है"
+
+#: facebook-feed.php:16
+msgid "\" Facebook Feed  \" Coming Soon"
+msgstr "\"फेसबुक फ़ीड\" जल्द ही आ रहा है"
+
+#: facebook-feed.php:22
+msgid "Here"
+msgstr "यहाँ"
+
+#: facebook-feed.php:23
+#, fuzzy
+#| msgid "Click Here"
+msgid " Click here"
+msgstr "यहाँ क्लिक करें"
+
+#: facebook-feed.php:31
+msgid "Feed Settings"
+msgstr "फीड सेटिंग"
+
+#: facebook-feed.php:37
+msgid "Choose page,group or profile:"
+msgstr "पृष्ठ, समूह या प्रोफ़ाइल चुनें:"
+
+#: facebook-feed.php:41
+msgid "Page"
+msgstr "पृष्ठ"
+
+#: facebook-feed.php:42
+#, fuzzy
+#| msgid "Group Name"
+msgid "Group"
+msgstr "समूह का नाम"
+
+#: facebook-feed.php:43
+#, fuzzy
+#| msgid "Business Profile"
+msgid "Profile"
+msgstr "व्यापार रूपरेखा"
+
+#: facebook-feed.php:50
+msgid "Page url:"
+msgstr "यूआरएल पृष्ठ:"
+
+#: facebook-feed.php:58
+#, fuzzy
+#| msgid "Group Name"
+msgid "Group id:"
+msgstr "समूह का नाम"
+
+#: facebook-feed.php:62
+msgid "Acess Token:"
+msgstr "एक्सेस टोकन:"
+
+#: facebook-feed.php:70
+#, fuzzy
+#| msgid "Appointment Date"
+msgid "Content type:"
+msgstr "नियुक्ति की तारीख"
+
+#: facebook-feed.php:73
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timeline"
+msgstr "समय क्षेत्र"
+
+#: facebook-feed.php:75
+msgid "Specific"
+msgstr "विशिष्ट"
+
+#: facebook-feed.php:80
+msgid "Show posts by:"
+msgstr "द्वारा पोस्ट दिखाएं:"
+
+#: facebook-feed.php:83
+msgid "Owner"
+msgstr "मालिक"
+
+#: facebook-feed.php:84
+msgid "Owner and other"
+msgstr "मालिक और अन्य"
+
+#: facebook-feed.php:90
+msgid "Post type:"
+msgstr "पद प्रकार:"
+
+#: facebook-feed.php:95
+#, fuzzy
+#| msgid "Status"
+msgid "Statuses"
+msgstr "अवस्था"
+
+#: facebook-feed.php:99 facebook-feed.php:123
+msgid "Photos"
+msgstr "तस्वीरें"
+
+#: facebook-feed.php:103 facebook-feed.php:126
+msgid "Videos"
+msgstr "वीडियो"
+
+#: facebook-feed.php:107
+msgid "Links"
+msgstr "लिंक"
+
+#: facebook-feed.php:111 facebook-feed.php:132
+msgid "Events"
+msgstr "आयोजन"
+
+#: facebook-feed.php:119
+msgid "Use page s:"
+msgstr "पृष्ठ का उपयोग करें:"
+
+#: facebook-feed.php:129
+msgid "Albums"
+msgstr "एल्बम"
+
+#: facebook-feed.php:144
+msgid "Layout"
+msgstr "ख़ाका"
+
+#: facebook-feed.php:148
+msgid "One Column"
+msgstr "एक कॉलम"
+
+#: facebook-feed.php:149
+msgid "Two Column"
+msgstr "दो स्तंभ"
+
+#: facebook-feed.php:150
+msgid "Three Column"
+msgstr "तीन स्तंभ"
+
+#: facebook-feed.php:151
+msgid "Four Column"
+msgstr "चार स्तंभ"
+
+#: facebook-feed.php:152
+msgid "Six Column"
+msgstr "छह स्तंभ"
+
+#: facebook-feed.php:155
+msgid "Choose a column layout."
+msgstr "एक स्तंभ लेआउट चुनें।"
+
+#: facebook-feed.php:167
+msgid "hover Effect"
+msgstr "मंडराना प्रभाव"
+
+#: facebook-feed.php:171
+msgid "Image top Move"
+msgstr "छवि शीर्ष स्थानांतरित करें"
+
+#: facebook-feed.php:172
+msgid "Image bottom Move"
+msgstr "छवि तल हटो"
+
+#: facebook-feed.php:173
+msgid "Image left Move"
+msgstr "छवि बाएँ हटो"
+
+#: facebook-feed.php:174
+msgid "Image right Move"
+msgstr "इमेज राइट मूव"
+
+#: facebook-feed.php:177
+msgid "Image hange up"
+msgstr "छवि हंगेर अप"
+
+#: facebook-feed.php:178
+msgid "Image hange down"
+msgstr "छवि हेंगे नीचे"
+
+#: facebook-feed.php:179
+msgid "Image hange right"
+msgstr "छवि हंगेर सही"
+
+#: facebook-feed.php:180
+msgid "Image hange left"
+msgstr "छवि हेंगे छोड़ दिया"
+
+#: facebook-feed.php:183
+msgid "Image flip horizontal"
+msgstr "छवि फ्लिप क्षैतिज"
+
+#: facebook-feed.php:184
+msgid "Image flip vertical"
+msgstr "चित्र ऊर्ध्वाधर फ्लिप"
+
+#: facebook-feed.php:185
+msgid "Image flip diag-1"
+msgstr "छवि फ्लिप डायग -1"
+
+#: facebook-feed.php:186
+msgid "Image flip diag-2"
+msgstr "छवि फ्लिप डायग -2"
+
+#: facebook-feed.php:190
+msgid "Image fold up"
+msgstr "छवि ऊपर गुना"
+
+#: facebook-feed.php:191
+msgid "Image fold down"
+msgstr "छवि नीचे गुना"
+
+#: facebook-feed.php:192
+msgid "Image fold right"
+msgstr "छवि गुना सही"
+
+#: facebook-feed.php:193
+msgid "Image fold left"
+msgstr "छवि गुना छोड़ दिया"
+
+#: facebook-feed.php:196
+msgid "Image zoom-out"
+msgstr "छवि ज़ूम-आउट"
+
+#: facebook-feed.php:197
+msgid "Image zoom-out-up"
+msgstr "छवि ज़ूम आउट-अप"
+
+#: facebook-feed.php:198
+msgid "Image zoom-down"
+msgstr "छवि ज़ूम-डाउन"
+
+#: facebook-feed.php:199
+msgid "Image zoom-out-left"
+msgstr "छवि ज़ूम-आउट-बाएं"
+
+#: facebook-feed.php:200
+msgid "Image zoom-out-right"
+msgstr "छवि ज़ूम-आउट-दाएं"
+
+#: facebook-feed.php:201
+msgid "Image zoom-out-flip-horizontal"
+msgstr "छवि ज़ूम-आउट-फ्लिप-क्षैतिज"
+
+#: facebook-feed.php:202
+msgid "Image zoom-out-flip-vertical"
+msgstr "छवि ज़ूम-आउट- फ्लिप-लंबवत"
+
+#: facebook-feed.php:206
+msgid "Slide effect left"
+msgstr "स्लाइड प्रभाव छोड़ दिया"
+
+#: facebook-feed.php:207
+msgid "Slide effect right"
+msgstr "स्लाइड प्रभाव सही"
+
+#: facebook-feed.php:208
+msgid "Slide effect bottom left"
+msgstr "स्लाइड प्रभाव नीचे बायां"
+
+#: facebook-feed.php:209
+msgid "Slide effect bottom right"
+msgstr "स्लाइड प्रभाव नीचे सही"
+
+#: facebook-feed.php:210
+msgid "Slide effect circle right"
+msgstr "स्लाइड प्रभाव सर्कल सही"
+
+#: facebook-feed.php:211
+msgid "Slide effect circle left"
+msgstr "स्लाइड प्रभाव सर्कल छोड़ दिया"
+
+#: facebook-feed.php:214
+msgid "Outline-border"
+msgstr "रूपरेखा सीमा"
+
+#: facebook-feed.php:215
+msgid "dotted-border"
+msgstr "बिंदीदार सीमा"
+
+#: facebook-feed.php:222
+msgid "hover color"
+msgstr "हॉवर रंग"
+
+#: facebook-feed.php:230
+msgid "Number of posts:"
+msgstr "पदो कि संख्या:"
+
+#: facebook-feed.php:235
+#, fuzzy
+#| msgid "Loading Staff..."
+msgid "Loading effect:"
+msgstr "कर्मचारी लोड हो रहें हैं ..."
+
+#: facebook-feed.php:239
+msgid "None"
+msgstr "नहीं"
+
+#: facebook-feed.php:241
+msgid "bounce"
+msgstr "उछाल"
+
+#: facebook-feed.php:242
+msgid "flash"
+msgstr "फ़्लैश"
+
+#: facebook-feed.php:243
+msgid "pulse"
+msgstr "नाड़ी"
+
+#: facebook-feed.php:244
+msgid "rubberBand"
+msgstr "रबर बैंड"
+
+#: facebook-feed.php:245
+msgid "shake"
+msgstr "हिलाना"
+
+#: facebook-feed.php:246
+msgid "swing"
+msgstr "झूला"
+
+#: facebook-feed.php:247
+msgid "tada"
+msgstr "तो"
+
+#: facebook-feed.php:248
+msgid "wobble"
+msgstr "लडखडाना"
+
+#: facebook-feed.php:249
+msgid "jello"
+msgstr "जेलो"
+
+#: facebook-feed.php:253
+msgid "bounceIn"
+msgstr "उछाल में"
+
+#: facebook-feed.php:254
+msgid "bounceInDown"
+msgstr "उछाल नीचे"
+
+#: facebook-feed.php:255
+msgid "bounceInLeft"
+msgstr "उछाल बाएं"
+
+#: facebook-feed.php:256
+msgid "bounceInRight"
+msgstr "बाउंस में सही"
+
+#: facebook-feed.php:257
+msgid "bounceInUp"
+msgstr "उछाल में ऊपर"
+
+#: facebook-feed.php:261
+msgid "bounceOut"
+msgstr "बाउंस आउट"
+
+#: facebook-feed.php:262
+msgid "bounceOutDown"
+msgstr "बाउंस आउट डाउन"
+
+#: facebook-feed.php:263
+msgid "bounceOutLeft"
+msgstr "बाउंस आउट बाएं"
+
+#: facebook-feed.php:264
+msgid "bounceOutRight"
+msgstr "बाउंस आउट राइट"
+
+#: facebook-feed.php:265
+msgid "bounceOutUp"
+msgstr "बाउंस आउटअप"
+
+#: facebook-feed.php:269
+msgid "fadeIn"
+msgstr "में फीका"
+
+#: facebook-feed.php:270
+msgid "fadeInDown"
+msgstr "फीका इनडाउन"
+
+#: facebook-feed.php:271
+msgid "fadeInDownBig"
+msgstr "नीचे बिग में फीका"
+
+#: facebook-feed.php:272
+msgid "fadeInLeft"
+msgstr "फीका इनलाइन"
+
+#: facebook-feed.php:273
+msgid "fadeInLeftBig"
+msgstr "फीका इनफ़ेल्ट बिग"
+
+#: facebook-feed.php:274
+msgid "fadeInRight"
+msgstr "फीका इनराइट"
+
+#: facebook-feed.php:275
+msgid "fadeInRightBig"
+msgstr "फीडइन राइटबिग"
+
+#: facebook-feed.php:276
+msgid "fadeInUp"
+msgstr "फीडइन अप"
+
+#: facebook-feed.php:277
+msgid "fadeInUpBig"
+msgstr "फीडइन अपबिग"
+
+#: facebook-feed.php:281
+msgid "fadeOut"
+msgstr "फेड आउट"
+
+#: facebook-feed.php:282
+msgid "fadeOutDown"
+msgstr "फीका आउटडाऊन"
+
+#: facebook-feed.php:283
+msgid "fadeOutDownBig"
+msgstr "फीका आउटडाउनबाग"
+
+#: facebook-feed.php:284
+msgid "fadeOutLeft"
+msgstr "फीका आउटफ़ाईट"
+
+#: facebook-feed.php:285
+msgid "fadeOutLeftBig"
+msgstr "फीका आउट-लेफ्टबॉल"
+
+#: facebook-feed.php:286
+msgid "fadeOutRight"
+msgstr "फीका आउटराइट"
+
+#: facebook-feed.php:287
+msgid "fadeOutRightBig"
+msgstr "फीका आउटग्रेड"
+
+#: facebook-feed.php:288
+msgid "fadeOutUp"
+msgstr "फीका आउट आउट"
+
+#: facebook-feed.php:289
+msgid "fadeOutUpBig"
+msgstr "फीका आउटअपबिग"
+
+#: facebook-feed.php:293
+msgid "flip"
+msgstr "फ्लिप"
+
+#: facebook-feed.php:294
+msgid "flipInX"
+msgstr "flip In X"
+
+#: facebook-feed.php:295
+msgid "flipInY"
+msgstr "flip In Y"
+
+#: facebook-feed.php:296
+msgid "flipOutX"
+msgstr "पागल हो जाना"
+
+#: facebook-feed.php:297
+msgid "flipOutY"
+msgstr "पागल हो जाना"
+
+#: facebook-feed.php:301
+msgid "lightSpeedIn"
+msgstr "प्रकाश गति में"
+
+#: facebook-feed.php:302
+msgid "lightSpeedOut"
+msgstr "प्रकाश स्पीडऑट"
+
+#: facebook-feed.php:306
+msgid "rotateIn"
+msgstr "घुमाएंगे में"
+
+#: facebook-feed.php:307
+msgid "rotateInDownLeft"
+msgstr "नीचे की ओर घुमाएं"
+
+#: facebook-feed.php:308
+msgid "rotateInDownRight"
+msgstr "नीचे में राइट बारी बारी से"
+
+#: facebook-feed.php:309
+msgid "rotateInUpLeft"
+msgstr "ऊपर की तरफ घुमाएं"
+
+#: facebook-feed.php:310
+msgid "rotateInUpRight"
+msgstr "रोटेट इन अप राइट"
+
+#: facebook-feed.php:314
+msgid "rotateOut"
+msgstr "घुमाएंगे आउट"
+
+#: facebook-feed.php:315
+msgid "rotateOutDownLeft"
+msgstr "आउटडाउन-लेफ्ट घुमाएँ"
+
+#: facebook-feed.php:316
+msgid "rotateOutDownRight"
+msgstr "घुमाएंगे आउटडाउन राइट"
+
+#: facebook-feed.php:317
+msgid "rotateOutUpLeft"
+msgstr "आउटपुट लिफ्ट को घुमाएं"
+
+#: facebook-feed.php:318
+msgid "rotateOutUpRight"
+msgstr "आउटवेयर को घुमाएं"
+
+#: facebook-feed.php:322
+msgid "slideInUp"
+msgstr "स्लाइड इन-अप"
+
+#: facebook-feed.php:323
+msgid "slideInDown"
+msgstr "स्लाइड डाउन में"
+
+#: facebook-feed.php:324
+msgid "slideInLeft"
+msgstr "बाएं में स्लाइड"
+
+#: facebook-feed.php:325
+msgid "slideInRight"
+msgstr "इनराइट स्लाइड"
+
+#: facebook-feed.php:329
+msgid "slideOutUp"
+msgstr "स्लाइड आउट आउट"
+
+#: facebook-feed.php:330
+msgid "slideOutDown"
+msgstr "स्लाइड आउटडाउन"
+
+#: facebook-feed.php:331
+msgid "slideOutLeft"
+msgstr "स्लाइड आउटलेफ़्ट"
+
+#: facebook-feed.php:332
+#, fuzzy
+#| msgid "Widget Height"
+msgid "slideOutRight"
+msgstr "विजेट लंबाई"
+
+#: facebook-feed.php:337
+msgid "zoomIn"
+msgstr "ज़ूम इन"
+
+#: facebook-feed.php:338
+msgid "zoomInDown"
+msgstr "ज़ूम इन डाउन"
+
+#: facebook-feed.php:339
+msgid "zoomInLeft"
+msgstr "ज़ूम इन-लेट"
+
+#: facebook-feed.php:340
+msgid "zoomInRight"
+msgstr "ज़ूम इनराइट"
+
+#: facebook-feed.php:341
+msgid "zoomInUp"
+msgstr "ज़ूम इन अप करें"
+
+#: facebook-feed.php:345
+msgid "zoomOut"
+msgstr "ज़ूम आउट"
+
+#: facebook-feed.php:346
+msgid "zoomOutDown"
+msgstr "ज़ूम आउटडाउन"
+
+#: facebook-feed.php:347
+msgid "zoomOutLeft"
+msgstr "ज़ूम आउट-लेफ्ट"
+
+#: facebook-feed.php:348
+msgid "zoomOutRight"
+msgstr "आउटपुट ज़ूम करें"
+
+#: facebook-feed.php:349
+msgid "zoomOutUp"
+msgstr "आउट आउट ज़ूम करें"
+
+#: facebook-feed.php:353
+msgid "hinge"
+msgstr "काज"
+
+#: facebook-feed.php:354
+msgid "rollIn"
+msgstr "रोलिंग"
+
+#: facebook-feed.php:355
+msgid "rollOut"
+msgstr "रोल आउट"
+
+#: facebook-feed.php:363
+#, fuzzy
+#| msgid "Show Widget Header"
+msgid "Show Header:"
+msgstr "विजेट हैडर दिखाएँ "
+
+#: facebook-feed.php:370
+#, fuzzy
+#| msgid "Select any group."
+msgid "Select layout:"
+msgstr "कोई समूह चुनें"
+
+#: facebook-feed.php:375
+msgid "Full-width"
+msgstr "पूर्ण चौड़ाई"
+
+#: facebook-feed.php:376
+msgid "Half-width"
+msgstr "आधी चौड़ाई"
+
+#: facebook-feed.php:377
+msgid "Thumbnail"
+msgstr "थंबनेल"
+
+#: facebook-feed.php:384 facebook-feed.php:402
+msgid "Light Box Styles"
+msgstr "लाइट बॉक्स शैलियाँ"
+
+#: facebook-feed.php:389
+msgid "Photo Box"
+msgstr "फोटो बॉक्स"
+
+#: facebook-feed.php:390 facebook-feed.php:408
+msgid "Pretty Photo"
+msgstr "\\सुंदर तस्वीर"
+
+#: facebook-feed.php:391 facebook-feed.php:413
+msgid "Fancy Box"
+msgstr "फैंसी बॉक्स"
+
+#: facebook-feed.php:392
+msgid "Magnific Box "
+msgstr "शानदार बॉक्स"
+
+#: facebook-feed.php:393
+msgid "Nivo"
+msgstr "स्तर"
+
+#: facebook-feed.php:394 facebook-feed.php:416
+msgid "Custom Box"
+msgstr "कस्टम बॉक्स"
+
+#: facebook-feed.php:397 facebook-feed.php:419
+msgid "Choose a image preview light box style."
+msgstr "एक छवि पूर्वावलोकन प्रकाश बॉक्स शैली चुनें।"
+
+#: facebook-feed.php:407
+msgid "Photo Box "
+msgstr "फोटो बॉक्स"
+
+#: facebook-feed.php:409
+msgid "Window Box"
+msgstr "विंडो बॉक्स"
+
+#: facebook-feed.php:410
+msgid "Smoodiv Box"
+msgstr "एसमुदिव बॉक्स"
+
+#: facebook-feed.php:411
+msgid "Swipe Box"
+msgstr "स्वाइप बॉक्स"
+
+#: facebook-feed.php:412
+msgid "Ion Box"
+msgstr "आयन बॉक्स"
+
+#: facebook-feed.php:414
+msgid "Magnific Box"
+msgstr "शानदार बॉक्स"
+
+#: facebook-feed.php:432
+msgid "Timeline / Posts Options"
+msgstr "समयरेखा / पोस्ट विकल्प"
+
+#: facebook-feed.php:434
+msgid "Post-background-color"
+msgstr "पोस्ट-पृष्ठभूमि रंग"
+
+#: facebook-feed.php:440
+msgid "Post-font-color "
+msgstr "पोस्ट लिपि का रंग"
+
+#: facebook-feed.php:446
+msgid "Post-font-size"
+msgstr "पोस्ट फ़ॉन्ट आकार"
+
+#: facebook-feed.php:452
+msgid "Show post author image:"
+msgstr "पोस्ट लेखक की छवि दिखाएं:"
+
+#: facebook-feed.php:455 facebook-feed.php:462 facebook-feed.php:469 facebook-feed.php:476
+#: facebook-feed.php:483 facebook-feed.php:490 facebook-feed.php:498 facebook-feed.php:506
+#: facebook-feed.php:541 facebook-feed.php:549 facebook-feed.php:557 facebook-feed.php:565
+#: facebook-feed.php:573 facebook-feed.php:581 facebook-feed.php:589 facebook-feed.php:597
+#: facebook-feed.php:611 facebook-feed.php:619 facebook-feed.php:628 facebook-feed.php:636
+#: facebook-feed.php:644 facebook-feed.php:652 help-body.php:161 help-body.php:170
 msgid "Yes"
 msgstr "हाँ"
 
-#: help-body.php:150 help-body.php:159 help-body.php:168
+#: facebook-feed.php:459
+msgid "Show post author name:"
+msgstr "पोस्ट लेखक का नाम दिखाएं:"
+
+#: facebook-feed.php:466
+msgid "Show post date:"
+msgstr "पोस्ट की तारीख दिखाएं:"
+
+#: facebook-feed.php:473
+msgid "Show comments author name:"
+msgstr "टिप्पणियाँ लेखक का नाम दिखाएँ:"
+
+#: facebook-feed.php:480
+msgid "Show comments author image:"
+msgstr "टिप्पणियाँ लेखक छवि दिखाएं:"
+
+#: facebook-feed.php:488
+msgid "Show comments message(description):"
+msgstr "टिप्पणी संदेश (विवरण) दिखाएं"
+
+#: facebook-feed.php:496
+msgid "Show comments reply count:"
+msgstr "टिप्पणियों का उत्तर दिखाएं:"
+
+#: facebook-feed.php:504
+#, fuzzy
+#| msgid "Show Faces"
+msgid "Show likes:"
+msgstr "चेहरे दिखाएँ"
+
+#: facebook-feed.php:518
+msgid "Event Options"
+msgstr "ईवेंट विकल्प"
+
+#: facebook-feed.php:520
+msgid "Event background-color"
+msgstr "इवेंट पृष्ठभूमि-रंग"
+
+#: facebook-feed.php:526
+msgid "Event font-color"
+msgstr "इवेंट फ़ॉन्ट-रंग"
+
+#: facebook-feed.php:532
+msgid "Event font-size"
+msgstr "इवेंट फ़ॉन्ट-आकार"
+
+#: facebook-feed.php:539
+msgid "Show event image:"
+msgstr "ईवेंट छवि दिखाएं:"
+
+#: facebook-feed.php:547
+#, fuzzy
+#| msgid "Show Live Stream"
+msgid "Show event title:"
+msgstr "लाइव स्ट्रीम दिखाएँ"
+
+#: facebook-feed.php:555
+#, fuzzy
+#| msgid "Show Live Stream"
+msgid "Show event date:"
+msgstr "लाइव स्ट्रीम दिखाएँ"
+
+#: facebook-feed.php:563
+msgid "Show event place:"
+msgstr "ईवेंट स्थान दिखाएं:"
+
+#: facebook-feed.php:571
+msgid "Show event interested:"
+msgstr "रुचि रखने वाली घटना दिखाएँ:"
+
+#: facebook-feed.php:579
+msgid "Show event going:"
+msgstr "ईवेंट को दिखाएं:"
+
+#: facebook-feed.php:587
+msgid "Show event Buy ticket:"
+msgstr "ईवेंट खरीदें टिकट दिखाएं:"
+
+#: facebook-feed.php:595
+#, fuzzy
+#| msgid "Service Description"
+msgid "Show event description:"
+msgstr "सेवा विवरण"
+
+#: facebook-feed.php:606
+msgid "Social Sharing Options"
+msgstr "सामाजिक साझा विकल्प"
+
+#: facebook-feed.php:609
+msgid "Show share buttons:"
+msgstr "शेयर बटन दिखाएं:"
+
+#: facebook-feed.php:617
+msgid "Show Facebook button:"
+msgstr "फेसबुक बटन दिखाएं:"
+
+#: facebook-feed.php:626
+msgid "Show Twitter button:"
+msgstr "ट्विटर बटन दिखाएं:"
+
+#: facebook-feed.php:634
+msgid "Show Google+ button:"
+msgstr "गूगल+ बटन दिखाएं:"
+
+#: facebook-feed.php:642
+msgid "Show Linkedin button:"
+msgstr "लिंक्डइन बटन दिखाएं:"
+
+#: facebook-feed.php:650
+msgid "Show View on Facebook:"
+msgstr "फेसबुक पर दिखाना देखें"
+
+#: facebook-feed.php:666
+msgid "Image Onclick:"
+msgstr "छवि ऑनक्लिक:"
+
+#: facebook-feed.php:668
+msgid "Open Lightbox"
+msgstr "ओपन लाइटबॉक्स"
+
+#: facebook-feed.php:669
+msgid "Redirect To Facebook"
+msgstr "फेसबुक पर रीडायरेक्ट"
+
+#: facebook-feed.php:670
+msgid "Do Nothing"
+msgstr "कुछ मत करो"
+
+#: facebook-feed.php:674
+msgid "Google font:"
+msgstr "गूगल फ़ॉन्ट:"
+
+#: facebook-feed.php:1230
+msgid "Save"
+msgstr "बनायें"
+
+#: facebook-feed.php:1233
+msgid "Plugin Shortcode"
+msgstr "प्लगइन शोर्ट"
+
+#: facebook-feed.php:1234
+msgid "copy this shortcode"
+msgstr "इस शोर्ट को कॉपी करें"
+
+#: facebook-feed.php:1234
+msgid "to any page, post or widget where you want to showcase your Facebook feed."
+msgstr "किसी भी पृष्ठ, पोस्ट या विजेट पर जहां आप अपने फेसबुक फ़ीड को प्रदर्शित करना चाहते हैं"
+
+#: help-body.php:101
+msgid "Shortcode Settings"
+msgstr "लघु कोड सेटिंग्स"
+
+#: help-body.php:162 help-body.php:171
 msgid "No"
 msgstr "नहीं"
 
-#: help-body.php:188
+#: help-body.php:191
 msgid "Get Your Own Facebook APP Id"
 msgstr "अपनी खुद फेसबुक एपीपी आईडी प्राप्त करें"
 
-#: help-body.php:198
-msgid ""
-"Settings successfully saved. Reloading page for generating preview below."
-msgstr ""
-"सेटिंग्स सफलतापूर्वक बना दी गई है। नीचे पूर्वावलोकन पैदा करने के लिए पेज को पुन: लोड किया "
-"जा रहा है।"
+#: help-body.php:196
+msgid "SAVE"
+msgstr "बचाना"
 
-#: help-body.php:206
+#: help-body.php:201
+msgid "Settings successfully saved. Reloading page for generating preview below."
+msgstr "सेटिंग्स सफलतापूर्वक बना दी गई है। नीचे पूर्वावलोकन पैदा करने के लिए पेज को पुन: लोड किया जा रहा है।"
+
+#: help-body.php:209
 msgid "Preview"
 msgstr "पूर्वावलोकन"
+
+#: help-body.php:289
+#, php-format
+msgid "%s rating"
+msgstr "रेटिंग"
+
+#: help-body.php:308
+msgid "Get More Free Wordpress Plguins From Weblizar"
+msgstr "वेबलिज़र से अधिक नि: शुल्क वर्डप्रेस प्लगइन्स प्राप्त करें"
+
+#: help-body.php:357
+#, fuzzy
+#| msgid "Details"
+msgid "More Details"
+msgstr "विवरण"
+
+#: help-body.php:368
+msgid "Install Now"
+msgstr "अभी स्थापित करें"
+
+#: help-body.php:375
+msgid "Update Now"
+msgstr "अभी अद्यतन करें"
+
+#: help-body.php:402
+msgid "By "
+msgstr "द्वारा"
+
+#: help-body.php:416
+msgid "Last Updated:"
+msgstr "आखरी अपडेट"
+
+#: help-body.php:427
+msgid "Untested with your version of WordPress"
+msgstr "वर्डप्रेस के आपके संस्करण के साथ अनचेस्टर"
+
+#: help-body.php:431
+msgid "Incompatible with your version of WordPress"
+msgstr "वर्डप्रेस के आपके संस्करण के साथ असंगत"
+
+#: help-body.php:435
+msgid "Compatible with your version of WordPress"
+msgstr "वर्डप्रेस के आपके संस्करण के साथ संगत"
+
+#: help-body.php:475
+msgid "Facebook Like Box Help Section"
+msgstr "फेसबुक की तरह बॉक्स सहायता अनुभाग"
+
+#: help-body.php:477
+msgid "Facebook By Weblizar plugin comes with 2 functionality"
+msgstr "वेबलिज़र प्लगइन द्वारा फेसबुक 2 कार्यक्षमता के साथ आता है"
+
+#: help-body.php:479 help-body.php:483
+msgid "Facebook Like Box Widget"
+msgstr "फेसबुक की तरह बॉक्स विजेट"
+
+#: help-body.php:480 help-body.php:489
+msgid "Facebook Like Box Shoertcode"
+msgstr "फेसबुक की तरह बॉक्स शूटरकोड"
+
+#: help-body.php:485
+msgid "You can use the widget to display your Facebook Like Box in any theme Widget Sections"
+msgstr ""
+"आप किसी भी थीम विजेट अनुभाग में अपने फेसबुक की तरह बॉक्स प्रदर्शित करने के लिए विजेट का उपयोग कर सकते हैं"
+
+#: help-body.php:486
+msgid "Simple go to your"
+msgstr "सरल अपने जाओ"
+
+#: help-body.php:486
+msgid "Widgets"
+msgstr "विजेट"
+
+#: help-body.php:486
+msgid "section and activate available"
+msgstr "अनुभाग और उपलब्ध सक्रिय करें"
+
+#: help-body.php:486
+msgid "Facebook By Weblizar"
+msgstr "वेबलिज़र द्वारा फेसबुक"
+
+#: help-body.php:486
+msgid "widget in any sidebar section, like in left sidebar, right sidebar or footer sidebar"
+msgstr "किसी भी साइडबार अनुभाग में विजेट, जैसे बाएं साइडबार, सही साइडबार या पाद लेख साइडबार में"
+
+#: help-body.php:491
+msgid "shortcode give ability to display Facebook Like Box in any Page / Post with content"
+msgstr "शोर्टकोड सामग्री के साथ किसी भी पेज / पोस्ट में फेसबुक की तरह बॉक्स प्रदर्शित करने की क्षमता देते हैं"
+
+#: help-body.php:492
+msgid "To use shortcode, just copy "
+msgstr "शोर्ट का उपयोग करने के लिए, बस कॉपी करें"
+
+#: help-body.php:492
+msgid "shortcode and paste into content editor of any Page / Post"
+msgstr "किसी भी पृष्ठ / पोस्ट के सामग्री संपादक में शोर्ट और पेस्ट करें"
+
+#: help-body.php:495
+#, fuzzy
+#| msgid "Facebook Page URL"
+msgid "What is Facebook Page URL"
+msgstr "फेसबुक पेज यूआरएल"
+
+#: help-body.php:496
+msgid ""
+"is your Facebook page your where you promote your business. Here your customers, clients, "
+"friends, guests can like, share, comment review your POST"
+msgstr ""
+"आपका फेसबुक पेज आपका है जहां आप अपने व्यापार का प्रचार करते हैं यहां आपके ग्राहक, ग्राहक, मित्र, मेहमान आपके "
+"पोस्ट की समीक्षा, साझा, टिप्पणी कर सकते हैं"
+
+#: help-body.php:498
+#, fuzzy
+#| msgid "Facebook App ID"
+msgid "What is Facebook APP ID"
+msgstr "फेसबुक एप्लिकेशन आईडी"
+
+#: help-body.php:499
+#, fuzzy
+#| msgid "Facebook App ID"
+msgid "Facebook Application ID"
+msgstr "फेसबुक एप्लिकेशन आईडी"
+
+#: help-body.php:499
+msgid ""
+" used to authenticate your Facebook Page data & settings. To get your own Facebook APP ID "
+"please read our 4 Steps very simple and easy "
+msgstr ""
+"अपने फेसबुक पेज डेटा और सेटिंग्स को प्रमाणित करने के लिए उपयोग किया जाता है अपनी खुद की फेसबुक एपीपी आईडी "
+"प्राप्त करने के लिए कृपया हमारे 4 कदम बहुत सरल और आसान पढ़ें"
+
+#: help-body.php:499
+msgid " Tutorial"
+msgstr "ट्यूटोरियल"
+
+#: help-body.php:511
+msgid "Weblizar Responsive WordPress Theme"
+msgstr "वेबलिजर उत्तरदायी वर्डप्रेस थीम"
+
+#: help-body.php:512
+msgid "Get The Premium, And Create your website Beautifully"
+msgstr "प्रीमियम प्राप्त करें, और अपनी वेबसाइट खूबसूरती से बनाएं"
+
+#: help-body.php:516
+#, fuzzy
+#| msgid "Get Premium Version"
+msgid "Premium Themes"
+msgstr "प्रीमियम संस्करण प्राप्त करें"
+
+#: help-body.php:536
+#, fuzzy
+#| msgid "Remove Plugin"
+msgid "Premium Plugins"
+msgstr "प्लगइन हटायें"
+
+#: help-body.php:557
+msgid ""
+"Note: More details to click on weblizar Products site link are below given view site button"
+msgstr "नोट: वेबलिज़र पर क्लिक करने के लिए अधिक विवरण उत्पाद साइट लिंक नीचे दी गई साइट देखें बटन है"
+
+#: help-body.php:561
+#, fuzzy
+#| msgid "View Staff"
+msgid "View Site"
+msgstr "कर्मचारी देखें"
+
+#~ msgid "Widget Color Scheme"
+#~ msgstr "विजेट रंग योजना"
+
+#~ msgid "Light Color Theme"
+#~ msgstr "हल्के रंग थीम"
+
+#~ msgid "Dark Color Theme"
+#~ msgstr "काले रंग की थीम"
 
 #~ msgid "Select any time."
 #~ msgstr "कोइ समय चुनें"
 
 #~ msgid ""
-#~ "Thank you for scheduling appointment with us.<br>A confirmation mail will "
-#~ "be forward to you soon after admin approval."
+#~ "Thank you for scheduling appointment with us.<br>A confirmation mail will be forward to "
+#~ "you soon after admin approval."
 #~ msgstr ""
-#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक "
-#~ "अनुमोदन के बाद जल्द ही आपको भेजा जाएगा।"
+#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक अनुमोदन के बाद जल्द "
+#~ "ही आपको भेजा जाएगा।"
 
 #~ msgid "Select any service."
 #~ msgstr "कोइ सेवा चुनें"
@@ -138,14 +1216,11 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "नई नियुक्ति बनायें"
 
 #~ msgid ""
-#~ "Thank you for scheduling appointment with us. A confirmation mail will be "
-#~ "sent to you soon after admin approval."
+#~ "Thank you for scheduling appointment with us. A confirmation mail will be sent to you "
+#~ "soon after admin approval."
 #~ msgstr ""
-#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक "
-#~ "अनुमोदन के बाद जल्द ही आपको भेजा जाएगा।"
-
-#~ msgid "Click Here"
-#~ msgstr "यहाँ क्लिक करें"
+#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक अनुमोदन के बाद जल्द "
+#~ "ही आपको भेजा जाएगा।"
 
 #~ msgid "to book another appointment."
 #~ msgstr "एक और नियुक्ति बुक करने के लिए."
@@ -253,11 +1328,11 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "अमान्य ईमेल"
 
 #~ msgid ""
-#~ "Thank you for scheduling appointment with us. A confirmation mail will be "
-#~ "forward to you soon after admin approval."
+#~ "Thank you for scheduling appointment with us. A confirmation mail will be forward to you "
+#~ "soon after admin approval."
 #~ msgstr ""
-#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक "
-#~ "अनुमोदन के बाद जल्द ही आपको भेजा जाएगा।"
+#~ "हमारे साथ नियुक्ति का समय निर्धारण करने के लिए धन्यवाद। एक संपुष्टि मेल व्यवस्थापक अनुमोदन के बाद जल्द "
+#~ "ही आपको भेजा जाएगा।"
 
 #~ msgid "Sorry! Today's all appointments has been booked."
 #~ msgstr "क्षमा करें! आज सभी नियुक्तियों को बुक किया जा चुका है।"
@@ -277,42 +1352,30 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Notification Settings"
 #~ msgstr "अधिसूचना सेटिंग"
 
-#~ msgid "Remove Plugin"
-#~ msgstr "प्लगइन हटायें"
-
-#~ msgid "Get Premium Version"
-#~ msgstr "प्रीमियम संस्करण प्राप्त करें"
-
 #~ msgid "Help & Support"
 #~ msgstr "मदद और समर्थन"
 
 #~ msgid ""
-#~ "Appointment Calendar Plugin has been successfully removed. It can be re-"
-#~ "activated from the "
-#~ msgstr ""
-#~ "नियुक्ति कैलेंडर प्लगइन सफलतापूर्वक हटा दिया गया है। आप इसे फिर से सक्रिय कर सकते हैं"
-
-#~ msgid "Plugins Page"
-#~ msgstr "प्लगइन पृष्ठ"
+#~ "Appointment Calendar Plugin has been successfully removed. It can be re-activated from "
+#~ "the "
+#~ msgstr "नियुक्ति कैलेंडर प्लगइन सफलतापूर्वक हटा दिया गया है। आप इसे फिर से सक्रिय कर सकते हैं"
 
 #~ msgid "Remove Appointment Calendar Plugin"
 #~ msgstr "नियुक्ति कैलेंडर प्लगइन हटायें।"
 
 #~ msgid ""
-#~ "This operation wiil delete all Appointment Calendar data & settings. If "
-#~ "you continue, You will not be able to retrieve or restore your "
-#~ "appointments entries."
+#~ "This operation wiil delete all Appointment Calendar data & settings. If you continue, "
+#~ "You will not be able to retrieve or restore your appointments entries."
 #~ msgstr ""
-#~ "यह कार्यवाही नियुक्ति कैलेंडर डेटा की नियुक्ति प्रविष्टियों सहित सेटिंग्स, नष्ट कर देगी. "
-#~ "यह पूर्ववत प्राप्त नहीं किया जा सकता है।"
+#~ "यह कार्यवाही नियुक्ति कैलेंडर डेटा की नियुक्ति प्रविष्टियों सहित सेटिंग्स, नष्ट कर देगी. यह पूर्ववत प्राप्त "
+#~ "नहीं किया जा सकता है।"
 
 #~ msgid ""
-#~ "Warning! Appointment Calendar data & settings, including appointment "
-#~ "entries will be deleted. This cannot be undone. OK to delete, CANCEL to "
-#~ "stop"
+#~ "Warning! Appointment Calendar data & settings, including appointment entries will be "
+#~ "deleted. This cannot be undone. OK to delete, CANCEL to stop"
 #~ msgstr ""
-#~ "चेतावनी! नियुक्ति कैलेंडर डेटा और नियुक्ति प्रविष्टियों सहित सेटिंग्स, नष्ट कर दिया "
-#~ "जाएगा. यह पूर्ववत प्राप्त नहीं किया जा सकता है. इसको रोकने के लिए रद्द करें।"
+#~ "चेतावनी! नियुक्ति कैलेंडर डेटा और नियुक्ति प्रविष्टियों सहित सेटिंग्स, नष्ट कर दिया जाएगा. यह पूर्ववत "
+#~ "प्राप्त नहीं किया जा सकता है. इसको रोकने के लिए रद्द करें।"
 
 #~ msgid "REMOVE PLUGIN"
 #~ msgstr "प्लगइन हटायें"
@@ -338,9 +1401,7 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Phone cannot be blank."
 #~ msgstr "फोन खाली नहीं हो सकता"
 
-#~ msgid ""
-#~ "Thank you, appointment has been scheduled. Confirmation mail sent to the "
-#~ "client."
+#~ msgid "Thank you, appointment has been scheduled. Confirmation mail sent to the client."
 #~ msgstr "धन्यवाद! आपकी नियुक्ति निर्धारित की जा चुकी है।"
 
 #~ msgid "Setect Date & Service"
@@ -384,9 +1445,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Time"
 #~ msgstr "समय"
-
-#~ msgid "Status"
-#~ msgstr "अवस्था"
 
 #~ msgid "Action"
 #~ msgstr "कार्रवाई"
@@ -504,9 +1562,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Description"
 #~ msgstr "विवरण"
-
-#~ msgid "Service Description"
-#~ msgstr "सेवा विवरण"
 
 #~ msgid "Duration"
 #~ msgstr "अवधि"
@@ -724,9 +1779,6 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Not Available"
 #~ msgstr "अनुपलब्ध"
 
-#~ msgid "Details"
-#~ msgstr "विवरण"
-
 #~ msgid "WP Email"
 #~ msgstr "WP ईमेल"
 
@@ -735,9 +1787,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Notification settings successfully updated."
 #~ msgstr "अधिसूचना सेटिंग सफलतापूर्वक नवीनतम हो चुकी है।"
-
-#~ msgid "Save"
-#~ msgstr "बनायें"
 
 #~ msgid "Rename Category"
 #~ msgstr "श्रेणी का नाम बदलें"
@@ -838,9 +1887,6 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Repeat Month(s)"
 #~ msgstr "दोहरान महिनें"
 
-#~ msgid "Start Date"
-#~ msgstr "प्रारम्भ दिनांक"
-
 #~ msgid "End Date"
 #~ msgstr "अंतिम दिनांक"
 
@@ -891,9 +1937,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Appointment End Time"
 #~ msgstr "नियुक्ति का अंतिम समय"
-
-#~ msgid "Appointment Date"
-#~ msgstr "नियुक्ति की तारीख"
 
 #~ msgid "Appointment Description"
 #~ msgstr "नियुक्ति विवरण"
@@ -986,36 +2029,32 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "नियुक्त हो चुकी"
 
 #~ msgid ""
-#~ "<strong>Appointment Calendar Lite</strong> is a simple but effective "
-#~ "plugin which enables you to take appointments on your wordpress blog."
+#~ "<strong>Appointment Calendar Lite</strong> is a simple but effective plugin which "
+#~ "enables you to take appointments on your wordpress blog."
 #~ msgstr ""
-#~ "<strong>नियुक्ति कैलेंडर एक सरल लेकिन प्रभावी प्लगइन जो आपको अपने वर्डप्रैस ब्लॉग पर "
-#~ "नियुक्तियों को लेने के लिए सक्षम बनाता है। </strong>"
+#~ "<strong>नियुक्ति कैलेंडर एक सरल लेकिन प्रभावी प्लगइन जो आपको अपने वर्डप्रैस ब्लॉग पर नियुक्तियों को लेने के "
+#~ "लिए सक्षम बनाता है। </strong>"
 
 #~ msgid ""
-#~ "If you are a consultant/doctor/lawyer etc, you can harness the power of "
-#~ "appointment calendar."
+#~ "If you are a consultant/doctor/lawyer etc, you can harness the power of appointment "
+#~ "calendar."
 #~ msgstr ""
-#~ "यदि आप एक परामर्शदाता चिकित्सक, वकील आदि हैं, तो आप नियुक्ति कैलेंडर की शक्ति का "
-#~ "दोहन कर सकते हैं।"
+#~ "यदि आप एक परामर्शदाता चिकित्सक, वकील आदि हैं, तो आप नियुक्ति कैलेंडर की शक्ति का दोहन कर सकते हैं।"
 
 #~ msgid ""
-#~ "Simply unzip and upload appointment-calendar directory to /wp-content/"
-#~ "plugins/ directory and activate the plugin."
+#~ "Simply unzip and upload appointment-calendar directory to /wp-content/plugins/ directory "
+#~ "and activate the plugin."
 #~ msgstr ""
-#~ "बस खोलें और नियुक्ति कैलेंडर प्रीमियम प्लगइन को /wp-content/plugins/ डयरेक्ट्री में "
-#~ "अपलोड करें और प्लगइन को सक्रिय करें।"
+#~ "बस खोलें और नियुक्ति कैलेंडर प्रीमियम प्लगइन को /wp-content/plugins/ डयरेक्ट्री में अपलोड करें और प्लगइन "
+#~ "को सक्रिय करें।"
 
-#~ msgid ""
-#~ "To insert Appointment Calendar into any post or page, use the shortcode:"
-#~ msgstr ""
-#~ "किसी भी पोस्ट या पृष्ठ में नियुक्ति कैलेंडर डालने के लिए इस शोर्टकोड का उपयोग करें:"
+#~ msgid "To insert Appointment Calendar into any post or page, use the shortcode:"
+#~ msgstr "किसी भी पोस्ट या पृष्ठ में नियुक्ति कैलेंडर डालने के लिए इस शोर्टकोड का उपयोग करें:"
 
 #~ msgid "Appointment Calendar shortcode for Mobile Devices:"
 #~ msgstr "मोबाइल उपकरणों के लिए नियुक्ति कैलेंडर शोर्टकोड"
 
-#~ msgid ""
-#~ "That's it, you can now start taking appointments on your wordpress site."
+#~ msgid "That's it, you can now start taking appointments on your wordpress site."
 #~ msgstr "यह ठीक है, अब आप अपने वर्डप्रैस साइट पर नियुक्तियों लेने शुरू कर सकते हैं।"
 
 #~ msgid "<strong>WordPress Forum Support:</strong>"
@@ -1023,9 +2062,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "WordPress Forum Support"
 #~ msgstr "वर्डप्रेस फोरम सहायता"
-
-#~ msgid "HERE"
-#~ msgstr "यहाँ जायें"
 
 #~ msgid "Documentation For Appointment Calendar Plugin"
 #~ msgstr "नियुक्ति कैलेंडर प्लगइन के लिए प्रलेखन"
@@ -1062,9 +2098,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Select Service:"
 #~ msgstr "सेवा चयन करें:"
-
-#~ msgid "Loading Staff..."
-#~ msgstr "कर्मचारी लोड हो रहें हैं ..."
 
 #~ msgid "Select Staff:"
 #~ msgstr "कर्मचारी चयन करें:"
@@ -1191,9 +2224,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Sorry! No Time Available Today."
 #~ msgstr "क्षमा करें! आज कोई समय उपलब्ध नहीं है।"
-
-#~ msgid "None"
-#~ msgstr "नहीं"
 
 #~ msgid "Particular Dates"
 #~ msgstr "विशेष तिथियाँ"
@@ -1351,8 +2381,7 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "कोई नियुक्ति हटाने के लिये नहीं चुना गया।"
 
 #, fuzzy
-#~ msgid ""
-#~ "Service Duration<br>Enter Numeric Value In Multiple Of 5<br>Eg: 15, 30, 60"
+#~ msgid "Service Duration<br>Enter Numeric Value In Multiple Of 5<br>Eg: 15, 30, 60"
 #~ msgstr "अवधि 5 के गुणांक में हो, उदहरण: 5, 10, 15, 20, 25"
 
 #, fuzzy
@@ -1366,15 +2395,11 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "CTRL को दबाकर ज्यादा स्टाफ जोंडे़"
 
 #, fuzzy
-#~ msgid ""
-#~ "Assign Staff(s) To This Service<br>Use CTRL To Select Multiple Staffs"
+#~ msgid "Assign Staff(s) To This Service<br>Use CTRL To Select Multiple Staffs"
 #~ msgstr "CTRL को दबाकर ज्यादा स्टाफ को इस सेवा से जोंडे़"
 
 #~ msgid "New service added successfully."
 #~ msgstr "टाईम आफ हटा दिया गया है।"
-
-#~ msgid "Service updated successfully."
-#~ msgstr "सेवा सफलतापूर्वक नवीनतम कर दी गई है।"
 
 #, fuzzy
 #~ msgid "Capacity cannot be blank."
@@ -1406,9 +2431,6 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Staff Experience(In year)."
 #~ msgstr "कर्मचारी अनुभव (वर्ष में)"
 
-#~ msgid "Group Name"
-#~ msgstr "समूह का नाम"
-
 #~ msgid "Select Staff Group"
 #~ msgstr "कर्मचारी की समूह का चयन करें"
 
@@ -1433,13 +2455,8 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Use CTRL to Select Multiple Service(s)"
 #~ msgstr "CTRL को दबाकर ज्यादा सेवांए जोंडे़"
 
-#~ msgid ""
-#~ "Assign Staff(s) To This Service.&lt;br&gt;Use CTRL To Select Multiple "
-#~ "Staffs"
+#~ msgid "Assign Staff(s) To This Service.&lt;br&gt;Use CTRL To Select Multiple Staffs"
 #~ msgstr "CTRL को दबाकर ज्यादा स्टाफ को इस सेवा से जोंडे़"
-
-#~ msgid "View Staff"
-#~ msgstr "कर्मचारी देखें"
 
 #, fuzzy
 #~ msgid "Year(s)"
@@ -1465,9 +2482,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Invalid  value."
 #~ msgstr "अमान्य तथ्य"
-
-#~ msgid "Select any group."
-#~ msgstr "कोई समूह चुनें"
 
 #~ msgid "Assign any service."
 #~ msgstr "कोई भी सेवा जोंडे़"
@@ -1516,9 +2530,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Settings Panel"
 #~ msgstr "सेटिंग्स पैनल"
-
-#~ msgid "Business Profile"
-#~ msgstr "व्यापार रूपरेखा"
 
 #~ msgid "Business Hours"
 #~ msgstr "व्यापार के घटें"
@@ -1617,11 +2628,8 @@ msgstr "पूर्वावलोकन"
 #~ msgstr "नियुक्ति कैलेंडर प्रीमियम"
 
 #~ msgid ""
-#~ "To insert Appointment Calendar Premium Button into any post or page, use "
-#~ "the shortcode:"
-#~ msgstr ""
-#~ "किसी भी पोस्ट या पृष्ठ में नियुक्ति कैलेंडर प्रीमियम बटन डालने के लिए इस शोर्टकोड का "
-#~ "उपयोग करें:"
+#~ "To insert Appointment Calendar Premium Button into any post or page, use the shortcode:"
+#~ msgstr "किसी भी पोस्ट या पृष्ठ में नियुक्ति कैलेंडर प्रीमियम बटन डालने के लिए इस शोर्टकोड का उपयोग करें:"
 
 #, fuzzy
 #~ msgid "AppointZilla Documentation"
@@ -1708,9 +2716,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Language"
 #~ msgstr "भाषा"
-
-#~ msgid "Time Zone"
-#~ msgstr "समय क्षेत्र"
 
 #~ msgid "Currency"
 #~ msgstr "मुद्रा"
@@ -1808,9 +2813,6 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Business Name"
 #~ msgstr "व्यापार नाम"
 
-#~ msgid "Owner"
-#~ msgstr "मालिक"
-
 #~ msgid "Fax"
 #~ msgstr "फैक्स"
 
@@ -1825,9 +2827,6 @@ msgstr "पूर्वावलोकन"
 
 #~ msgid "Business  Name."
 #~ msgstr "व्यापार नाम"
-
-#~ msgid "Owner Name."
-#~ msgstr "मालिक का नाम"
 
 #~ msgid "Address."
 #~ msgstr "पता"
@@ -2013,11 +3012,8 @@ msgstr "पूर्वावलोकन"
 #~ msgid "Notify Admin On New Appointment Message sucessfully updated."
 #~ msgstr "नई नियुक्ति पर व्यवस्थापक के संदेश को सफलतापूर्वक नवीनतम बना दिया गया है।"
 
-#~ msgid ""
-#~ "Notify Client On Approve/Cancel Appointment Message sucessfully updated."
-#~ msgstr ""
-#~ "नियुक्ति स्वीकार या रद्द करने पर ग्राहक के संदेश को सफलतापूर्वक नवीनतम बना दिया गया "
-#~ "है।"
+#~ msgid "Notify Client On Approve/Cancel Appointment Message sucessfully updated."
+#~ msgstr "नियुक्ति स्वीकार या रद्द करने पर ग्राहक के संदेश को सफलतापूर्वक नवीनतम बना दिया गया है।"
 
 #, fuzzy
 #~ msgid "Payment setting successfully saved"

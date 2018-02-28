@@ -1,19 +1,19 @@
 ﻿=== Carousel Ultimate ===
 Contributors: themepoints
 Donate link:http://themepoints.com
-Tags:  carousel, carousel logo, carousel shortcode, carousel's, client carousel, easy carousel, gallery carousel, image carousel, logo carousel, Nice carousel, post carousel, post slider, responsive carousel, responsive slider, carousel slider, touch carousel, image, gallery, photo carousel, photo gallery, owl carousel, shortcode, carousel images, image carousel , shortcode carousel, wp image slider, wp image carousel, slideshow, header image slider, touch slider, content slider, animation, top logo slider, top logo carousel, WordPress carousel.
+Tags:  carousel, image carousel, carousel shortcode, logo carousel, client carousel, WordPress carousel.
 Requires at least: 3.8
-Tested up to: 4.8
-Stable tag: 1.6
+Tested up to: 4.9.1
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Carousel Ultimate WordPress Plugin allows you to easily create Responsive carousel/slider/post slider/logo showcase/ team etc. Carousel plugin comes with lots of features including advanced Shortcode Generator.
 
 == Description ==
-[Live Demo](http://themepoints.com/carouselpro/) | [Upgrade to PRO](http://themepoints.com/product/carousel-shortcode-pro/) | [Support](hhttps://wordpress.org/support/plugin/carousel)
+[Live Demo](https://themepoints.com/carouselpro/) | [Upgrade to PRO](https://themepoints.com/product/carousel-shortcode-pro/) | [Support](https://wordpress.org/support/plugin/carousel)
 
-Carousel Ultimate WordPress Plugin allows you to easily create Responsive carousel/slider/post slider/logo showcase/ team etc.
+Carousel Ultimate WordPress Plugin allows you to easily create Responsive carousel, slider, post slider, logo showcase, team etc.
 
 You can easily display multiple responsive carousel, slider, team, logo showcase, post slider in a same page or widget's.
 
@@ -26,12 +26,12 @@ Carousel Ultimate plugin 100% responsive and compatible with mobile, tablets, de
 * All Browser support.
 * Touch Supported.
 * Easy Shortcode Generator.
-* 5 Different Carousel/Post Style.
+* 10 Different Carousel/Post Style.
 * Auto play Enable/Disable option.
 * Auto play Stop On Hover option.
 * Enable/Disable Pagination option.
 * Enable/Disable Navigation option.
-* Thumbnail Size Option.
+* Custom Thumbnail Size.
 * Multiple post query.
 * Display Carousel/post By Multiple Category.
 * Unlimited Number of Carousel Items.
@@ -43,9 +43,13 @@ Carousel Ultimate plugin 100% responsive and compatible with mobile, tablets, de
 * Carousel from post with Read More.
 * Enable/Disable Read More Button.
 * Show/Hide Carousel or Post title option.
-* Carousel / Post Title Font Size option.
-* Carousel / Post Title Text Align option.
-* Carousel / Post Title Color option.
+* Carousel Caption font size.
+* Carousel Caption font color option.
+* Carousel text alignment option.
+* Post Title Font Size option.
+* Post Title Font color option.
+* Post Title Text Align option.
+* Post Title Color option.
 * Mobile, Tablet, Desktop touch supported.
 * SEO friendly.
 
@@ -64,19 +68,19 @@ Carousel Ultimate plugin 100% responsive and compatible with mobile, tablets, de
 	<li> Multiple Style in same page.</li>
 	<li> Background Color Option.</li>
 	<li> User friendly option page.</li>
-	<li> 10 different Logo Slider & Post Slider Style .</li>
+	<li> 10 different Image Slider & Post Slider Style .</li>
 	<li> Order By (author,date,title,modified,random).</li>
 	<li> Order(Descending, Ascending).</li>
-	<li> Show/Hide Logo.</li>
-	<li> Custom Logo height Option.</li>
-	<li> Show/Hide Logo Title.</li>
-	<li> Logo Title Color Option.</li>
-	<li> Logo Title Font Size Option.</li>
-	<li> Logo Title Text Align(center,left,right).</li>
-	<li> Show/Hide Logo Description.</li>
-	<li> Logo Description Color Option.</li>
-	<li> Logo Description Font Size Option.</li>
-	<li> Logo Description Text Align (center,left,right).</li>
+	<li> Show/Hide Image.</li>
+	<li> Custom Image height Option.</li>
+	<li> Show/Hide Image Title.</li>
+	<li> Image Title Color Option.</li>
+	<li> Image Title Font Size Option.</li>
+	<li> Image Title Text Align(center,left,right).</li>
+	<li> Show/Hide Image Description.</li>
+	<li> Image Description Color Option.</li>
+	<li> Image Description Font Size Option.</li>
+	<li> Image Description Text Align (center,left,right).</li>
 	<li> Excerpt Length Option.</li>
 	<li> Show/Hide Permalink Option.</li>
 	<li> Show/Hide Tooltip Option.</li>
@@ -84,8 +88,8 @@ Carousel Ultimate plugin 100% responsive and compatible with mobile, tablets, de
 	<li> Tooltip Background Color Option.</li>
 	<li> Tooltip Text Color Option.</li>
 	<li> Tooltip Custom Width Option.</li>
-	<li> Logo Border Color Option.</li>
-	<li> Logo Border Hover Color Option.</li>
+	<li> Image Border Color Option.</li>
+	<li> Image Border Hover Color Option.</li>
 	<li> Autoplay (True/False).</li>
 	<li> Slider Delay Speed.</li>
 	<li> Slider Stop Hover (True/False).</li>
@@ -118,30 +122,73 @@ Carousel Ultimate plugin 100% responsive and compatible with mobile, tablets, de
 
 == Installation ==
 
-<ul>
-	<li> Install as regular WordPress plugin.</li>
-	<li> Inside your Wordpress admin area, go to Plugins at the top you'll see "Add New" click that and the click the link that says "Upload". In the upload box select the carousel.zip file and click upload or you can install it via your WordPress Dashboard go to Plugins then "Add New" search plugins called "carousel" then Install now and active it. After uploading is completed and instalation is done Plugins > Installed Plugins and activate it.</li>
-</ul>
+You can install from within WordPress using the Plugin/Add New feature, or if you wish to manually install:
+
+1. Download the plugin.
+1. Upload the entire `carousel` directory to your plugins folder.
+1. In the WordPress Dashboard under Plugins, activate the plugin.
+
+= Overview =
+
+You add carousels to WordPress, and assign them to carousel categories, so you can easily pull carousel into different sections of the site.  Then use generated shortcodes in your page or post. also you can use this shortcode in a text widget.
+
+= Create a Carousel Categories =
+
+To create a carousel categories, go to *Dashboard > Carousel Free > Add New Image > Carousel categories* and add a new category. you must select at last one categories to display carousel.
+
+For example, if you wanted to have a specific carousel that is shown in the _Gallery_ pages of your site, you might create a categories called _Gallery_ so you can easily identify them in the future and update option page easily.
+
+= Add Carousel =
+
+Adding Carousel is super easy:
+
+1. *Go to Carousel Free > Add New Images* - this will allow you to enter the carousel title, Website URL, Target URL, categories and embed images.
+1. *Carousel Title.
+1. *Carousel URL.
+1. *Set Target URL.
+1. *Assign the Carousel to one or multiple categories.
+1. *Set Carousel Featured Image.
+1. *Publish Carousel.
+
+= Embed a Carousel in a page or post using shortcodes: =
+
+1. *Go to Carousel Free > Generate Shortcode* > Select Post Type _tpmfcarousel_ & categories. now publish Shortcode.
+It's super easy no need to required any coding skill. just copy shortcode and paste post , page or widgets section in your website.
+
+`[carousel_composer id="39"]` 
+
+
+= Shortcode Examples =
+
+your shortcode might look like:
+
+`[carousel_composer id="39"]`
+
+
+= Embed a Carousel directly in your theme template =
+
+You can drop the following WordPress function in your template files.
+
+`<?php echo do_shortcode("[carousel_composer id='39']"); ?>`
+
+= Display Post in Carousel =
+
+1. *Go to Carousel Free > Generate Shortcode* > Select Post Type _post_ & select post categories. now publish Shortcode. copy the shortcode and paste it into your post, page or widgets section.
+
+
+
+
 
 == Frequently Asked Questions ==
+
+
+= Where are the instructions? =
+
+Check the plugin's [Installation tab](https://wordpress.org/plugins/carousel/installation).
+
+= Support =
+
 Do you have questions or issues with Carousel? [Ask for support here](https://wordpress.org/support/plugin/carousel)
-
-= Activation = 
-
-Once the Carousels folder has been uploaded, you can activate the plugin. Go to your WordPress admin panel and select the ‘Plugins’ menu option. You should see a new plugin listed, Carousel Ultimate. Click Activate to activate the plugin.
-
-= Using the Plugin =
-
-Once the plugin has been activated, a new menu called Carousel Free will appear in menu section. There are Five menu options: ‘Carousel Free’, ‘Add New’, ‘categories’, ‘All Shortcode’, ‘Generate Shortcode’.
-
-
-= How to create a Carousel/Slider ? =
-
-If you know how to add a post or a page in WordPess you know how to add carousel or slider in your website. We have split this into 4 simple steps. first go to "Carousel Free" Menu Click Add New Insert your Carousel/slider Title then insert you carousel/slider Internal or external links Select your category , Upload you Image then publish. add more carousel/slider items in same way.
-
-= Plugin Support =
-
-If you have a question or problem with the carousel plugin, post it on the [support](https://wordpress.org/support/plugin/carousel) section and we will try to solved your issues.
 
 <br /><br />
 
@@ -160,9 +207,28 @@ If you have a question or problem with the carousel plugin, post it on the [supp
 7. screenshot-7
 8. screenshot-8
 9. screenshot-9
+10. screenshot-10
+11. screenshot-11
 
 
 == Changelog ==
+
+= 1.8 =
+*Release Date - 03 Jan, 2018*
+* Fix Color Picker Issues.
+* Update Css File.
+
+= 1.7 =
+*Release Date - 24 Sep, 2017*
+* Update Option Page.
+* Update Css File.
+* Added New Options.
+* Added New Options Page.
+* Remove Old Options page.
+* Change Admin Interface.
+
+= 1.6 =
+* Update Option Page.
 
 = 1.5 =
 *Release Date - 23 May, 2017*

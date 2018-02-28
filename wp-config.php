@@ -42,7 +42,7 @@ define("FTP_HOST", "35.154.150.23");
 define("FTP_USER", "ftpuser");
 ##Deny from all
 define("FTP_PASS", "bagoli@123");
-
+define('FS_METHOD', 'direct');
 /**#@+
  * Authentication Unique Keys and Salts.
  *
