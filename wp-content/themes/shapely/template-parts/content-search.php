@@ -10,15 +10,15 @@
 ?>
 
 <div class="row">
-	<article id="post-<?php the_ID(); ?>" <?php post_class('post-content post-grid-wide col-md-12'); ?>>
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'post-content post-grid-wide col-md-12' ); ?>>
 		<header class="entry-header">
 			<?php
-			$image    = '<img class="wp-post-image" alt="" src="' . get_template_directory_uri() . '/assets/images/placeholder_wide.jpg" />';
+			$image = '<img class="wp-post-image" alt="" src="' . get_template_directory_uri() . '/assets/images/placeholder_wide.jpg" />';
 			if ( has_post_thumbnail() ) {
 				$layout = shapely_get_layout_class();
 				$size   = 'shapely-featured';
 
-				if ( $layout == 'full-width' ) {
+				if ( 'full-width' == $layout ) {
 					$size = 'shapely-full';
 				}
 				$image = get_the_post_thumbnail( get_the_ID(), $size );
@@ -33,9 +33,9 @@
 					'class'       => true,
 					'alt'         => true,
 					'width'       => true,
-					'height'      => true
+					'height'      => true,
 				),
-				'noscript' => array()
+				'noscript' => array(),
 			);
 			?>
 			<a href="<?php echo esc_url( get_the_permalink() ); ?>">
@@ -50,7 +50,9 @@
 
 			<div class="entry-meta">
 				<?php
-				shapely_posted_on_no_cat(); ?><!-- post-meta -->
+				shapely_posted_on_no_cat();
+				?>
+				<!-- post-meta -->
 			</div>
 
 			<?php the_excerpt(); ?>

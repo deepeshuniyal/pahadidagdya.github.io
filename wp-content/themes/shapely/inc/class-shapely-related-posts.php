@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Shapely_Related_Posts_Output
+ * Class Shapely_Related_Posts
  *
  * This file does the social sharing handling for the Muscle Core Lite Framework
  *
@@ -11,7 +11,7 @@
  * @package          Shapely
  */
 
-if ( ! function_exists( 'Shapely_CallRelatedPostsClass' ) ) {
+if ( ! function_exists( 'shapely_call_related_posts_class' ) ) {
 	/**
 	 *
 	 * Gets called only if the "display related posts" option is checked
@@ -20,26 +20,26 @@ if ( ! function_exists( 'Shapely_CallRelatedPostsClass' ) ) {
 	 * @since   1.0.0
 	 *
 	 */
-	function Shapely_CallRelatedPostsClass() {
+	function shapely_call_related_posts_class() {
 		$display_related_blog_posts = get_theme_mod( 'related_posts_area', true );
 
 		if ( $display_related_blog_posts ) {
 
 			// instantiate the class & load everything else
-			Shapely_Related_Posts_Output::getInstance();
+			Shapely_Related_Posts::get_instance();
 		}
 	}
 
-	add_action( 'wp_loaded', 'Shapely_CallRelatedPostsClass' );
+	add_action( 'wp_loaded', 'shapely_call_related_posts_class' );
 }
 
 
-if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
+if ( ! class_exists( 'Shapely_Related_Posts' ) ) {
 
 	/**
-	 * Class Shapely_Related_Posts_Output
+	 * Class Shapely_Related_Posts
 	 */
-	class Shapely_Related_Posts_Output {
+	class Shapely_Related_Posts {
 
 		/**
 		 * @var Singleton The reference to *Singleton* instance of this class
@@ -56,7 +56,6 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 				add_action( 'shapely_single_after_article', array( $this, 'output_related_posts' ), 2 );
 			}
 
-
 		}
 
 		/**
@@ -64,8 +63,8 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 		 *
 		 * @return Singleton The *Singleton* instance.
 		 */
-		public static function getInstance() {
-			if ( NULL === static::$instance ) {
+		public static function get_instance() {
+			if ( null === static::$instance ) {
 				static::$instance = new static();
 			}
 
@@ -104,17 +103,55 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 			$related_postquery = new WP_Query();
 			$args              = '';
 
-			if ( $number_posts == 0 ) {
+			if ( 0 == $number_posts ) {
 				return $related_postquery;
 			}
 
-			$args = wp_parse_args( $args, array(
-				'category__in'        => wp_get_post_categories( $post_id ),
-				'ignore_sticky_posts' => 0,
-				'posts_per_page'      => $number_posts,
-				'post__not_in'        => array( $post_id ),
-//				'meta_key'            => '_thumbnail_id',
-			) );
+			$args = wp_parse_args(
+				$args, array(
+					'category__in'        => wp_get_post_categories( $post_id ),
+					'ignore_sticky_posts' => 0,
+					'posts_per_page'      => $number_posts,
+					'post__not_in'        => array( $post_id ),
+				)
+			);
+
+			if ( is_singular( 'jetpack-portfolio' ) ) {
+				unset( $args['category__in'] );
+				$args['post_type'] = 'jetpack-portfolio';
+
+				$terms_args = array(
+					'fields' => 'ids',
+				);
+				$types      = wp_get_object_terms( get_the_ID(), 'jetpack-portfolio-type', $terms_args );
+				$tags       = wp_get_object_terms( get_the_ID(), 'jetpack-portfolio-tag', $terms_args );
+
+				$tax_query = array();
+
+				if ( ! empty( $types ) ) {
+					array_push(
+						$tax_query, array(
+							'taxonomy' => 'jetpack-portfolio-type',
+							'field'    => 'term_id',
+							'terms'    => $types,
+						)
+					);
+				}
+
+				if ( ! empty( $tags ) ) {
+					array_push(
+						$tax_query, array(
+							'taxonomy' => 'jetpack-portfolio-tag',
+							'field'    => 'term_id',
+							'terms'    => $tags,
+						)
+					);
+				}
+
+				if ( ! empty( $tax_query ) ) {
+					$args['tax_query'] = $tax_query;
+				}
+			}
 
 			$related_postquery = new WP_Query( $args );
 
@@ -130,10 +167,17 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 		 * @return string                    HTML markup to display related posts
 		 **/
 		function output_related_posts() {
+
+			if ( is_singular( 'jetpack-portfolio' ) ) {
+				if ( ! get_theme_mod( 'related_projects_area', true ) ) {
+					return;
+				}
+			}
+
 			// Check if related posts should be shown
 			$related_posts = $this->get_related_posts( get_the_ID(), get_option( 'posts_per_page' ) );
 
-			if ( $related_posts->post_count == 0 ) {
+			if ( 0 == $related_posts->post_count ) {
 				return false;
 			}
 
@@ -145,14 +189,17 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 			$show_date  = get_theme_mod( 'shapely_enable_related_date_blog_posts', false );
 			$auto_play  = get_theme_mod( 'shapely_autoplay_blog_posts', true );
 
-
 			echo '<div class="row">';
 
 			/*
 			 * Heading
 			 */
 			echo '<div class="col-lg-11 col-sm-10 col-xs-12 shapely-related-posts-title">';
-			echo '<h3><span>' . esc_html__( 'Related articles ', 'shapely' ) . '</span></h3>';
+			if ( is_singular( 'jetpack-portfolio' ) ) {
+				echo '<h3><span>' . esc_html__( 'Related projects', 'shapely' ) . '</span></h3>';
+			} else {
+				echo '<h3><span>' . esc_html__( 'Related articles ', 'shapely' ) . '</span></h3>';
+			}
 			echo '</div>';
 
 			echo '</div><!--/.row-->';
@@ -167,10 +214,11 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 			echo '</ul>';
 			echo '</div>';
 
-
-			echo sprintf( '<div class="owlCarousel owl-carousel owl-theme" data-slider-id="%s" id="owlCarousel-%s" 
+			echo sprintf(
+				'<div class="owlCarousel owl-carousel owl-theme" data-slider-id="%s" id="owlCarousel-%s" 
 			data-slider-items="%s" 
-			data-slider-speed="400" data-slider-auto-play="%s" data-slider-navigation="false">', get_the_ID(), get_the_ID(), absint( $limit ), esc_html( $auto_play ) );
+			data-slider-speed="400" data-slider-auto-play="%s" data-slider-navigation="false">', get_the_ID(), get_the_ID(), absint( $limit ), esc_html( $auto_play )
+			);
 
 			// Loop through related posts
 			while ( $related_posts->have_posts() ) {
@@ -178,18 +226,16 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 
 				echo '<div class="item">';
 				if ( has_post_thumbnail( $related_posts->post->ID ) ) {
-					echo '<a href="' . esc_url( get_the_permalink() ) . '">' . get_the_post_thumbnail( $related_posts->post->ID, 'shapely-grid' ) . '</a>';
+					echo '<a href="' . esc_url( get_the_permalink() ) . '" class="related-item-thumbnail" style="background-image: url( ' . get_the_post_thumbnail_url( $related_posts->post->ID, 'shapely-grid' ) . ' )">' . get_the_post_thumbnail( $related_posts->post->ID, 'shapely-grid' ) . '</a>';
 				} else {
-					echo '<a href="' . esc_url( get_the_permalink() ) . '"><img class="wp-post-image" alt="" src="' . get_template_directory_uri() . '/assets/images/placeholder.jpg" /></a>';
+					echo '<a href="' . esc_url( get_the_permalink() ) . '" class="related-item-thumbnail" style="background-image: url( ' . get_template_directory_uri() . '/assets/images/placeholder.jpg )"><img class="wp-post-image" alt="" src="' . get_template_directory_uri() . '/assets/images/placeholder.jpg" /></a>';
 				}
 
 				if ( $show_title ) {
 					echo '<div class="shapely-related-post-title">';
 
 					# Post Title
-					echo '<a href="' . esc_url( get_the_permalink() ) . '">' . wp_trim_words( get_the_title(), 5 ) .
-					     '</a>';
-
+					echo '<a href="' . esc_url( get_the_permalink() ) . '">' . wp_trim_words( get_the_title(), 5 ) . '</a>';
 					echo '</div>';
 
 				}
@@ -209,8 +255,8 @@ if ( ! class_exists( 'Shapely_Related_Posts_Output' ) ) {
 
 			echo '</div><!--/.owlCarousel-->';
 			echo '</div><!--/.mt-related-posts-->';
-			
+
 			wp_reset_postdata();
 		}
 	}
-}
+}// End if().

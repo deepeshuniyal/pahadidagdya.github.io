@@ -10,7 +10,7 @@ get_header();
 $layout_class = shapely_get_layout_class(); ?>
 	<div class="row">
 		<?php
-		if ( $layout_class == 'sidebar-left' ):
+		if ( 'sidebar-left' == $layout_class ) :
 			get_sidebar();
 		endif;
 		?>
@@ -18,7 +18,8 @@ $layout_class = shapely_get_layout_class(); ?>
 			<main id="main" class="site-main" role="main">
 
 				<?php
-				if ( have_posts() ) : ?>
+				if ( have_posts() ) :
+				?>
 
 					<header class="entry-header nolist">
 						<h1 class="post-title entry-title"><?php printf( esc_html__( 'Search Results for: %s', 'shapely' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
@@ -26,7 +27,8 @@ $layout_class = shapely_get_layout_class(); ?>
 
 					<?php
 					/* Start the Loop */
-					while ( have_posts() ) : the_post();
+					while ( have_posts() ) :
+						the_post();
 
 						/**
 						 * Run the loop for the search to output the results.
@@ -42,13 +44,14 @@ $layout_class = shapely_get_layout_class(); ?>
 
 					get_template_part( 'template-parts/content', 'none' );
 
-				endif; ?>
+				endif;
+				?>
 
 			</main><!-- #main -->
 		</section><!-- #primary -->
 
 		<?php
-		if ( $layout_class == 'sidebar-right' ):
+		if ( 'sidebar-right' == $layout_class ) :
 			get_sidebar();
 		endif;
 		?>
