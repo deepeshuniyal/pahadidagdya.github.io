@@ -38,7 +38,7 @@ define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 
 /** FTP Settings */
-define("FTP_HOST", "35.154.150.23");
+define("FTP_HOST", "13.232.178.61");
 define("FTP_USER", "ftpuser");
 ##Deny from all
 define("FTP_PASS", "bagoli@123");
@@ -88,7 +88,7 @@ define( 'WPCF7_VALIDATE_CONFIGURATION', false );
 
 
 
-define('WP_MEMORY_LIMIT', '64M');
+define('WP_MEMORY_LIMIT', '256M');
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
